@@ -1,23 +1,38 @@
-﻿/* curosoftai - Contact Page Stylesheet */
+/* curosoftai - Contact Page Stylesheet
+   Dependent on layout.css design system tokens
+*/
 
+/* ============================================
+   PAGE SHELL
+   .site-main zaten margin-top: var(--header-height) ekliyor.
+   Bu yüzden burada header yüksekliğini tekrar uygulamıyoruz;
+   aksi halde header iki kere itilir ve hero başlangıcı boş kalır.
+   ============================================ */
 .contact-page {
     position: relative;
-    min-height: 100vh;
-    padding: calc(var(--header-height, 80px) + 60px) 0 100px;
+    min-height: calc(100svh - var(--header-height));
+    padding: clamp(40px, 6vh, 72px) 0 clamp(72px, 12vh, 120px);
     background-color: var(--bg-primary);
     overflow: hidden;
     isolation: isolate;
 }
 
-/* Background Ambient FX */
+/* home.css'teki .container ile aynı davranış — bu sayfa home.css yüklemiyor */
+.contact-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 48px);
+}
+
+/* Background Ambient FX (home hero glow ile aynı dil) */
 .contact-glow {
     position: absolute;
     top: -10%;
     left: -10%;
-    width: 60vw;
-    height: 60vw;
+    width: clamp(420px, 60vw, 900px);
+    height: clamp(420px, 60vw, 900px);
     background: radial-gradient(circle, var(--glow-warm) 0%, transparent 60%);
-    opacity: 0.4;
+    opacity: 0.45;
     filter: blur(80px);
     z-index: -1;
     pointer-events: none;
@@ -31,12 +46,13 @@
     opacity: 0.4;
     mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.14 0 0 0 0 0.12 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 220px 220px;
 }
 
 .contact-grid {
     display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 80px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(48px, 6vw, 80px);
     align-items: start;
 }
 
@@ -44,36 +60,47 @@
    LEFT COLUMN: INFO
    ============================================ */
 .contact-header {
-    margin-bottom: 60px;
+    margin-bottom: clamp(40px, 6vh, 60px);
 }
 
 .contact-eyebrow {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     font-weight: var(--fw-semibold);
     text-transform: uppercase;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.14em;
     color: var(--text-secondary);
     margin-bottom: 24px;
-    padding: 6px 14px;
-    border: 1px solid rgba(89, 75, 66, 0.15);
-    border-radius: 100px;
+    padding: 7px 14px 7px 12px;
+    background: rgba(245, 242, 237, 0.7);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
+    /* Layout'taki .status-dot ile uyumlu — aynı yeşil/pulse */
     .contact-eyebrow .status-dot {
-        width: 6px;
-        height: 6px;
+        width: 7px;
+        height: 7px;
         border-radius: 50%;
-        background: var(--status-live, oklch(0.62 0.16 145));
-        box-shadow: 0 0 0 3px rgba(99, 158, 90, 0.2);
+        background: var(--status-live);
+        box-shadow: 0 0 0 0 rgba(99, 158, 90, 0.55);
+        animation: contactStatusPulse 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
     }
+
+@keyframes contactStatusPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(99, 158, 90, 0.55); }
+    80%  { box-shadow: 0 0 0 8px rgba(99, 158, 90, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(99, 158, 90, 0); }
+}
 
 .contact-title {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 5vw, 4.5rem);
-    line-height: 1.05;
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    line-height: 1.08;
     font-weight: var(--fw-regular);
     color: var(--text-primary);
     letter-spacing: -0.02em;
@@ -83,13 +110,15 @@
 .title-em {
     font-style: italic;
     color: var(--accent);
+    padding: 0 0.04em;
 }
 
 .contact-lead {
-    font-size: 1.1rem;
-    line-height: 1.6;
+    font-size: var(--fs-lead);
+    line-height: 1.65;
     color: var(--text-secondary);
-    max-width: 440px;
+    font-weight: var(--fw-light);
+    max-width: 460px;
 }
 
 .contact-details {
@@ -105,15 +134,16 @@
 }
 
 .detail-label {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: var(--fw-semibold);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.14em;
     color: var(--text-muted);
 }
 
-.detail-text, .detail-link {
-    font-size: 1.1rem;
+.detail-text,
+.detail-link {
+    font-size: 1.05rem;
     color: var(--text-primary);
     font-weight: var(--fw-medium);
 }
@@ -125,6 +155,7 @@
     position: relative;
     display: inline-block;
     width: fit-content;
+    letter-spacing: -0.01em;
 }
 
     .detail-link--large::after {
@@ -137,7 +168,7 @@
         background: var(--accent);
         transform: scaleX(0.3);
         transform-origin: left;
-        transition: transform 0.4s var(--ease-editorial);
+        transition: transform 0.5s var(--ease-editorial);
     }
 
     .detail-link--large:hover::after {
@@ -149,14 +180,16 @@
     align-items: center;
     gap: 10px;
     padding: 12px 20px;
-    background: transparent;
+    background: rgba(245, 242, 237, 0.6);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 999px;
     color: var(--text-primary);
     font-size: 0.9rem;
     font-weight: var(--fw-semibold);
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: background-color 0.35s var(--ease-soft),
+                border-color 0.35s var(--ease-soft),
+                transform 0.35s var(--ease-editorial);
     width: fit-content;
 }
 
@@ -164,12 +197,13 @@
         width: 18px;
         height: 18px;
         color: var(--text-muted);
-        transition: color 0.3s ease;
+        transition: color 0.3s var(--ease-soft);
     }
 
     .btn-calendar:hover {
-        background: var(--bg-secondary);
+        background: var(--bg-primary);
         border-color: var(--text-muted);
+        transform: translateY(-1px);
     }
 
         .btn-calendar:hover svg {
@@ -178,19 +212,23 @@
 
 /* ============================================
    RIGHT COLUMN: FORM
+   home'daki demo-panel ile aynı yüzey dili (cam + soft shadow)
    ============================================ */
 .contact-form-wrapper {
-    perspective: 1000px;
+    perspective: 1400px;
 }
 
 .form-panel {
-    background: linear-gradient(160deg, rgba(245, 242, 237, 0.7), rgba(236, 229, 219, 0.4));
+    background: linear-gradient(160deg, rgba(245, 242, 237, 0.95), rgba(236, 229, 219, 0.85));
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-color);
-    border-radius: 24px;
-    padding: 50px 48px;
-    box-shadow: 0 30px 60px -20px rgba(42, 36, 32, 0.12);
+    border-radius: 22px;
+    padding: clamp(32px, 5vw, 50px) clamp(24px, 4vw, 48px);
+    box-shadow:
+        0 30px 70px -30px rgba(42, 36, 32, 0.32),
+        0 12px 24px -12px rgba(42, 36, 32, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
 .minimal-form {
@@ -227,7 +265,7 @@
     font-size: 1rem;
     color: var(--text-primary);
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s var(--ease-soft);
     position: relative;
     z-index: 2;
     resize: none;
@@ -240,7 +278,9 @@
     font-size: 1rem;
     color: var(--text-muted);
     pointer-events: none;
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: top 0.35s var(--ease-editorial),
+                font-size 0.35s var(--ease-editorial),
+                color 0.35s var(--ease-soft);
     z-index: 1;
 }
 
@@ -255,6 +295,7 @@
         top: -16px;
         font-size: 0.75rem;
         font-weight: var(--fw-medium);
+        letter-spacing: 0.02em;
         color: var(--accent);
     }
 
@@ -268,7 +309,7 @@
     background: var(--text-primary);
     transform: scaleX(0);
     transform-origin: center;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.5s var(--ease-editorial);
     box-shadow: 0 -2px 10px rgba(89, 75, 66, 0.2);
     z-index: 3;
 }
@@ -296,79 +337,156 @@
     gap: 12px;
 }
 
+.service-chip {
+    cursor: pointer;
+}
+
 .service-chip input[type="radio"] {
-    display: none;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .chip-text {
     display: inline-flex;
     padding: 10px 18px;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: var(--fw-medium);
     color: var(--text-secondary);
     border: 1px solid rgba(89, 75, 66, 0.15);
-    border-radius: 100px;
+    border-radius: 999px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.4);
+    transition: background-color 0.3s var(--ease-soft),
+                color 0.3s var(--ease-soft),
+                border-color 0.3s var(--ease-soft),
+                box-shadow 0.3s var(--ease-soft),
+                transform 0.3s var(--ease-editorial);
+    background: rgba(255, 255, 255, 0.45);
+}
+
+.service-chip:hover .chip-text {
+    border-color: rgba(89, 75, 66, 0.3);
+    color: var(--text-primary);
 }
 
 .service-chip input[type="radio"]:checked + .chip-text {
     background: var(--text-primary);
     color: var(--bg-primary);
     border-color: var(--text-primary);
-    box-shadow: 0 4px 12px rgba(42, 36, 32, 0.15);
+    box-shadow: 0 4px 12px rgba(42, 36, 32, 0.18);
 }
 
-/* Button override for form */
-.w-100 {
-    width: 100%;
+.service-chip input[type="radio"]:focus-visible + .chip-text {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
 }
 
+/* ============================================
+   SUBMIT BUTTON — home'daki .btn-editorial--primary
+   ile aynı dil; home.css yüklenmediği için burada lokal kopyası var
+   ============================================ */
 .form-submit {
     margin-top: 10px;
 }
 
+.w-100 {
+    width: 100%;
+}
+
+.btn-editorial {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: var(--fw-medium);
+    letter-spacing: -0.005em;
+    cursor: pointer;
+    border: none;
+    transition: color 0.4s var(--ease-editorial),
+                background-color 0.4s var(--ease-editorial),
+                transform 0.4s var(--ease-editorial),
+                box-shadow 0.4s var(--ease-editorial);
+}
+
+.btn-editorial--primary {
+    padding: 15px 24px;
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    border-radius: 999px;
+    box-shadow: 0 1px 2px rgba(42, 36, 32, 0.12),
+                0 8px 28px rgba(42, 36, 32, 0.10);
+}
+
+    .btn-editorial--primary svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.4s var(--ease-editorial);
+    }
+
+    .btn-editorial--primary:hover {
+        background-color: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px rgba(42, 36, 32, 0.10),
+                    0 14px 36px rgba(89, 75, 66, 0.22);
+    }
+
+        .btn-editorial--primary:hover svg {
+            transform: translateX(4px);
+        }
+
+.btn-editorial:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+/* ============================================
+   SUCCESS MESSAGE
+   ============================================ */
 .form-success-msg {
     display: none;
     align-items: center;
     gap: 10px;
-    padding: 16px;
+    padding: 16px 18px;
     margin-top: 20px;
-    background: rgba(99, 158, 90, 0.1);
-    border: 1px solid rgba(99, 158, 90, 0.2);
-    border-radius: 8px;
-    color: #3b6636;
+    background: oklch(0.62 0.16 145 / 0.10);
+    border: 1px solid oklch(0.62 0.16 145 / 0.28);
+    border-radius: 12px;
+    color: oklch(0.42 0.10 145);
     font-size: 0.9rem;
     font-weight: var(--fw-medium);
 }
 
     .form-success-msg.is-visible {
         display: flex;
-        animation: fadeIn 0.5s ease forwards;
+        animation: contactFadeIn 0.5s var(--ease-editorial) forwards;
     }
 
-@keyframes fadeIn {
+.success-icon {
+    color: var(--status-live);
+    font-size: 1rem;
+}
+
+@keyframes contactFadeIn {
     from {
         opacity: 0;
         transform: translateY(-10px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Responsive */
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 @media (max-width: 992px) {
     .contact-grid {
         grid-template-columns: 1fr;
         gap: 60px;
-    }
-
-    .form-panel {
-        padding: 40px 32px;
     }
 }
 
@@ -378,20 +496,31 @@
         gap: 40px;
     }
 
-    .contact-title {
-        font-size: 2.8rem;
+    .form-panel {
+        border-radius: 18px;
     }
 
-    .form-panel {
-        padding: 32px 20px;
-        border-radius: 16px;
+    .contact-details {
+        gap: 28px;
     }
 }
 
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
+    .contact-eyebrow .status-dot,
     .form-input ~ .form-label,
     .input-glow,
-    .detail-link--large::after {
+    .detail-link--large::after,
+    .btn-editorial,
+    .btn-calendar,
+    .chip-text {
         transition: none;
+        animation: none;
+    }
+
+    .form-success-msg.is-visible {
+        animation: none;
     }
 }

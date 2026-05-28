@@ -1,5 +1,7 @@
-﻿/**
+/**
  * curosoftai - Contact Page Interactions
+ * GSAP & ScrollTrigger _Layout.cshtml içinden defer ile yükleniyor;
+ * DOMContentLoaded sırasında hazır olmaları beklenir.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,100 +15,114 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function initContactAnimations() {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const fadeElements = document.querySelectorAll('[data-gsap="fade-up"]');
+    const formPanel = document.querySelector('[data-gsap="form-reveal"]');
 
-    // Fallback for missing GSAP or reduced motion
+    // Fallback: GSAP yoksa veya kullanıcı reduced-motion istiyorsa
     if (typeof gsap === 'undefined' || reduceMotion) {
-        document.querySelectorAll('[data-gsap]').forEach(el => {
+        fadeElements.forEach(el => {
             el.style.opacity = 1;
             el.style.transform = 'none';
         });
+        if (formPanel) {
+            formPanel.style.opacity = 1;
+            formPanel.style.transform = 'none';
+        }
         return;
+    }
+
+    // about.js ile aynı plugin kaydı — ileride scroll bazlı reveal eklenirse hazır
+    if (typeof ScrollTrigger !== 'undefined' && !gsap.core.globals().ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
     }
 
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    // Left Column Info Stagger
-    const fadeElements = document.querySelectorAll('[data-gsap="fade-up"]');
-    tl.fromTo(fadeElements,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1, stagger: 0.15 },
-        0.2
-    );
+    if (fadeElements.length) {
+        tl.fromTo(fadeElements,
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1, stagger: 0.15 },
+            0.2
+        );
+    }
 
-    // Right Column Form Panel Reveal
-    const formPanel = document.querySelector('[data-gsap="form-reveal"]');
     if (formPanel) {
         tl.fromTo(formPanel,
             { opacity: 0, x: 40, rotationY: -5 },
-            { opacity: 1, x: 0, rotationY: 0, duration: 1.2, clearProps: "all" },
+            { opacity: 1, x: 0, rotationY: 0, duration: 1.2, clearProps: 'transform' },
             0.4
         );
     }
 }
 
 /**
- * Textarea Auto-Resize based on content length
+ * Textarea Auto-Resize
  */
 function initTextareaAutoResize() {
     const textarea = document.querySelector('.form-textarea');
     if (!textarea) return;
 
-    textarea.addEventListener('input', function () {
-        this.style.height = 'auto'; // Reset height
-        this.style.height = (this.scrollHeight) + 'px'; // Set to scroll height
-    });
+    const resize = () => {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+    };
+
+    textarea.addEventListener('input', resize);
 }
 
 /**
- * Form Handling (Demo logic preventing default submission)
+ * Form Handling (Demo)
+ * NOT: Gerçek gönderim eklenince fetch() ile değiştirin.
  */
 function initFormHandling() {
     const form = document.getElementById('contactForm');
-    const successMsg = document.getElementById('formSuccess');
-    const submitBtn = form?.querySelector('button[type="submit"]');
-
     if (!form) return;
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault(); // Varsayılan sayfa yenilemesini engelle
+    const successMsg = document.getElementById('formSuccess');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const btnTextEl = submitBtn?.querySelector('.btn-text');
 
-        // Temel doğrulama (HTML5 required attribute zaten tutuyor, ek güvenlik)
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
         }
 
-        // Simüle Edilmiş Gönderme Durumu
-        const originalText = submitBtn.querySelector('.btn-text').textContent;
-        submitBtn.querySelector('.btn-text').textContent = "Gönderiliyor...";
-        submitBtn.style.pointerEvents = "none";
-        submitBtn.style.opacity = "0.7";
+        const originalText = btnTextEl ? btnTextEl.textContent : '';
 
-        // API'ye gidiyormuş gibi bekle (örneğin 1.5s)
+        if (btnTextEl) btnTextEl.textContent = 'Gönderiliyor...';
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+        }
+
+        // Simüle edilmiş ağ gecikmesi — gerçek entegrasyonda fetch ile değiştir
         setTimeout(() => {
-            // Başarı durumunu göster
-            successMsg.classList.add('is-visible');
-            successMsg.setAttribute('aria-hidden', 'false');
+            if (successMsg) {
+                successMsg.classList.add('is-visible');
+                successMsg.setAttribute('aria-hidden', 'false');
+            }
 
-            // Formu Temizle
             form.reset();
 
-            // Textarea yüksekliğini sıfırla
             const textarea = form.querySelector('.form-textarea');
             if (textarea) textarea.style.height = 'auto';
 
-            // Butonu eski haline getir
-            submitBtn.querySelector('.btn-text').textContent = "Gönderildi";
+            if (btnTextEl) btnTextEl.textContent = 'Gönderildi';
 
-            // İsteğe bağlı: 5 saniye sonra başarı mesajını gizleyebilir veya butonu eski haline getirebilirsiniz.
             setTimeout(() => {
-                successMsg.classList.remove('is-visible');
-                successMsg.setAttribute('aria-hidden', 'true');
-                submitBtn.querySelector('.btn-text').textContent = originalText;
-                submitBtn.style.pointerEvents = "auto";
-                submitBtn.style.opacity = "1";
+                if (successMsg) {
+                    successMsg.classList.remove('is-visible');
+                    successMsg.setAttribute('aria-hidden', 'true');
+                }
+                if (btnTextEl) btnTextEl.textContent = originalText;
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '';
+                }
             }, 5000);
-
         }, 1500);
     });
 }

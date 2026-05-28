@@ -1,6 +1,5 @@
 wwwroot\css\about.css
 wwwroot\css\coming-soon.css
-wwwroot\css\contact.css
 wwwroot\css\home.css
 wwwroot\css\layout.css
 wwwroot\css\site.css
@@ -66,4 +65,5 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\css\contact.css
 wwwroot\js\contact.js
