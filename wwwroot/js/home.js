@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initServicesSpotlight();
     initDemoScene();
     initDemoTilt();
+    initProcessTimeline();
 });
 
 /**
@@ -351,6 +352,121 @@ function initDemoTilt() {
         panel.style.setProperty('--tilt-x', '0deg');
         panel.style.setProperty('--tilt-y', '0deg');
     });
+}
+
+/**
+ * Process Timeline — scroll-bound vertical rail + milestone activation.
+ *
+ * Preferred path: GSAP ScrollTrigger scrubs the rail fill height to scroll
+ * progress and toggles each milestone's `data-active` as its top crosses the
+ * activation line. Falls back to IntersectionObserver if ScrollTrigger isn't
+ * available, and finally to a static "all active" state for no-JS or
+ * `prefers-reduced-motion` users.
+ *
+ * The rail starts/ends aligned to the first and last milestone node anchors
+ * (not the section edges) so the progress feels honest — the cap reaches the
+ * last node exactly when you scroll past it.
+ */
+function initProcessTimeline() {
+    const timeline = document.querySelector('[data-timeline]');
+    if (!timeline) return;
+
+    const fill = timeline.querySelector('[data-rail-fill]');
+    const cap = timeline.querySelector('[data-rail-cap]');
+    const milestones = Array.from(timeline.querySelectorAll('[data-milestone]'));
+    if (!fill || !milestones.length) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const setAllActive = () => {
+        fill.style.height = '100%';
+        milestones.forEach(m => m.setAttribute('data-active', 'true'));
+        if (cap) cap.classList.remove('is-active');
+    };
+
+    if (reduceMotion) {
+        setAllActive();
+        return;
+    }
+
+    const hasGsap = typeof window.gsap !== 'undefined';
+    const hasScrollTrigger = hasGsap && typeof window.ScrollTrigger !== 'undefined';
+
+    if (hasScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Scroll-bound rail fill — uses the first node as start anchor and
+        // the last node as end anchor so progress is calibrated against the
+        // actual milestones, not arbitrary section edges.
+        const firstNode = milestones[0].querySelector('.timeline-node');
+        const lastNode = milestones[milestones.length - 1].querySelector('.timeline-node');
+
+        ScrollTrigger.create({
+            trigger: timeline,
+            start: () => {
+                const rect = firstNode.getBoundingClientRect();
+                return (window.scrollY + rect.top) - window.innerHeight * 0.7;
+            },
+            end: () => {
+                const rect = lastNode.getBoundingClientRect();
+                return (window.scrollY + rect.bottom) - window.innerHeight * 0.5;
+            },
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+                const p = self.progress;
+                fill.style.height = (p * 100) + '%';
+                if (cap) {
+                    cap.style.top = (p * 100) + '%';
+                    cap.classList.toggle('is-active', p > 0.01 && p < 0.999);
+                }
+            }
+        });
+
+        // Activate each milestone when its top crosses the 60% viewport line
+        milestones.forEach((m) => {
+            ScrollTrigger.create({
+                trigger: m,
+                start: 'top 65%',
+                onEnter: () => m.setAttribute('data-active', 'true'),
+                onLeaveBack: () => m.setAttribute('data-active', 'false')
+            });
+        });
+
+        return;
+    }
+
+    // Fallback — no ScrollTrigger available
+    if ('IntersectionObserver' in window) {
+        const milestoneIo = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting) {
+                    e.target.setAttribute('data-active', 'true');
+                    milestoneIo.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.35 });
+        milestones.forEach(m => milestoneIo.observe(m));
+
+        // Single-shot rail fill — animates once when timeline scrolls in
+        const fillIo = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting) {
+                    fill.style.transition = 'height 2.6s cubic-bezier(0.22, 1, 0.36, 1)';
+                    fill.style.height = '100%';
+                    if (cap) {
+                        cap.classList.add('is-active');
+                        cap.style.transition = 'top 2.6s cubic-bezier(0.22, 1, 0.36, 1)';
+                        cap.style.top = '100%';
+                        setTimeout(() => cap.classList.remove('is-active'), 2700);
+                    }
+                    fillIo.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.25 });
+        fillIo.observe(timeline);
+    } else {
+        setAllActive();
+    }
 }
 
 /**
