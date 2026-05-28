@@ -1,5 +1,5 @@
 /* curosoftai - About Page Stylesheet
-   Dependent on layout.css / home.css design system tokens
+   Dependent on layout.css design system tokens
 */
 
 .about-page {
@@ -10,16 +10,15 @@
 /* ============================================
    1. HERO SECTION
    ============================================ */
-/* .site-main zaten margin-top: var(--header-height) ekliyor.
-   Bu yüzden .about-hero'da ek bir padding-top vermiyoruz; aksi halde
-   header yüksekliği iki kere uygulanır ve hero viewport'tan taşar. */
+/* .site-main header offset'ini zaten uygular.
+   Hero burada sadece layout ritmine uygun ilk nefesi ve kendi alt alanını yönetir. */
 .about-hero {
     position: relative;
-    min-height: min(100svh - var(--header-height), 760px);
+    min-height: min(calc(100svh - var(--header-height)), 760px);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: clamp(40px, 8vh, 80px) 0 clamp(80px, 12vh, 120px);
+    justify-content: flex-start;
+    padding: clamp(40px, 6vh, 72px) 0 clamp(88px, 12vh, 120px);
     isolation: isolate;
 }
 
@@ -298,7 +297,8 @@
 
 @media (max-width: 768px) {
     .about-hero {
-        min-height: min(100svh - var(--header-height), 620px);
+        min-height: min(calc(100svh - var(--header-height)), 620px);
+        padding: clamp(36px, 6vh, 56px) 0 clamp(80px, 12vh, 104px);
     }
 
     .about-hero-meta { margin-bottom: 20px; }
