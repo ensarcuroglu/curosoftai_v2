@@ -1,0 +1,386 @@
+﻿/* curosoftai Design System Stylesheet
+   Theme: Modern, Soft, Minimalist, Trustworthy Corporate
+*/
+
+:root {
+    /* Color Palette — Modern Taupe / Mocha (cool, gray-leaning brown) */
+    --bg-primary: #F5F2ED;             /* Kırık beyaz */
+    --bg-secondary: #E8E2D8;           /* Açık taupe krem */
+    --text-primary: #2A2420;           /* Çok koyu mocha (ana metin) */
+    --text-secondary: #5A5148;         /* Orta gri-kahve */
+    --text-muted: #998F84;             /* Açık taupe */
+    --accent: #594B42;                 /* Zengin koyu kahve (vurgu) */
+    --accent-soft: #ECE5DB;            /* Açık krem (vurgu zemini) */
+    --border-color: #D6CDC2;           /* Taupe border */
+    --header-bg: rgba(245, 242, 237, 0.85);
+
+    /* OKLCH Glow / Status Tokens */
+    --glow-warm: oklch(0.82 0.06 60);  /* Soft amber radial */
+    --status-live: oklch(0.62 0.16 145); /* Living green */
+
+    /* Typography */
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-display: 'Instrument Serif', 'Times New Roman', Georgia, serif;
+    --fs-hero: clamp(2rem, 5vw, 3.8rem);
+    --fs-lead: clamp(1.05rem, 1.4vw, 1.25rem);
+
+    /* Layout Variables */
+    --max-width: 1200px;
+    --header-height: 80px;
+    --header-height-scroll: 65px;
+
+    /* Motion Tokens */
+    --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Font Weights */
+    --fw-light: 300;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+}
+
+/* Animatable custom property for breathing glow */
+@property --hero-glow-opacity {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0.6;
+}
+
+/* Reset & Base Elements */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+ul {
+    list-style: none;
+}
+
+/* Page Loading Progress Bar */
+.page-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #8B7A6F);
+    width: 0;
+    z-index: 9999;
+    transition: width 0.2s ease;
+}
+
+/* Site Header Styling */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    background-color: var(--header-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    z-index: 1000;
+    transition: var(--transition-smooth);
+}
+
+    .site-header.scrolled {
+        height: var(--header-height-scroll);
+        border-bottom-color: var(--border-color);
+        box-shadow: 0 4px 30px rgba(42, 36, 32, 0.04);
+    }
+
+.header-container {
+    max-width: var(--max-width);
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo Design */
+.site-logo {
+    font-size: 1.4rem;
+    font-weight: var(--fw-bold);
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+}
+
+.logo-dot {
+    color: var(--accent);
+}
+
+/* Navigation System */
+.nav-list {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.nav-link {
+    font-size: 0.95rem;
+    font-weight: var(--fw-medium);
+    color: var(--text-secondary);
+    position: relative;
+    padding: 8px 0;
+}
+
+    .nav-link:hover {
+        color: var(--text-primary);
+    }
+
+/* Minimal Call-To-Action Button */
+.cta-button {
+    display: inline-block;
+    padding: 10px 22px;
+    background-color: var(--text-primary);
+    color: var(--bg-primary) !important;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: var(--fw-semibold);
+    box-shadow: 0 4px 12px rgba(42, 36, 32, 0.12);
+    transition: var(--transition-smooth);
+}
+
+    .cta-button:hover {
+        background-color: var(--accent);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(89, 75, 66, 0.25);
+    }
+
+/* Mobile Toggle Hamburger */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    z-index: 1100;
+}
+
+.hamburger-line {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: var(--text-primary);
+    transition: var(--transition-smooth);
+    border-radius: 2px;
+}
+
+/* Main Content Area */
+.site-main {
+    margin-top: var(--header-height);
+    min-height: calc(100vh - var(--header-height) - 350px);
+    padding-bottom: 60px;
+    animation: fadeInPage 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInPage {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Minimalist Footer Styling */
+.site-footer {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: 70px 0 0 0;
+    color: var(--text-secondary);
+}
+
+.footer-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px 50px 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 48px;
+}
+
+.footer-brand {
+    max-width: 360px;
+}
+
+.footer-logo {
+    font-size: 1.3rem;
+    font-weight: var(--fw-bold);
+    color: var(--text-primary);
+    display: inline-block;
+    margin-bottom: 16px;
+}
+
+.footer-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.footer-links-grid {
+    display: flex;
+    gap: 80px;
+}
+
+.footer-title {
+    font-size: 0.9rem;
+    font-weight: var(--fw-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+}
+
+.footer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+    .footer-list a {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+    }
+
+        .footer-list a:hover {
+            color: var(--accent);
+            padding-left: 4px;
+        }
+
+.footer-bottom {
+    border-top: 1px solid rgba(42, 36, 32, 0.08);
+    padding: 24px 0;
+}
+
+.footer-bottom-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Responsive Grid and Mobile Layout Adjustments */
+@media (max-width: 768px) {
+    :root {
+        --header-height: 70px;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .site-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 320px;
+        height: 100vh;
+        background-color: var(--bg-primary);
+        box-shadow: -10px 0 40px rgba(42, 36, 32, 0.08);
+        padding: 100px 40px 40px 40px;
+        transition: var(--transition-smooth);
+        z-index: 1050;
+    }
+
+        .site-nav.is-active {
+            right: 0;
+        }
+
+    .nav-list {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        width: 100%;
+    }
+
+    .nav-item {
+        width: 100%;
+    }
+
+    .nav-link {
+        display: block;
+        font-size: 1.1rem;
+        width: 100%;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--bg-secondary);
+    }
+
+    .nav-cta {
+        margin-top: 16px;
+        width: 100%;
+    }
+
+    .cta-button {
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+
+    /* Hamburger Active State Animation */
+    .menu-toggle.is-active .line-1 {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle.is-active .line-2 {
+        opacity: 0;
+    }
+
+    .menu-toggle.is-active .line-3 {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .footer-container {
+        flex-direction: column;
+        gap: 36px;
+    }
+
+    .footer-links-grid {
+        gap: 40px;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .footer-bottom-container {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}

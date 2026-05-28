@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - curosoftai</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <div class="page-progress" id="pageProgress"></div>
+
+    <header class="site-header" id="siteHeader">
+        <div class="header-container">
+            <a class="site-logo" asp-area="" asp-controller="Home" asp-action="Index">
+                curosoftai<span class="logo-dot">.</span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Menüyü Aç/Kapat" aria-expanded="false">
+                <span class="hamburger-line line-1"></span>
+                <span class="hamburger-line line-2"></span>
+                <span class="hamburger-line line-3"></span>
+            </button>
+
+            <nav class="site-nav" id="siteNav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Services" asp-action="Index">Hizmetler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="AiSolutions" asp-action="Index">AI Çözümler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Portfolio" asp-action="Index">Projeler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="About" asp-action="Index">Hakkımızda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Blog" asp-action="Index">Blog</a>
+                    </li>
+                    <li class="nav-item nav-cta">
+                        <a class="cta-button" asp-area="" asp-controller="Contact" asp-action="Index">İletişim</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-main" role="main" id="contentView">
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a class="footer-logo" asp-controller="Home" asp-action="Index">
+                    curosoftai<span class="logo-dot">.</span>
+                </a>
+                <p class="footer-description">
+                    Kurumsal ihtiyaçları yazılım, otomasyon ve yapay zeka destekli modüllerle çözen teknoloji stüdyosu.
+                </p>
+            </div>
+
+            <div class="footer-links-grid">
+                <div class="footer-group">
+                    <h3 class="footer-title">Çözümler</h3>
+                    <ul class="footer-list">
+                        <li><a asp-controller="Services" asp-action="Index">Kurumsal Web Sitesi</a></li>
+                        <li><a asp-controller="AiSolutions" asp-action="Index">AI Firma Asistanı</a></li>
+                        <li><a asp-controller="Services" asp-action="Index">Özel Yazılım Çözümleri</a></li>
+                        <li><a asp-controller="AiSolutions" asp-action="Index">Yapay Zeka Modülleri</a></li>
+                    </ul>
+                </div>
+                <div class="footer-group">
+                    <h3 class="footer-title">Stüdyo</h3>
+                    <ul class="footer-list">
+                        <li><a asp-controller="About" asp-action="Index">Hakkımızda</a></li>
+                        <li><a asp-controller="Portfolio" asp-action="Index">Projeler / Portföy</a></li>
+                        <li><a asp-controller="Blog" asp-action="Index">Blog / Teknik Notlar</a></li>
+                        <li><a asp-controller="Contact" asp-action="Index">İletişim</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <p class="copyright">&copy; @DateTime.Now.Year curosoftai. Tüm hakları saklıdır.</p>
+                <p class="footer-motto">Sade, güven veren, teknoloji odaklı.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+    <script src="~/js/layout.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

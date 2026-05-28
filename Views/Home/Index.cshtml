@@ -1,0 +1,409 @@
+﻿@{
+    ViewData["Title"] = "Yazılım ve Yapay Zeka Çözümleri Stüdyosu";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+}
+
+<section class="hero-section" aria-labelledby="heroHeading">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-grain" aria-hidden="true"></div>
+
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-status" data-hero-anim="status">
+                <span class="status-dot" aria-hidden="true"></span>
+                <span class="status-text">2026 için yeni projeler</span>
+            </div>
+
+            <h1 id="heroHeading" class="hero-title">
+                <span class="hero-line"><span class="hero-line-inner">Kurumsal ihtiyaçları</span></span>
+                <span class="hero-line"><span class="hero-line-inner">yazılım, otomasyon ve</span></span>
+                <span class="hero-line"><span class="hero-line-inner"><em class="hero-emphasis">yapay zeka</em> ile</span></span>
+                <span class="hero-line"><span class="hero-line-inner">çözüyoruz.</span></span>
+            </h1>
+
+            <p class="hero-lead" data-hero-anim="lead">
+                İşletmeniz için modern kurumsal web siteleri, ölçeklenebilir özel yazılımlar ve akıllı yapay zeka modülleri geliştiren teknoloji stüdyosu.
+            </p>
+
+            <div class="hero-actions" data-hero-anim="actions">
+                <a asp-controller="Contact" asp-action="Index" class="btn-editorial btn-editorial--primary">
+                    <span>Projenizi Konuşalım</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M5 12h14M13 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="#mvp-showcase" class="btn-editorial btn-editorial--ghost">
+                    <span>Çözümleri İnceleyin</span>
+                </a>
+            </div>
+        </div>
+
+        <aside class="hero-marker" data-hero-anim="marker" aria-hidden="true">
+            <span class="hero-marker-num">01</span>
+            <span class="hero-marker-label">studio · est. 2024</span>
+        </aside>
+    </div>
+
+    <div class="hero-marquee" data-hero-anim="marquee" aria-hidden="true">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span class="marquee-item">Yapay Zeka Çözümleri</span><span class="marquee-separator">✦</span>
+                <span class="marquee-item">Kurumsal Mimari</span><span class="marquee-separator">✦</span>
+                <span class="marquee-item">ASP.NET Core</span><span class="marquee-separator">✦</span>
+                <span class="marquee-item">Süreç Otomasyonu</span><span class="marquee-separator">✦</span>
+                <span class="marquee-item">Modern UI/UX</span><span class="marquee-separator">✦</span>
+            </div>
+            <div class="marquee-content">
+                <span class="marquee-item">Yapay Zeka Çözümleri</span><span class="marquee-separator">✦</span>
+                <span class="marquee-item">Kurumsal Mimari</span><span class="marquee-separator">✦</span>
+                <span class="marquee-item">ASP.NET Core</span><span class="marquee-separator">✦</span>
+                <span class="marquee-item">Süreç Otomasyonu</span><span class="marquee-separator">✦</span>
+                <span class="marquee-item">Modern UI/UX</span><span class="marquee-separator">✦</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="services-summary" aria-labelledby="servicesHeading">
+    <div class="services-decor" aria-hidden="true">
+        <div class="services-grid-bg"></div>
+        <div class="services-orb services-orb--one"></div>
+        <div class="services-orb services-orb--two"></div>
+    </div>
+
+    <div class="container services-container">
+        <header class="services-header scroll-reveal">
+            <div class="services-header-meta">
+                <span class="services-eyebrow">
+                    <span class="services-eyebrow-dot" aria-hidden="true"></span>
+                    <span>Neler Yapıyoruz?</span>
+                </span>
+                <span class="services-counter" aria-hidden="true">
+                    <span class="counter-num">03</span>
+                    <span class="counter-sep">/</span>
+                    <span class="counter-label">Uzmanlık Alanı</span>
+                </span>
+            </div>
+
+            <h2 id="servicesHeading" class="services-title">
+                Karmaşık teknolojileri,
+                <em class="services-title-em">somut faydalara</em>
+                dönüştürüyoruz.
+            </h2>
+
+            <p class="services-subtitle">
+                Üç odak alanında modüler ve ölçeklenebilir çözümler üretiyoruz. Her bir hizmet, işletmenizin büyüme hedeflerine bağlanan ölçülebilir bir kazanım için kurgulanır.
+            </p>
+        </header>
+
+        <div class="services-grid" data-services-grid>
+            <article class="service-card scroll-reveal" data-card-index="01" style="--card-i: 0;">
+                <div class="service-card-spotlight" aria-hidden="true"></div>
+                <div class="service-card-border" aria-hidden="true"></div>
+                <div class="service-card-inner">
+                    <header class="service-card-head">
+                        <span class="service-card-num" aria-hidden="true">01</span>
+                        <span class="service-card-chip">Web</span>
+                    </header>
+
+                    <div class="service-card-icon" aria-hidden="true">
+                        <span class="icon-ring icon-ring--outer"></span>
+                        <span class="icon-ring icon-ring--inner"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-.856.12-1.683.342-2.466" />
+                        </svg>
+                    </div>
+
+                    <h3 class="service-card-title">Kurumsal Web Sitesi</h3>
+                    <p class="service-card-desc">Modern tasarıma sahip, SEO uyumlu, yüksek performanslı ve tam yönetim panelli firma tanıtım siteleri.</p>
+
+                    <ul class="service-card-features">
+                        <li><span class="feature-dot" aria-hidden="true"></span>SEO Uyumlu Mimari</li>
+                        <li><span class="feature-dot" aria-hidden="true"></span>Çekirdek Web Vitals</li>
+                        <li><span class="feature-dot" aria-hidden="true"></span>Yönetim Paneli</li>
+                    </ul>
+
+                    <footer class="service-card-footer">
+                        <span class="service-card-cta">
+                            <span>Detayları İncele</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M5 12h14M13 5l7 7-7 7" />
+                            </svg>
+                        </span>
+                    </footer>
+                </div>
+            </article>
+
+            <article class="service-card service-card--featured scroll-reveal" data-card-index="02" style="--card-i: 1;">
+                <div class="service-card-spotlight" aria-hidden="true"></div>
+                <div class="service-card-border" aria-hidden="true"></div>
+                <div class="service-card-inner">
+                    <header class="service-card-head">
+                        <span class="service-card-num" aria-hidden="true">02</span>
+                        <span class="service-card-chip service-card-chip--accent">
+                            <span class="chip-pulse" aria-hidden="true"></span>
+                            AI
+                        </span>
+                    </header>
+
+                    <div class="service-card-icon" aria-hidden="true">
+                        <span class="icon-ring icon-ring--outer"></span>
+                        <span class="icon-ring icon-ring--inner"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 21l8.982-8.983m-10.169 3.886 3.228-3.228m-3.228 3.228 1.93 1.932M17.982 12.017 19 7l-8.982 8.983m10.169-3.886-3.228 3.228m3.228-3.228-1.93-1.932M5.18 19.82 19.82 5.18M12 3v3m0 12v3M3 12h3m12 0h3" />
+                        </svg>
+                    </div>
+
+                    <h3 class="service-card-title">AI Çözümleri &amp; Asistanlar</h3>
+                    <p class="service-card-desc">Web sitenizde çalışan, firma dokümanlarınızı öğrenen ve müşterilerinizi 7/24 karşılayan akıllı chatbot altyapıları.</p>
+
+                    <ul class="service-card-features">
+                        <li><span class="feature-dot" aria-hidden="true"></span>RAG &amp; Doküman Asistanı</li>
+                        <li><span class="feature-dot" aria-hidden="true"></span>Çok Dilli Yanıt Motoru</li>
+                        <li><span class="feature-dot" aria-hidden="true"></span>Kurumsal Tonda Üretim</li>
+                    </ul>
+
+                    <footer class="service-card-footer">
+                        <span class="service-card-cta">
+                            <span>Detayları İncele</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M5 12h14M13 5l7 7-7 7" />
+                            </svg>
+                        </span>
+                    </footer>
+                </div>
+            </article>
+
+            <article class="service-card scroll-reveal" data-card-index="03" style="--card-i: 2;">
+                <div class="service-card-spotlight" aria-hidden="true"></div>
+                <div class="service-card-border" aria-hidden="true"></div>
+                <div class="service-card-inner">
+                    <header class="service-card-head">
+                        <span class="service-card-num" aria-hidden="true">03</span>
+                        <span class="service-card-chip">Yazılım</span>
+                    </header>
+
+                    <div class="service-card-icon" aria-hidden="true">
+                        <span class="icon-ring icon-ring--outer"></span>
+                        <span class="icon-ring icon-ring--inner"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75 2.25 12l4.179 2.25m11.142 0L21.75 12l-4.179-2.25M12 5.75 7.75 8l4.25 2.25L16.25 8 12 5.75Zm0 12.5-4.25-2.25L12 13.75l4.25 2.25-4.25 2.25Z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="service-card-title">Özel Yazılım Geliştirme</h3>
+                    <p class="service-card-desc">İşletmenizin iç süreçlerine özel admin panelleri, operasyonel takip ekranları ve akıllı raporlama sistemleri.</p>
+
+                    <ul class="service-card-features">
+                        <li><span class="feature-dot" aria-hidden="true"></span>Süreç Otomasyonu</li>
+                        <li><span class="feature-dot" aria-hidden="true"></span>Operasyonel Dashboard</li>
+                        <li><span class="feature-dot" aria-hidden="true"></span>API &amp; Entegrasyon</li>
+                    </ul>
+
+                    <footer class="service-card-footer">
+                        <span class="service-card-cta">
+                            <span>Detayları İncele</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M5 12h14M13 5l7 7-7 7" />
+                            </svg>
+                        </span>
+                    </footer>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section id="mvp-showcase" class="mvp-showcase-section" aria-labelledby="mvpHeading">
+    <div class="mvp-decor" aria-hidden="true">
+        <div class="mvp-grid-bg"></div>
+        <div class="mvp-orb mvp-orb--one"></div>
+        <div class="mvp-orb mvp-orb--two"></div>
+    </div>
+
+    <div class="container mvp-container">
+        <div class="mvp-wrapper">
+            <div class="mvp-text scroll-reveal">
+                <div class="mvp-eyebrow">
+                    <span class="mvp-eyebrow-num">01</span>
+                    <span class="mvp-eyebrow-line" aria-hidden="true"></span>
+                    <span class="mvp-eyebrow-label">Featured Demo</span>
+                </div>
+
+                <h2 id="mvpHeading" class="mvp-title">
+                    Sadece tanıtmaz —
+                    <em class="mvp-title-em">cevap verir</em>,
+                    <em class="mvp-title-em">öğrenir</em>,
+                    <em class="mvp-title-em">kaynağını gösterir</em>.
+                </h2>
+
+                <p class="mvp-lead">
+                    <span class="mvp-dropcap" aria-hidden="true">Y</span><span class="mvp-lead-rest">eni nesil altyapımız sayesinde kurumsal web siteniz arkada çalışan AI Firma Asistanı ile müşteri sorularını dokümanlarınıza sadık kalarak yanıtlar — her cevabın altında kaynağı görünür.</span>
+                </p>
+
+                <ul class="mvp-features">
+                    <li class="mvp-feature">
+                        <div class="mvp-feature-glyph" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 7l8-3 8 3-8 3-8-3z" />
+                                <path d="M4 12l8 3 8-3" />
+                                <path d="M4 17l8 3 8-3" />
+                            </svg>
+                        </div>
+                        <div class="mvp-feature-body">
+                            <h3>Doküman Bazlı RAG</h3>
+                            <p>PDF, Word ve içerikleriniz gerçek zamanlı indekslenir.</p>
+                        </div>
+                    </li>
+
+                    <li class="mvp-feature">
+                        <div class="mvp-feature-glyph" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" />
+                                <path d="M12 8v8M8.5 10v4M15.5 10v4" />
+                            </svg>
+                        </div>
+                        <div class="mvp-feature-body">
+                            <h3>Kurumsal Ton</h3>
+                            <p>Markanızın dilinde, halüsinasyonsuz yanıtlar üretir.</p>
+                        </div>
+                    </li>
+
+                    <li class="mvp-feature">
+                        <div class="mvp-feature-glyph" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="16" rx="2" />
+                                <path d="M7 9h10M7 13h10M7 17h6" />
+                            </svg>
+                        </div>
+                        <div class="mvp-feature-body">
+                            <h3>Yönetim Paneli</h3>
+                            <p>Mobil uyumlu, sade arayüzle içerik yönetimi.</p>
+                        </div>
+                    </li>
+
+                    <li class="mvp-feature">
+                        <div class="mvp-feature-glyph" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="9" />
+                                <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+                            </svg>
+                        </div>
+                        <div class="mvp-feature-body">
+                            <h3>Çok Dilli Yanıt</h3>
+                            <p>Türkçe, İngilizce ve 6 dilde aynı kalitede.</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="mvp-action">
+                    <a asp-controller="AiSolutions" asp-action="Index" class="mvp-cta">
+                        <span class="mvp-cta-label">Canlı Demoyu İncele</span>
+                        <span class="mvp-cta-arrow" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M13 5l7 7-7 7" />
+                            </svg>
+                        </span>
+                    </a>
+                    <span class="mvp-status" aria-hidden="true">
+                        <span class="mvp-status-dot"></span>
+                        <span>demo · live</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="mvp-visual scroll-reveal" data-demo-scene>
+                <div class="demo-panel" data-demo-tilt>
+                    <div class="demo-glow" aria-hidden="true"></div>
+                    <div class="demo-grain" aria-hidden="true"></div>
+
+                    <header class="demo-stats" aria-hidden="true">
+                        <div class="demo-stat">
+                            <span class="demo-stat-label">Yanıt Süresi</span>
+                            <span class="demo-stat-value" data-stat="latency">1.4<span class="demo-stat-unit">s</span></span>
+                        </div>
+                        <span class="demo-stat-sep"></span>
+                        <div class="demo-stat">
+                            <span class="demo-stat-label">Kaynak</span>
+                            <span class="demo-stat-value" data-stat="sources">2<span class="demo-stat-unit">doküman</span></span>
+                        </div>
+                        <span class="demo-stat-sep"></span>
+                        <div class="demo-stat">
+                            <span class="demo-stat-label">Güven</span>
+                            <span class="demo-stat-value" data-stat="confidence">%94</span>
+                        </div>
+                    </header>
+
+                    <div class="demo-stage" data-chat-track aria-live="polite" aria-label="AI asistan demo sahnesi">
+                        <div class="chat-row chat-row--user">
+                            <div class="chat-bubble chat-bubble--user">
+                                <p>Dokümanlarımızı okuyabilen bir asistan kurabiliyor musunuz?</p>
+                            </div>
+                        </div>
+                        <div class="chat-row chat-row--bot">
+                            <div class="chat-bubble chat-bubble--bot">
+                                <p>Evet — RAG mimarimizle dokümanlarınızı indeksleyip kurumsal tonda yanıt veren bir asistan kuruyoruz.</p>
+                                <div class="chat-sources">
+                                    <span class="chat-source-chip"><span class="chip-icon" aria-hidden="true"></span>ürün-katalog.pdf<span class="chip-page">s.12</span></span>
+                                    <span class="chat-source-chip"><span class="chip-icon" aria-hidden="true"></span>kvkk-süreç.docx<span class="chip-page">s.3</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer class="demo-footer" aria-hidden="true">
+                        <span class="demo-footer-tag">
+                            <span class="demo-footer-dot"></span>
+                            curosoftai-assistant
+                        </span>
+                        <span class="demo-footer-meta">streaming · v2.6</span>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="approach-section">
+    <div class="container">
+        <div class="section-header scroll-reveal">
+            <span class="section-tag">Çalışma Prensibimiz</span>
+            <h2 class="section-title">Süreç Nasıl İşliyor?</h2>
+        </div>
+
+        <div class="approach-steps">
+            <div class="step-item scroll-reveal">
+                <div class="step-number">01</div>
+                <h3>Problemi Anlamak</h3>
+                <p>Teknoloji jargonuna boğulmadan, işletmenizin gerçek ihtiyacını ve çözülmesi gereken kök problemi analiz ediyoruz.</p>
+            </div>
+            <div class="step-item scroll-reveal">
+                <div class="step-number">02</div>
+                <h3>Sade Geliştirme</h3>
+                <p>Gereksiz karmaşıklıktan uzak, temiz kod mimarisine sahip ve doğrudan fayda odaklı çalışan yazılımı üretiyoruz.</p>
+            </div>
+            <div class="step-item scroll-reveal">
+                <div class="step-number">03</div>
+                <h3>Güvenli Teslimat</h3>
+                <p>Performansı yüksek, SEO altyapısı hazır çözümleri sisteminize entegre ediyor ve düzenli desteğimizi sürdürüyoruz.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-bottom-section">
+    <div class="container">
+        <div class="cta-box scroll-reveal">
+            <h2>Geleceğin Dijital Çözümlerini Birlikte İnşa Edelim</h2>
+            <p>Projeniz veya fikirleriniz mi var? Doğru çözümü bulmak ve işinizi dijitalde büyütmek için bizimle iletişime geçin.</p>
+            <a asp-controller="Contact" asp-action="Index" class="btn btn-primary btn-white">Bizimle Konuşun</a>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/home.js" asp-append-version="true"></script>
+}
