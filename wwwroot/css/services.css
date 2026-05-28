@@ -1,0 +1,581 @@
+﻿/* ============================================================
+   curosoftai — Services Page Stylesheet
+   Mevcut layout.css token'ları üzerine kurulu. Tüm stiller
+   .services-page altında scope'lanmıştır.
+   ============================================================ */
+
+.services-page {
+    /* Sayfa-içi yerel token'lar (global paletten türetilir) */
+    --svc-card-bg: #FBF9F5;
+    --svc-card-bg-hover: #FFFFFF;
+    --svc-radius: 18px;
+    --svc-radius-sm: 12px;
+    --svc-section-gap: clamp(64px, 9vw, 130px);
+    color: var(--text-primary);
+}
+
+    /* Animasyon hedefleri: JS varsa gizlenir, yoksa görünür kalır */
+    .services-page[data-svc-ready] [data-svc-anim] {
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+
+.svc-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ---------- Shared Section ---------- */
+.svc-section {
+    padding: var(--svc-section-gap) 0;
+}
+
+.svc-section__head {
+    max-width: 640px;
+    margin-bottom: clamp(40px, 6vw, 72px);
+}
+
+.svc-section__title {
+    font-family: var(--font-display);
+    font-weight: var(--fw-regular);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+}
+
+.svc-section__desc {
+    margin-top: 18px;
+    font-size: var(--fs-lead);
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+
+.svc-italic {
+    font-style: italic;
+    color: var(--accent);
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.svc-hero {
+    position: relative;
+    padding: clamp(64px, 11vw, 130px) 0 clamp(48px, 8vw, 96px);
+    overflow: hidden;
+}
+
+.svc-hero__glow {
+    position: absolute;
+    top: -180px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(900px, 120vw);
+    height: 620px;
+    pointer-events: none;
+    background: radial-gradient( ellipse at center, var(--glow-warm) 0%, transparent 62% );
+    opacity: var(--hero-glow-opacity);
+    filter: blur(14px);
+    animation: svcBreathe 7s var(--ease-soft) infinite alternate;
+    z-index: 0;
+}
+
+@keyframes svcBreathe {
+    from {
+        --hero-glow-opacity: 0.45;
+        transform: translateX(-50%) scale(1);
+    }
+
+    to {
+        --hero-glow-opacity: 0.72;
+        transform: translateX(-50%) scale(1.06);
+    }
+}
+
+.svc-hero .svc-container {
+    position: relative;
+    z-index: 1;
+}
+
+.svc-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 0.82rem;
+    font-weight: var(--fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-secondary);
+    margin-bottom: 22px;
+}
+
+.svc-eyebrow__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--status-live);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--status-live) 18%, transparent);
+}
+
+.svc-hero__title {
+    font-family: var(--font-display);
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-hero);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    max-width: 14ch;
+}
+
+.svc-hero__lead {
+    margin-top: 26px;
+    max-width: 56ch;
+    font-size: var(--fs-lead);
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.svc-hero__actions {
+    margin-top: 38px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+/* ---------- Buttons ---------- */
+.svc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px 26px;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    font-weight: var(--fw-semibold);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    border: 1px solid transparent;
+}
+
+    .svc-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+.svc-btn--primary {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    box-shadow: 0 6px 18px rgba(42, 36, 32, 0.14);
+}
+
+    .svc-btn--primary:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 26px rgba(89, 75, 66, 0.26);
+    }
+
+.svc-btn--ghost {
+    background: transparent;
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+    .svc-btn--ghost:hover {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+    }
+
+.svc-btn--light {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+    .svc-btn--light:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.26);
+    }
+
+        .svc-btn--light:hover svg {
+            transform: translateX(3px);
+        }
+
+    .svc-btn--light svg {
+        transition: transform 0.3s var(--ease-soft);
+    }
+
+/* ============================================================
+   SERVICES GRID
+   ============================================================ */
+.svc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.svc-card {
+    position: relative;
+    background: var(--svc-card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--svc-radius);
+    padding: 34px 32px 32px;
+    overflow: hidden;
+    transition: transform 0.4s var(--ease-editorial), box-shadow 0.4s var(--ease-editorial), border-color 0.4s var(--ease-editorial), background-color 0.4s var(--ease-editorial);
+}
+
+    .svc-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient( 420px circle at var(--mx, 50%) var(--my, 0%), var(--accent-soft) 0%, transparent 60% );
+        opacity: 0;
+        transition: opacity 0.4s var(--ease-soft);
+        pointer-events: none;
+    }
+
+    .svc-card:hover {
+        transform: translateY(-5px);
+        background: var(--svc-card-bg-hover);
+        border-color: color-mix(in srgb, var(--accent) 35%, var(--border-color));
+        box-shadow: 0 18px 44px rgba(42, 36, 32, 0.10);
+    }
+
+        .svc-card:hover::before {
+            opacity: 1;
+        }
+
+    .svc-card > * {
+        position: relative;
+        z-index: 1;
+    }
+
+.svc-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.svc-card__index {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    line-height: 1;
+    color: var(--text-muted);
+    transition: color 0.4s var(--ease-soft);
+}
+
+.svc-card:hover .svc-card__index {
+    color: var(--accent);
+}
+
+.svc-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+}
+
+    .svc-card__icon svg {
+        width: 23px;
+        height: 23px;
+    }
+
+.svc-card:hover .svc-card__icon {
+    background: var(--accent);
+    color: var(--bg-primary);
+    border-color: var(--accent);
+}
+
+.svc-card__title {
+    font-size: 1.3rem;
+    font-weight: var(--fw-semibold);
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+}
+
+.svc-card__desc {
+    font-size: 0.97rem;
+    color: var(--text-secondary);
+    line-height: 1.62;
+    margin-bottom: 22px;
+}
+
+.svc-card__list {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+    .svc-card__list li {
+        position: relative;
+        padding-left: 24px;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+        .svc-card__list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.5em;
+            width: 12px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+/* Feature card vurgusu */
+.svc-card--feature {
+    border-color: color-mix(in srgb, var(--accent) 28%, var(--border-color));
+    background: linear-gradient(170deg, var(--svc-card-bg-hover), var(--accent-soft));
+}
+
+.svc-card__badge {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 2;
+    font-size: 0.68rem;
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bg-primary);
+    background: var(--accent);
+    padding: 5px 11px;
+    border-radius: 999px;
+}
+
+.svc-card--feature .svc-card__top {
+    margin-top: 6px;
+}
+
+/* ============================================================
+   PROCESS
+   ============================================================ */
+.svc-process {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.svc-steps {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+}
+
+/* Yatay bağlantı çizgisi (desktop) */
+.svc-steps__line {
+    position: absolute;
+    top: 19px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border-color);
+}
+
+.svc-steps__line-fill {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, var(--accent), #8B7A6F);
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+.svc-step {
+    position: relative;
+    padding-top: 0;
+}
+
+.svc-step__num {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--accent);
+    margin-bottom: 20px;
+}
+
+.svc-step__title {
+    font-size: 1.12rem;
+    font-weight: var(--fw-semibold);
+    margin-bottom: 9px;
+}
+
+.svc-step__desc {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 26ch;
+}
+
+/* ============================================================
+   CTA
+   ============================================================ */
+.svc-cta-section {
+    padding: clamp(48px, 7vw, 90px) 0 0;
+}
+
+.svc-cta {
+    position: relative;
+    overflow: hidden;
+    border-radius: 26px;
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    padding: clamp(48px, 7vw, 80px) clamp(28px, 5vw, 72px);
+    text-align: center;
+}
+
+.svc-cta__glow {
+    position: absolute;
+    bottom: -260px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 500px;
+    background: radial-gradient(ellipse at center, var(--glow-warm) 0%, transparent 60%);
+    opacity: 0.28;
+    pointer-events: none;
+}
+
+.svc-cta > * {
+    position: relative;
+    z-index: 1;
+}
+
+.svc-cta__title {
+    font-family: var(--font-display);
+    font-weight: var(--fw-regular);
+    font-size: clamp(1.9rem, 4vw, 3.1rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    max-width: 18ch;
+    margin: 0 auto;
+}
+
+    .svc-cta__title .svc-italic {
+        color: var(--glow-warm);
+    }
+
+.svc-cta__desc {
+    margin: 18px auto 32px;
+    max-width: 46ch;
+    font-size: var(--fs-lead);
+    color: color-mix(in srgb, var(--bg-primary) 78%, transparent);
+    line-height: 1.65;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+    .svc-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .svc-steps {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    /* Dikey çizgi (mobil) */
+    .svc-steps__line {
+        top: 20px;
+        bottom: 20px;
+        left: 19px;
+        right: auto;
+        width: 1px;
+        height: auto;
+    }
+
+    .svc-steps__line-fill {
+        width: 100%;
+        height: 100%;
+        transform: scaleY(0);
+        transform-origin: top center;
+    }
+
+    .svc-step {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        column-gap: 20px;
+        align-items: start;
+        padding: 0 0 34px;
+    }
+
+        .svc-step:last-child {
+            padding-bottom: 0;
+        }
+
+    .svc-step__num {
+        margin-bottom: 0;
+        grid-row: span 2;
+    }
+
+    .svc-step__title {
+        margin-top: 7px;
+    }
+
+    .svc-step__desc {
+        max-width: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .svc-hero__actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .svc-btn {
+        justify-content: center;
+    }
+
+    .svc-card {
+        padding: 28px 24px;
+    }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    .services-page[data-svc-ready] [data-svc-anim] {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .svc-hero__glow {
+        animation: none;
+    }
+
+    .svc-steps__line-fill {
+        transform: scaleX(1) !important;
+    }
+
+    @media (max-width: 900px) {
+        .svc-steps__line-fill {
+            transform: scaleY(1) !important;
+        }
+    }
+
+    .svc-card, .svc-btn, .svc-card__icon {
+        transition: none;
+    }
+}

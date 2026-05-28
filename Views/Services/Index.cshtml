@@ -1,15 +1,224 @@
 @{
-    ViewData["Title"] = "Hizmetler | Curosoftai";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Hizmetler";
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/coming-soon.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/services.css" asp-append-version="true" />
 }
 
-@await Html.PartialAsync("_ComingSoon", (
-    Tag: "HİZMETLERİMİZ",
-    Title: "Çözüm portföyümüzü hazırlıyoruz.",
-    Description: "Kurumsal web, özel yazılım ve süreç otomasyonu hizmetlerimizin detaylarını çok yakında bu sayfada paylaşacağız."
-))
+<div class="services-page">
+
+    <!-- ============ HERO ============ -->
+    <section class="svc-hero">
+        <div class="svc-hero__glow" aria-hidden="true"></div>
+        <div class="svc-container">
+            <p class="svc-eyebrow" data-svc-anim="hero">
+                <span class="svc-eyebrow__dot"></span>Hizmetler
+            </p>
+            <h1 class="svc-hero__title" data-svc-anim="hero">
+                Fikirden çalışan ürüne,
+                <span class="svc-italic">uçtan uca</span> dijital çözümler.
+            </h1>
+            <p class="svc-hero__lead" data-svc-anim="hero">
+                Kurumsal web sitelerinden yapay zeka destekli modüllere kadar; işletmenizin
+                ihtiyaçlarını sade, ölçülebilir ve sürdürülebilir çözümlere dönüştürüyoruz.
+            </p>
+            <div class="svc-hero__actions" data-svc-anim="hero">
+                <a class="svc-btn svc-btn--primary" asp-controller="Contact" asp-action="Index">
+                    Projenizi Konuşalım
+                </a>
+                <a class="svc-btn svc-btn--ghost" asp-controller="Portfolio" asp-action="Index">
+                    Projeleri İncele
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ SERVICES ============ -->
+    <section class="svc-section svc-services">
+        <div class="svc-container">
+            <header class="svc-section__head" data-svc-anim="fade">
+                <h2 class="svc-section__title">Neler Yapıyoruz</h2>
+                <p class="svc-section__desc">
+                    Her proje, işletmenizin gerçek bir ihtiyacından başlar. Teknolojiyi değil,
+                    çözdüğü problemi merkeze alıyoruz.
+                </p>
+            </header>
+
+            <div class="svc-grid">
+
+                <!-- 01 -->
+                <article class="svc-card" data-svc-anim="card">
+                    <div class="svc-card__top">
+                        <span class="svc-card__index">01</span>
+                        <span class="svc-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="16" rx="2" />
+                                <path d="M3 9h18" />
+                                <circle cx="6" cy="6.5" r="0.6" fill="currentColor" stroke="none" />
+                                <circle cx="8.4" cy="6.5" r="0.6" fill="currentColor" stroke="none" />
+                            </svg>
+                        </span>
+                    </div>
+                    <h3 class="svc-card__title">Kurumsal Web Sitesi</h3>
+                    <p class="svc-card__desc">
+                        Firmanızı ilk izlenimde güçlü temsil eden; hızlı, mobil uyumlu ve
+                        güven veren kurumsal web siteleri.
+                    </p>
+                    <ul class="svc-card__list">
+                        <li>Firma tanıtım & hizmet sayfaları</li>
+                        <li>Blog / içerik alanı</li>
+                        <li>İletişim formu & yönetim paneli</li>
+                        <li>SEO ve performans temelleri</li>
+                    </ul>
+                </article>
+
+                <!-- 02 -->
+                <article class="svc-card svc-card--feature" data-svc-anim="card">
+                    <span class="svc-card__badge">Öne Çıkan</span>
+                    <div class="svc-card__top">
+                        <span class="svc-card__index">02</span>
+                        <span class="svc-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
+                                <path d="M12 8.2l.9 1.9 1.9.9-1.9.9-.9 1.9-.9-1.9-1.9-.9 1.9-.9z" />
+                            </svg>
+                        </span>
+                    </div>
+                    <h3 class="svc-card__title">AI Firma Asistanı</h3>
+                    <p class="svc-card__desc">
+                        Web sitenize, firma bilgilerinizi ve dokümanlarınızı 7/24 yanıtlayan
+                        akıllı bir asistan ekliyoruz.
+                    </p>
+                    <ul class="svc-card__list">
+                        <li>Site içinde çalışan AI asistan</li>
+                        <li>SSS & doküman bazlı yanıtlama</li>
+                        <li>Bilgi tabanı altyapısı</li>
+                        <li>Türkçe doğal dil desteği</li>
+                    </ul>
+                </article>
+
+                <!-- 03 -->
+                <article class="svc-card" data-svc-anim="card">
+                    <div class="svc-card__top">
+                        <span class="svc-card__index">03</span>
+                        <span class="svc-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M8 8l-4 4 4 4" />
+                                <path d="M16 8l4 4-4 4" />
+                                <path d="M13.5 6l-3 12" />
+                            </svg>
+                        </span>
+                    </div>
+                    <h3 class="svc-card__title">Özel Yazılım Geliştirme</h3>
+                    <p class="svc-card__desc">
+                        İşinize özel paneller, raporlama ekranları ve süreç otomasyonları ile
+                        operasyonunuzu ölçülebilir hale getiriyoruz.
+                    </p>
+                    <ul class="svc-card__list">
+                        <li>İşletmeye özel panel & dashboard</li>
+                        <li>Raporlama ekranları</li>
+                        <li>Operasyonel takip sistemleri</li>
+                        <li>İç süreç otomasyonları</li>
+                    </ul>
+                </article>
+
+                <!-- 04 -->
+                <article class="svc-card" data-svc-anim="card">
+                    <div class="svc-card__top">
+                        <span class="svc-card__index">04</span>
+                        <span class="svc-card__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="6" y="6" width="12" height="12" rx="2" />
+                                <path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2" />
+                                <rect x="10" y="10" width="4" height="4" rx="0.6" />
+                            </svg>
+                        </span>
+                    </div>
+                    <h3 class="svc-card__title">AI Ürün &amp; Modüller</h3>
+                    <p class="svc-card__desc">
+                        Verilerinizi ve dokümanlarınızı anlamlı, sorgulanabilir bilgiye
+                        dönüştüren yapay zeka modülleri.
+                    </p>
+                    <ul class="svc-card__list">
+                        <li>Doküman & Excel yorumlama asistanı</li>
+                        <li>Raporlama asistanı</li>
+                        <li>Doğal dilde sorgulama (Text-to-SQL)</li>
+                        <li>Kurumsal bilgi asistanı</li>
+                    </ul>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PROCESS ============ -->
+    <section class="svc-section svc-process">
+        <div class="svc-container">
+            <header class="svc-section__head" data-svc-anim="fade">
+                <h2 class="svc-section__title">Nasıl Çalışıyoruz</h2>
+                <p class="svc-section__desc">
+                    Net, şeffaf ve sürdürülebilir bir süreç. Her adımda ne yaptığımızı
+                    bilirsiniz.
+                </p>
+            </header>
+
+            <div class="svc-steps">
+                <div class="svc-steps__line" aria-hidden="true">
+                    <span class="svc-steps__line-fill"></span>
+                </div>
+
+                <div class="svc-step" data-svc-anim="step">
+                    <span class="svc-step__num">01</span>
+                    <h3 class="svc-step__title">Keşif &amp; Analiz</h3>
+                    <p class="svc-step__desc">İhtiyacı ve çözülecek problemi birlikte netleştiriyoruz.</p>
+                </div>
+
+                <div class="svc-step" data-svc-anim="step">
+                    <span class="svc-step__num">02</span>
+                    <h3 class="svc-step__title">Planlama &amp; Tasarım</h3>
+                    <p class="svc-step__desc">Kapsamı ve kullanıcı deneyimini sade biçimde kurguluyoruz.</p>
+                </div>
+
+                <div class="svc-step" data-svc-anim="step">
+                    <span class="svc-step__num">03</span>
+                    <h3 class="svc-step__title">Geliştirme</h3>
+                    <p class="svc-step__desc">Temiz, sürdürülebilir kodla çözümü hayata geçiriyoruz.</p>
+                </div>
+
+                <div class="svc-step" data-svc-anim="step">
+                    <span class="svc-step__num">04</span>
+                    <h3 class="svc-step__title">Teslim &amp; Destek</h3>
+                    <p class="svc-step__desc">Yayına alıyor, ölçüyor ve zamanla geliştiriyoruz.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="svc-cta-section" data-svc-anim="fade">
+        <div class="svc-container">
+            <div class="svc-cta">
+                <div class="svc-cta__glow" aria-hidden="true"></div>
+                <h2 class="svc-cta__title">
+                    Bir sonraki projenizi
+                    <span class="svc-italic">birlikte</span> kuralım.
+                </h2>
+                <p class="svc-cta__desc">
+                    İhtiyacınızı dinleyelim, size en uygun çözümü sade bir dille konuşalım.
+                </p>
+                <a class="svc-btn svc-btn--light" asp-controller="Contact" asp-action="Index">
+                    İletişime Geç
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/services.js" asp-append-version="true" defer></script>
+}

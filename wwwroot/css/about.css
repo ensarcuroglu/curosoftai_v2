@@ -148,17 +148,24 @@
    ============================================ */
 .manifesto-section {
     background-color: var(--bg-secondary);
-    padding: clamp(64px, 9vh, 96px) 0 0;
+    /* Pin sırasında section tam olarak viewport - header kadar yer kaplasın ki
+       başlık + kartlar tek nefeste görünür olsun, kartlar viewport'tan taşmasın. */
+    height: calc(100vh - var(--header-height-scroll, 65px));
+    display: flex;
+    flex-direction: column;
+    padding: clamp(32px, 4vh, 56px) 0 0;
     border-top: 1px solid var(--border-color);
     overflow: hidden;
 }
 
 .manifesto-header {
-    margin-bottom: clamp(32px, 5vh, 56px);
+    margin-bottom: clamp(16px, 2.5vh, 32px);
+    flex-shrink: 0;
 }
 
 .pin-wrap-container {
-    height: calc(100vh - var(--header-height-scroll, 65px));
+    flex: 1;
+    min-height: 0;
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -175,6 +182,7 @@
 .manifesto-card {
     width: 420px;
     height: 460px;
+    max-height: 100%;
     background: var(--bg-primary);
     border: 1px solid var(--border-color);
     border-radius: 24px;
@@ -299,9 +307,14 @@
     .indicator-line { height: 36px; }
 
     /* Mobilde yatay pin yerine dikey kart yığını — pinning mobilde çok kırılgan */
-    .manifesto-section { padding: 64px 0 80px; }
+    .manifesto-section {
+        height: auto;
+        display: block;
+        padding: 64px 0 80px;
+    }
 
     .pin-wrap-container {
+        flex: none;
         height: auto;
         display: block;
         overflow: visible;
@@ -320,6 +333,7 @@
         max-width: 480px;
         margin: 0 auto;
         height: auto;
+        max-height: none;
         min-height: 320px;
         padding: 32px 28px;
     }
@@ -353,7 +367,13 @@
         transform: none !important;
     }
 
+    .manifesto-section {
+        height: auto;
+        display: block;
+    }
+
     .pin-wrap-container {
+        flex: none;
         height: auto;
         display: block;
         overflow: visible;
@@ -372,5 +392,6 @@
         max-width: 480px;
         margin: 0 auto;
         height: auto;
+        max-height: none;
     }
 }
