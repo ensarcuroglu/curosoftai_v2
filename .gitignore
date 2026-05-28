@@ -1,0 +1,131 @@
+# ============================================
+# .NET / ASP.NET Core Build Outputs
+# ============================================
+bin/
+obj/
+out/
+publish/
+*.dll
+*.exe
+*.pdb
+*.cache
+
+# ============================================
+# User-specific & IDE files
+# ============================================
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Rider
+*.sln.iml
+
+# ============================================
+# Visual Studio / MSBuild ek dosyaları
+# ============================================
+*.tlog
+*.log
+*.tmp
+*.binlog
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+project.lock.json
+project.fragment.lock.json
+artifacts/
+[Tt]est[Rr]esults/
+[Cc]overage*/
+*.coverage
+*.coveragexml
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# ============================================
+# Publish profiles & Web Deploy
+# ============================================
+*.[Pp]ublish.xml
+*.pubxml
+*.pubxml.user
+*.azurePubxml
+PublishScripts/
+
+# ============================================
+# Static web assets cache (dotnet build çıktısı)
+# ============================================
+*.staticwebassets.endpoints.json
+*.staticwebassets.runtime.json
+wwwroot/dist/
+
+# ============================================
+# NuGet
+# ============================================
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+.nuget/
+
+# ============================================
+# Node / Front-end build artifacts
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.parcel-cache/
+.next/
+.nuxt/
+
+# ============================================
+# Secrets & local config
+# !!! KRİTİK: gerçek secret dosyalarını commit'leme
+# ============================================
+appsettings.*.Local.json
+appsettings.Local.json
+secrets.json
+.env
+.env.local
+.env.*.local
+*.pfx
+*.snk
+
+# ============================================
+# OS dosyaları
+# ============================================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ============================================
+# Loglar
+# ============================================
+logs/
+*.log
+LogFiles/
+
+# ============================================
+# Diğer
+# ============================================
+*.bak
+*.orig
+*.rej
+*.received.*
+*.received/
