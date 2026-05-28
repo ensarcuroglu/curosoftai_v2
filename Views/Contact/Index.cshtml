@@ -1,15 +1,141 @@
 @{
     ViewData["Title"] = "İletişim | Curosoftai";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/coming-soon.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/contact.css" asp-append-version="true" />
 }
 
-@await Html.PartialAsync("_ComingSoon", (
-    Tag: "İLETİŞİM",
-    Title: "İletişim formumuz hazırlanıyor.",
-    Description: "Projeniz hakkında konuşmak için lütfen daha sonra tekrar uğrayın. Form ve direkt iletişim kanalları çok yakında."
-))
+<main class="contact-page">
+    <div class="contact-glow" aria-hidden="true"></div>
+    <div class="contact-grain" aria-hidden="true"></div>
+
+    <div class="container contact-container">
+        <div class="contact-grid">
+
+            <!-- LEFT COLUMN: Editorial & Digital Presence -->
+            <section class="contact-info" aria-labelledby="contactTitle">
+                <header class="contact-header" data-gsap="fade-up">
+                    <span class="contact-eyebrow">
+                        <span class="status-dot"></span>
+                        Studio 2026 · Global
+                    </span>
+                    <h1 id="contactTitle" class="contact-title">
+                        Fikrinizi<br>
+                        <em class="title-em">koda dökme</em><br>
+                        zamanı.
+                    </h1>
+                    <p class="contact-lead">
+                        Tamamen dijital bir stüdyo olarak sınırları kaldırıyoruz. Projenizi, hedeflerinizi veya sadece vizyonunuzu paylaşın; geleceği birlikte inşa edelim.
+                    </p>
+                </header>
+
+                <div class="contact-details" data-gsap="fade-up" data-delay="0.2">
+                    <div class="detail-block">
+                        <span class="detail-label">Direkt İletişim</span>
+                        <a href="mailto:hello@curosoftai.com" class="detail-link detail-link--large">hello@curosoftai.com</a>
+                    </div>
+
+                    <div class="detail-block">
+                        <span class="detail-label">Çalışma Ağı</span>
+                        <span class="detail-text">Remote / Worldwide (GMT+3)</span>
+                    </div>
+
+                    <div class="detail-block detail-block--calendar">
+                        <span class="detail-label">Hızlı Başlangıç</span>
+                        <a href="#" class="btn-calendar">
+                            <span>Online Toplantı Planla</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT COLUMN: Minimalist Floating Form -->
+            <section class="contact-form-wrapper" data-gsap="form-reveal">
+                <div class="form-panel">
+                    <form id="contactForm" class="minimal-form" novalidate>
+
+                        <!-- Floating Inputs -->
+                        <div class="form-row">
+                            <div class="input-group">
+                                <input type="text" id="FullName" name="FullName" class="form-input" placeholder=" " required />
+                                <label for="FullName" class="form-label">Adınız Soyadınız</label>
+                                <div class="input-glow" aria-hidden="true"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-row split-row">
+                            <div class="input-group">
+                                <input type="email" id="Email" name="Email" class="form-input" placeholder=" " required />
+                                <label for="Email" class="form-label">E-posta Adresiniz</label>
+                                <div class="input-glow" aria-hidden="true"></div>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" id="Company" name="Company" class="form-input" placeholder=" " />
+                                <label for="Company" class="form-label">Şirket / Marka (Opsiyonel)</label>
+                                <div class="input-glow" aria-hidden="true"></div>
+                            </div>
+                        </div>
+
+                        <!-- Service Selection Chips -->
+                        <div class="form-row form-row--chips">
+                            <span class="chip-group-label">Hangi alanda çözüm arıyorsunuz?</span>
+                            <div class="chip-group">
+                                <label class="service-chip">
+                                    <input type="radio" name="Service" value="Kurumsal Web" checked />
+                                    <span class="chip-text">Kurumsal Web</span>
+                                </label>
+                                <label class="service-chip">
+                                    <input type="radio" name="Service" value="Özel Yazılım" />
+                                    <span class="chip-text">Özel Yazılım</span>
+                                </label>
+                                <label class="service-chip">
+                                    <input type="radio" name="Service" value="Yapay Zeka" />
+                                    <span class="chip-text">Yapay Zeka & AI</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Textarea -->
+                        <div class="form-row">
+                            <div class="input-group">
+                                <textarea id="Message" name="Message" class="form-input form-textarea" placeholder=" " rows="1" required></textarea>
+                                <label for="Message" class="form-label">Projenizden kısaca bahsedin...</label>
+                                <div class="input-glow" aria-hidden="true"></div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-submit">
+                            <button type="submit" class="btn-editorial btn-editorial--primary w-100">
+                                <span class="btn-text">Talebi İlet</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M13 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Success Message (Hidden by default) -->
+                        <div class="form-success-msg" id="formSuccess" aria-hidden="true">
+                            <span class="success-icon">✦</span>
+                            Mesajınız stüdyomuza ulaştı. 24 saat içinde dönüş yapacağız.
+                        </div>
+
+                    </form>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="~/js/contact.js" asp-append-version="true"></script>
+}s

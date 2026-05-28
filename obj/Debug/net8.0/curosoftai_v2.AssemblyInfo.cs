@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("curosoftai_v2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3987112ade530426e1284d7a0603ab6c78450cf8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3f17c41157bb34c434fde6f0581ffd9ea90e14d8")]
 [assembly: System.Reflection.AssemblyProductAttribute("curosoftai_v2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("curosoftai_v2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
