@@ -1,0 +1,14 @@
+@model (string Tag, string Title, string Description)
+
+<section class="coming-soon">
+    <div class="coming-soon-glow" aria-hidden="true"></div>
+    <div class="container coming-soon-container">
+        <span class="coming-soon-tag">@Model.Tag</span>
+        <h1 class="coming-soon-title">@Model.Title</h1>
+        <p class="coming-soon-desc">@Model.Description</p>
+        <div class="coming-soon-actions">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Ana Sayfaya Dön</a>
+            <a asp-controller="About" asp-action="Index" class="btn btn-primary">Hikayemizi Keşfet</a>
+        </div>
+    </div>
+</section>

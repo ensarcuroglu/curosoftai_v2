@@ -1,0 +1,15 @@
+@{
+    ViewData["Title"] = "Blog | Curosoftai";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/coming-soon.css" asp-append-version="true" />
+}
+
+@await Html.PartialAsync("_ComingSoon", (
+    Tag: "BLOG",
+    Title: "Teknik notlarımız yolda.",
+    Description: "Yazılım, yapay zeka ve süreç tasarımı üzerine yazılarımızı çok yakında burada paylaşacağız."
+))

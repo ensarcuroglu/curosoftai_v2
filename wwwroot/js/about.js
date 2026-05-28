@@ -1,38 +1,52 @@
-﻿/**
+/**
  * curosoftai - About Page Storytelling Interactions
- * Requires GSAP & ScrollTrigger
+ * Requires GSAP & ScrollTrigger (loaded in _Layout.cshtml)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ScrollTrigger'ı kaydet
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        // GSAP yüklenmediyse fallback: tüm animasyon hedeflerini görünür yap
+        showFallback();
+        return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-    if (!reduceMotion) {
-        initHeroAnimation();
-        initTextReveal();
+    if (reduceMotion) {
+        showFallback();
+        return;
+    }
+
+    initHeroAnimation();
+    initTextReveal();
+
+    // Mobilde yatay pin animasyonu hem performans hem UX açısından kötü;
+    // CSS zaten kartları dikey listeye düşürüyor, JS de bu modda devreye girmiyor.
+    if (!isMobile) {
         initHorizontalScroll();
-    } else {
-        // Hareketi azaltmayı seçen kullanıcılar için öğeleri görünür yap
-        document.querySelectorAll('.story-text').forEach(el => el.style.opacity = 1);
-        document.querySelectorAll('[data-gsap="fade-up"]').forEach(el => {
-            el.style.opacity = 1;
-            el.style.transform = 'none';
-        });
     }
 });
+
+function showFallback() {
+    document.querySelectorAll('.story-text .word').forEach(el => { el.style.opacity = 1; });
+    document.querySelectorAll('[data-gsap="fade-up"]').forEach(el => {
+        el.style.opacity = 1;
+        el.style.transform = 'none';
+    });
+    document.querySelectorAll('[data-gsap="title-line"]').forEach(el => {
+        el.style.opacity = 1;
+    });
+}
 
 /**
  * 1. Hero Giriş Animasyonu
  */
 function initHeroAnimation() {
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-    // Satırları maske içinden çıkarma
     const titles = document.querySelectorAll('[data-gsap="title-line"]');
 
-    // Geçici olarak maskelemek için içeriği sarıyoruz
     titles.forEach(title => {
         const text = title.innerHTML;
         title.innerHTML = `<span style="display:inline-block; transform:translateY(110%); will-change:transform;">${text}</span>`;
@@ -41,29 +55,27 @@ function initHeroAnimation() {
     const titleInners = document.querySelectorAll('[data-gsap="title-line"] > span');
     const fadeElements = document.querySelectorAll('[data-gsap="fade-up"]');
 
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
     tl.to(titleInners, {
         y: '0%',
         duration: 1.2,
         stagger: 0.15,
         delay: 0.2
-    })
-        .fromTo(fadeElements,
-            { opacity: 0, y: 30 },
-            { opacity: 1, y: 0, duration: 1, stagger: 0.2 },
-            "-=0.6"
-        );
+    }).fromTo(fadeElements,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1, stagger: 0.2 },
+        "-=0.6"
+    );
 }
 
 /**
  * 2. Metin Aydınlanma (Scrub Text Reveal) Animasyonu
- * Kullanıcı sayfayı kaydırdıkça metinler kelime kelime belirginleşir.
  */
 function initTextReveal() {
     const revealTexts = document.querySelectorAll('[data-text-reveal]');
 
     revealTexts.forEach(text => {
-        // Metni kelimelere böl (HTML etiketlerini bozmadan basitçe boşluklardan bölme)
-        // Eğer içinde <em> gibi etiketler varsa regex ile korunabilir ama tasarımda saf metin veya manuel etiketleme kullandık.
         const content = text.innerHTML;
         const words = content.split(' ').map(word => {
             if (word.trim() === '') return '';
@@ -79,9 +91,9 @@ function initTextReveal() {
             stagger: 0.1,
             scrollTrigger: {
                 trigger: text,
-                start: "top 85%", // Metin ekranın %85'ine geldiğinde başla
-                end: "top 35%",   // Metin ekranın %35'ine geldiğinde bitir
-                scrub: 1,         // Kaydırma hızına yumuşak (1sn) bir şekilde bağla
+                start: "top 80%",
+                end: "top 30%",
+                scrub: 1,
             }
         });
     });
@@ -89,7 +101,8 @@ function initTextReveal() {
 
 /**
  * 3. Yatay Kaydırma (Horizontal Scroll) Animasyonu
- * Manifesto bölümü ekranda sabitlenir ve kartlar yatayda kayar.
+ * Pin başlangıç noktası, sabit header kadar aşağıdan başlar — böylece
+ * "Stüdyo Kültürü / Neye İnanıyoruz?" başlığı header'ın altında kaybolmaz.
  */
 function initHorizontalScroll() {
     const pinSection = document.getElementById('manifesto-pin');
@@ -97,10 +110,16 @@ function initHorizontalScroll() {
 
     if (!pinSection || !pinWrap) return;
 
-    // Kapsayıcı ne kadar kaymalı? (İçeriğin genişliği - ekranın genişliği kadar)
+    const getHeaderOffset = () => {
+        const styles = getComputedStyle(document.documentElement);
+        const scrolled = parseInt(styles.getPropertyValue('--header-height-scroll')) || 65;
+        return scrolled;
+    };
+
     function getScrollAmount() {
-        let wrapWidth = pinWrap.scrollWidth;
-        return -(wrapWidth - window.innerWidth + 100); // 100px padding payı
+        const wrapWidth = pinWrap.scrollWidth;
+        // Tüm kartlar son scroll'da tamamen görünür olsun + 5vw padding payı
+        return -(wrapWidth - window.innerWidth + (window.innerWidth * 0.05));
     }
 
     const tween = gsap.to(pinWrap, {
@@ -110,11 +129,13 @@ function initHorizontalScroll() {
 
     ScrollTrigger.create({
         trigger: pinSection,
-        start: "top top",
-        end: () => `+=${getScrollAmount() * -1}`, // Animasyon mesafesi kadar scroll uzunluğu yarat
+        start: () => `top ${getHeaderOffset()}px`,
+        end: () => `+=${Math.abs(getScrollAmount())}`,
         pin: true,
+        pinSpacing: true,
         animation: tween,
-        scrub: 1, // Smooth scrub
-        invalidateOnRefresh: true // Ekran boyutu değiştiğinde değerleri yeniden hesapla
+        scrub: 1,
+        invalidateOnRefresh: true,
+        anticipatePin: 1
     });
 }

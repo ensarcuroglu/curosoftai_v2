@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
     @await RenderSectionAsync("Styles", required: false)
 </head>
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
+    string NavClass(string controller) =>
+        string.Equals(currentController, controller, StringComparison.OrdinalIgnoreCase)
+            ? "nav-link is-active"
+            : "nav-link";
+}
 <body>
     <div class="page-progress" id="pageProgress"></div>
 
@@ -30,25 +37,25 @@
             <nav class="site-nav" id="siteNav">
                 <ul class="nav-list">
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                        <a class="@NavClass("Home")" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Services" asp-action="Index">Hizmetler</a>
+                        <a class="@NavClass("Services")" asp-area="" asp-controller="Services" asp-action="Index">Hizmetler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="AiSolutions" asp-action="Index">AI Çözümler</a>
+                        <a class="@NavClass("AiSolutions")" asp-area="" asp-controller="AiSolutions" asp-action="Index">AI Çözümler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Portfolio" asp-action="Index">Projeler</a>
+                        <a class="@NavClass("Portfolio")" asp-area="" asp-controller="Portfolio" asp-action="Index">Projeler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="About" asp-action="Index">Hakkımızda</a>
+                        <a class="@NavClass("About")" asp-area="" asp-controller="About" asp-action="Index">Hakkımızda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Blog" asp-action="Index">Blog</a>
+                        <a class="@NavClass("Blog")" asp-area="" asp-controller="Blog" asp-action="Index">Blog</a>
                     </li>
                     <li class="nav-item nav-cta">
-                        <a class="cta-button" asp-area="" asp-controller="Contact" asp-action="Index">İletişim</a>
+                        <a class="cta-button @(string.Equals(currentController, "Contact", StringComparison.OrdinalIgnoreCase) ? "is-active" : "")" asp-area="" asp-controller="Contact" asp-action="Index">İletişim</a>
                     </li>
                 </ul>
             </nav>

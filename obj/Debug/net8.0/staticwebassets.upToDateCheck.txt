@@ -1,9 +1,7 @@
-wwwroot\css\about.css
+wwwroot\css\coming-soon.css
 wwwroot\css\home.css
-wwwroot\css\layout.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
-wwwroot\js\about.js
 wwwroot\js\home.js
 wwwroot\js\layout.js
 wwwroot\js\site.js
@@ -64,3 +62,6 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\css\about.css
+wwwroot\css\layout.css
+wwwroot\js\about.js

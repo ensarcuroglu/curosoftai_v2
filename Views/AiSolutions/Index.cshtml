@@ -1,0 +1,15 @@
+@{
+    ViewData["Title"] = "AI Çözümler | Curosoftai";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/coming-soon.css" asp-append-version="true" />
+}
+
+@await Html.PartialAsync("_ComingSoon", (
+    Tag: "YAPAY ZEKA",
+    Title: "AI çözümleri çok yakında.",
+    Description: "Firma asistanı, akıllı analiz ve süreç otomasyonu modüllerimizi yakında burada inceleyebileceksiniz."
+))
