@@ -115,30 +115,30 @@ function initDemoScene() {
     const scenario = [
         {
             user: 'Dokümanlarımızı okuyabilen bir asistan kurabiliyor musunuz?',
-            bot: 'Evet — RAG mimarimizle dokümanlarınızı indeksleyip kurumsal tonda yanıt veren bir asistan kuruyoruz.',
+            bot: 'Evet; kaynaklı doküman altyapısıyla içeriklerinizi bilgi tabanına ekleyip marka tonunuza uygun yanıtlar üreten bir asistan kuruyoruz.',
             sources: [
                 { name: 'ürün-katalog.pdf', page: 's.12' },
                 { name: 'kvkk-süreç.docx',   page: 's.3'  }
             ],
-            stats: { latency: ['1.4', 's'], sources: ['2', 'doküman'], confidence: ['%94', ''] }
+            stats: { latency: ['1.4', 's'], sources: ['2', 'doküman'], confidence: ['Eşleşti', ''] }
         },
         {
-            user: 'Çok dilli yanıt verebilir mi?',
-            bot: 'Türkçe, İngilizce ve 6 dilde aynı kalitede yanıt üretir. Dili otomatik algılar.',
+            user: 'Çok dilli yanıt desteği var mı?',
+            bot: 'Türkçe ve İngilizce başta olmak üzere çok dilli yanıt desteği kurgulanabilir; dil algılama ve kapsam proje ihtiyacına göre yapılandırılır.',
             sources: [
                 { name: 'lokalizasyon-rehberi.pdf', page: 's.7' }
             ],
-            stats: { latency: ['0.9', 's'], sources: ['1', 'doküman'], confidence: ['%97', ''] }
+            stats: { latency: ['1.0', 's'], sources: ['1', 'doküman'], confidence: ['Uygun', ''] }
         },
         {
             user: 'Yönetim paneliyle içerik güncelleyebilir miyim?',
-            bot: 'Mobil uyumlu admin panelinden içerik, SSS ve kaynak dokümanları tek tıkla güncelleyebilirsiniz.',
+            bot: 'Mobil uyumlu yönetim panelinden içerik, SSS ve kaynak dokümanları kontrollü biçimde güncelleyebilirsiniz.',
             sources: [
                 { name: 'admin-kullanım.pdf', page: 's.4'  },
                 { name: 'içerik-akışı.docx',  page: 's.18' },
                 { name: 'sürüm-notları.md',   page: 's.2'  }
             ],
-            stats: { latency: ['1.1', 's'], sources: ['3', 'doküman'], confidence: ['%92', ''] }
+            stats: { latency: ['1.2', 's'], sources: ['3', 'doküman'], confidence: ['Kontrollü', ''] }
         }
     ];
 
