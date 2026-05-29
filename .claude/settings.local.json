@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git --no-pager diff HEAD --stat -- Views/Shared/_Layout.cshtml wwwroot/css/layout.css wwwroot/js/layout.js)",
+      "Bash(git --no-pager diff HEAD --word-diff=porcelain --ignore-all-space -- Views/Shared/_Layout.cshtml)"
+    ]
+  }
+}

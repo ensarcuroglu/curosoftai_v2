@@ -7,7 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeaderScroll();
     initMobileMenu();
     initPageProgressBar();
+    initNavIndicator();
+    initMagneticCta();
+    initHeaderEntrance();
 });
+
+/**
+ * Respect the user's motion preferences for all non-essential animation
+ */
+function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
 
 /**
  * Manages header background shifts and height reductions on page scrolling
@@ -62,6 +72,90 @@ function initMobileMenu() {
             siteNav.classList.remove('is-active');
             document.body.style.overflow = '';
         }
+    });
+}
+
+/**
+ * Glides a soft "liquid" pill behind the link under the cursor, fading it out
+ * when the pointer leaves the navigation. The active link has its own
+ * persistent CSS indicator, so this layer is purely a hover affordance.
+ */
+function initNavIndicator() {
+    const navList = document.getElementById('navList');
+    const indicator = document.getElementById('navIndicator');
+    if (!navList || !indicator) return;
+
+    const links = Array.from(navList.querySelectorAll('.nav-link'));
+    if (!links.length) return;
+
+    links.forEach((link) => {
+        link.addEventListener('mouseenter', () => {
+            // Measure against the nav-list via client rects rather than offsetLeft:
+            // a transform left on an ancestor (e.g. by GSAP) would otherwise become
+            // the offsetParent and collapse offsetLeft to ~0 for every link.
+            const listRect = navList.getBoundingClientRect();
+            const linkRect = link.getBoundingClientRect();
+            indicator.style.width = linkRect.width + 'px';
+            indicator.style.transform = `translate(${linkRect.left - listRect.left}px, -50%)`;
+            indicator.style.opacity = '1';
+        });
+    });
+
+    navList.addEventListener('mouseleave', () => {
+        indicator.style.opacity = '0';
+    });
+}
+
+/**
+ * Gives the header CTA a subtle magnetic pull toward the cursor
+ */
+function initMagneticCta() {
+    if (prefersReducedMotion()) return;
+
+    const cta = document.querySelector('.nav-cta .cta-button');
+    if (!cta) return;
+
+    const strength = 0.35;
+    let centerX = 0;
+    let centerY = 0;
+
+    // Capture the resting center once per hover — avoids a layout read on every
+    // mousemove and measures against the original (not the translated) position.
+    cta.addEventListener('mouseenter', () => {
+        const rect = cta.getBoundingClientRect();
+        centerX = rect.left + rect.width / 2;
+        centerY = rect.top + rect.height / 2;
+    });
+
+    cta.addEventListener('mousemove', (e) => {
+        cta.style.transform = `translate(${(e.clientX - centerX) * strength}px, ${(e.clientY - centerY) * strength}px)`;
+    });
+
+    cta.addEventListener('mouseleave', () => {
+        cta.style.transform = '';
+    });
+}
+
+/**
+ * Soft staggered entrance for the logo and navigation on first paint (GSAP)
+ */
+function initHeaderEntrance() {
+    if (prefersReducedMotion() || typeof gsap === 'undefined') return;
+
+    const logo = document.querySelector('.site-logo');
+    const items = gsap.utils.toArray('.nav-item');
+
+    gsap.from(logo, { y: -14, opacity: 0, duration: 0.7, ease: 'power3.out' });
+    gsap.from(items, {
+        y: -14,
+        opacity: 0,
+        duration: 0.7,
+        ease: 'power3.out',
+        stagger: 0.07,
+        delay: 0.1,
+        // Clear the leftover identity transform so nav items don't linger as the
+        // offsetParent / containing block of their links after the entrance.
+        clearProps: 'transform'
     });
 }
 

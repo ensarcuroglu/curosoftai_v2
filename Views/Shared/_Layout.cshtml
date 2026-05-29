@@ -23,7 +23,7 @@
     <div class="page-progress" id="pageProgress"></div>
 
     <header class="site-header" id="siteHeader">
-        <div class="header-container">
+        <div class="header-shell" id="headerShell">
             <a class="site-logo" asp-area="" asp-controller="Home" asp-action="Index">
                 curosoftai<span class="logo-dot">.</span>
             </a>
@@ -35,7 +35,8 @@
             </button>
 
             <nav class="site-nav" id="siteNav">
-                <ul class="nav-list">
+                <ul class="nav-list" id="navList">
+                    <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
                     <li class="nav-item">
                         <a class="@NavClass("Home")" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
                     </li>
