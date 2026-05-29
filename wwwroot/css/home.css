@@ -108,7 +108,9 @@
     letter-spacing: -0.035em;
     color: var(--text-primary);
     margin: 0 0 clamp(20px, 3vh, 32px);
-    max-width: 18ch;
+    /* Lines are broken manually below; the container must stay wide enough that
+       no line wraps a second time (which .hero-line's overflow:hidden would clip). */
+    max-width: 24ch;
     text-align: center;
 }
 
@@ -867,6 +869,25 @@
     transform: translateX(4px);
 }
 
+/* Stretched link — makes the whole card a single accessible click target while
+   the visible CTA below stays as a decorative affordance. Sits above the inner
+   content so it captures clicks; pointer events still bubble to the card for the
+   spotlight tracking. */
+.service-card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    border-radius: inherit;
+    /* Visually inert: all styling lives on the card; the link only carries the
+       hit area, the accessible name (aria-label) and the keyboard focus ring. */
+    font-size: 0;
+}
+
+.service-card-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
 /* Reduced motion fallbacks */
 @media (prefers-reduced-motion: reduce) {
     .services-orb,
@@ -910,6 +931,9 @@
 
 .mvp-showcase-section {
     position: relative;
+    /* Anchor jumps from the hero ("Çözümleri inceleyin") land below the fixed
+       header instead of behind it. */
+    scroll-margin-top: calc(var(--header-height) + 24px);
     padding: 140px 0;
     background-color: var(--bg-secondary);
     border-top: 1px solid var(--border-color);
@@ -1187,10 +1211,10 @@
     border-radius: 50%;
     background: var(--status-live);
     box-shadow: 0 0 0 0 var(--status-live);
-    animation: statusPulse 2s ease-out infinite;
+    animation: mvpStatusPulse 2s ease-out infinite;
 }
 
-@keyframes statusPulse {
+@keyframes mvpStatusPulse {
     0%   { box-shadow: 0 0 0 0 oklch(0.62 0.16 145 / 0.5); }
     100% { box-shadow: 0 0 0 10px oklch(0.62 0.16 145 / 0); }
 }
@@ -1515,12 +1539,6 @@
    4. Process Timeline — Forensic Atelier
    Scroll-bound vertical timeline with rail fill + receipt cards
    =========================================================== */
-
-@property --rail-progress {
-    syntax: '<number>';
-    inherits: true;
-    initial-value: 0;
-}
 
 .approach-section {
     position: relative;
