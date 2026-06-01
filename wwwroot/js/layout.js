@@ -26,19 +26,28 @@ function initHeaderScroll() {
     const header = document.getElementById('siteHeader');
     if (!header) return;
 
-    const scrollThreshold = 20;
+    const scrollThreshold = 16;
+    let ticking = false;
 
-    const checkScroll = () => {
-        if (window.scrollY > scrollThreshold) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
+    // At the very top the header is chrome-less and merges with the page; past the
+    // threshold it condenses into the floating capsule. The toggle is rAF-throttled
+    // so it never runs more than once per frame, however fast the user scrolls.
+    const applyState = () => {
+        const scrolled = window.scrollY > scrollThreshold;
+        header.classList.toggle('scrolled', scrolled);
+        header.classList.toggle('is-top', !scrolled);
+        ticking = false;
+    };
+
+    const onScroll = () => {
+        if (!ticking) {
+            ticking = true;
+            window.requestAnimationFrame(applyState);
         }
     };
 
-    // Run on init and bound to scroll event
-    checkScroll();
-    window.addEventListener('scroll', checkScroll, { passive: true });
+    applyState();
+    window.addEventListener('scroll', onScroll, { passive: true });
 }
 
 /**
@@ -112,7 +121,7 @@ function initNavIndicator() {
 function initMagneticCta() {
     if (prefersReducedMotion()) return;
 
-    const cta = document.querySelector('.nav-cta .cta-button');
+    const cta = document.querySelector('.header-actions .cta-button');
     if (!cta) return;
 
     const strength = 0.35;
@@ -143,9 +152,10 @@ function initHeaderEntrance() {
     if (prefersReducedMotion() || typeof gsap === 'undefined') return;
 
     const logo = document.querySelector('.site-logo');
+    const actions = document.querySelector('.header-actions');
     const items = gsap.utils.toArray('.nav-item');
 
-    gsap.from(logo, { y: -14, opacity: 0, duration: 0.7, ease: 'power3.out' });
+    gsap.from([logo, actions], { y: -14, opacity: 0, duration: 0.7, ease: 'power3.out', clearProps: 'transform' });
     gsap.from(items, {
         y: -14,
         opacity: 0,
