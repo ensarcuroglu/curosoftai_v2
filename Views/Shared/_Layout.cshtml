@@ -25,15 +25,11 @@
 
     <header class="site-header" id="siteHeader">
         <div class="header-shell" id="headerShell">
+            <span class="header-aura" aria-hidden="true"></span>
+
             <a class="site-logo" asp-area="" asp-controller="Home" asp-action="Index">
                 curosoftai<span class="logo-dot">.</span>
             </a>
-
-            <button class="menu-toggle" id="menuToggle" aria-label="Menüyü Aç/Kapat" aria-expanded="false">
-                <span class="hamburger-line line-1"></span>
-                <span class="hamburger-line line-2"></span>
-                <span class="hamburger-line line-3"></span>
-            </button>
 
             <nav class="site-nav" id="siteNav">
                 <ul class="nav-list" id="navList">
@@ -56,11 +52,18 @@
                     <li class="nav-item">
                         <a class="@NavClass("Blog")" asp-area="" asp-controller="Blog" asp-action="Index">Blog</a>
                     </li>
-                    <li class="nav-item nav-cta">
-                        <a class="cta-button @(string.Equals(currentController, "Contact", StringComparison.OrdinalIgnoreCase) ? "is-active" : "")" asp-area="" asp-controller="Contact" asp-action="Index">İletişim</a>
-                    </li>
                 </ul>
             </nav>
+
+            <div class="header-actions">
+                <a class="cta-button @(string.Equals(currentController, "Contact", StringComparison.OrdinalIgnoreCase) ? "is-active" : "")" asp-area="" asp-controller="Contact" asp-action="Index">İletişim</a>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Menüyü Aç/Kapat" aria-expanded="false">
+                    <span class="hamburger-line line-1"></span>
+                    <span class="hamburger-line line-2"></span>
+                    <span class="hamburger-line line-3"></span>
+                </button>
+            </div>
         </div>
     </header>
 

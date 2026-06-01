@@ -86,8 +86,9 @@ body.ai-solutions-page {
     background: linear-gradient(90deg, var(--aic-cream), var(--aic-brown));
 }
 
+/* Rest state stays chrome-less here too: no border, so the header merges into the
+   immersive scene exactly like the light pages do. Only the ink colour carries over. */
 .ai-solutions-page .site-header .header-shell {
-    border-bottom: 1px solid var(--aic-line);
     color: var(--aic-ink);
 }
 
@@ -95,7 +96,14 @@ body.ai-solutions-page {
     background-color: rgba(6, 5, 4, 0.76);
     border-color: rgba(232, 220, 196, 0.16);
     box-shadow: 0 1px 0 rgba(232, 220, 196, 0.08) inset,
-                0 18px 46px -18px rgba(0, 0, 0, 0.74);
+                0 22px 50px -22px rgba(0, 0, 0, 0.74),
+                0 6px 18px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* The warm aurora reads beautifully over the near-black dock — let it glow a
+   little more here than on the light pages. */
+.ai-solutions-page .site-header.scrolled .header-aura {
+    opacity: 0.62;
 }
 
 .ai-solutions-page .site-logo,

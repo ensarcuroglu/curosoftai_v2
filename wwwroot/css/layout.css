@@ -26,8 +26,20 @@
 
     /* Layout Variables */
     --max-width: 1200px;
-    --header-height: 80px;
-    --header-height-scroll: 65px;
+    --header-height: 76px;
+    --header-height-scroll: 62px;
+
+    /* Header — at rest it fully dissolves into the page (no chrome on any page);
+       on scroll it condenses into a soft, frosted "dock" (rounded card) with a
+       warm aurora drifting inside. Edge / shadow / radius / width are tokenised so
+       each page theme (light + dark immersive) recolours the dock without
+       touching the morph logic. */
+    --header-dock-w: 1100px;
+    --header-dock-radius: 20px;
+    --header-edge: rgba(255, 255, 255, 0.6);
+    --header-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset,
+                     0 26px 60px -28px rgba(42, 36, 32, 0.34),
+                     0 8px 24px -14px rgba(42, 36, 32, 0.18);
 
     /* Motion Tokens */
     --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
@@ -190,7 +202,14 @@ ul {
     transition: width 0.2s ease;
 }
 
-/* Site Header — Floating Glass Pill */
+/* ============================================================================
+   Site Header — "Quiet Editorial · Dissolve-to-Dock"
+   Rest (scroll=0): zero chrome on EVERY page — the wordmark, centred nav and CTA
+   float directly on the page (light or dark immersive), nothing separates them
+   from it. On scroll the shell condenses into a soft, frosted cream "dock"
+   (rounded card) with a warm aurora drifting inside. Three-zone grid keeps the
+   nav optically centred regardless of logo / CTA widths.
+   ========================================================================== */
 .site-header {
     position: fixed;
     top: 0;
@@ -198,33 +217,74 @@ ul {
     width: 100%;
     z-index: 1000;
     padding: 0;
-    transition: padding 0.45s var(--ease-editorial);
+    transition: padding 0.5s var(--ease-editorial);
 }
 
-/* The visible bar. At the top it sits flush and transparent; on scroll it
-   detaches into a rounded, floating glass capsule. */
 .header-shell {
     position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
     max-width: var(--max-width);
     height: var(--header-height);
     margin: 0 auto;
     padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     border: 1px solid transparent;
     border-radius: 0;
     background-color: transparent;
     backdrop-filter: blur(0);
     -webkit-backdrop-filter: blur(0);
-    transition: max-width 0.55s var(--ease-editorial),
-                height 0.45s var(--ease-editorial),
-                padding 0.45s var(--ease-editorial),
-                background-color 0.45s var(--ease-soft),
-                border-color 0.45s var(--ease-soft),
-                border-radius 0.55s var(--ease-editorial),
-                box-shadow 0.45s var(--ease-soft),
-                backdrop-filter 0.45s var(--ease-soft);
+    transition: max-width 0.6s var(--ease-editorial),
+                height 0.5s var(--ease-editorial),
+                padding 0.5s var(--ease-editorial),
+                background-color 0.5s var(--ease-soft),
+                border-color 0.5s var(--ease-soft),
+                border-radius 0.6s var(--ease-editorial),
+                box-shadow 0.5s var(--ease-soft),
+                backdrop-filter 0.5s var(--ease-soft);
+}
+
+/* Three zones — explicit columns so the right cluster never drifts to centre
+   when the nav goes off-canvas (mobile drawer). They sit above the aura layer. */
+.site-logo {
+    grid-column: 1;
+    justify-self: start;
+    position: relative;
+    z-index: 1;
+}
+
+.site-nav {
+    grid-column: 2;
+    justify-self: center;
+    position: relative;
+    z-index: 1;
+}
+
+.header-actions {
+    grid-column: 3;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Warm aurora — the header's signature. Lives only inside the frosted dock and
+   is invisible at rest, so it never bleeds onto the page. */
+.header-aura {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0;
+    background:
+        radial-gradient(58% 140% at 15% 0%, var(--glow-warm), transparent 60%),
+        radial-gradient(48% 130% at 90% 130%, var(--glow-warm), transparent 62%);
+    transition: opacity 0.6s var(--ease-soft);
 }
 
 .site-header.scrolled {
@@ -232,41 +292,49 @@ ul {
 }
 
     .site-header.scrolled .header-shell {
-        max-width: 1080px;
+        max-width: var(--header-dock-w);
         height: var(--header-height-scroll);
         padding: 0 14px 0 26px;
-        border-radius: 999px;
+        border-radius: var(--header-dock-radius);
         background-color: var(--header-bg);
-        border-color: rgba(255, 255, 255, 0.5);
-        backdrop-filter: blur(18px) saturate(1.5);
-        -webkit-backdrop-filter: blur(18px) saturate(1.5);
-        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset,
-                    0 18px 40px -16px rgba(42, 36, 32, 0.28),
-                    0 4px 14px -8px rgba(42, 36, 32, 0.18);
+        border-color: var(--header-edge);
+        backdrop-filter: blur(22px) saturate(1.7);
+        -webkit-backdrop-filter: blur(22px) saturate(1.7);
+        box-shadow: var(--header-shadow);
     }
 
-/* Logo Design */
+    .site-header.scrolled .header-aura {
+        opacity: 0.5;
+        animation: headerAura 18s var(--ease-soft) infinite;
+    }
+
+@keyframes headerAura {
+    0%, 100% { transform: translate3d(-4%, 0, 0) scale(1.06); opacity: 0.42; }
+    50%      { transform: translate3d(4%, 0, 0) scale(1.13);  opacity: 0.6; }
+}
+
+/* Logo Design — editorial Instrument Serif wordmark with a warm accent dot.
+   The serif against the sans nav is the typographic "studio" signal; the dot
+   stays upright so it reads as a deliberate full stop, not a slanted glyph. */
 .site-logo {
-    font-size: 1.4rem;
-    font-weight: var(--fw-bold);
-    letter-spacing: -0.03em;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.7rem;
+    font-weight: var(--fw-regular);
+    line-height: 1;
+    letter-spacing: 0;
     color: var(--text-primary);
     transition: opacity 0.3s var(--ease-soft);
 }
 
     .site-logo:hover {
-        opacity: 0.65;
+        opacity: 0.6;
     }
 
 .logo-dot {
     display: inline-block;
     color: var(--accent);
-    animation: dotPulse 3.4s var(--ease-soft) infinite;
-}
-
-@keyframes dotPulse {
-    0%, 100% { transform: scale(1);    opacity: 1; }
-    50%      { transform: scale(1.28); opacity: 0.6; }
+    font-style: normal;
 }
 
 /* Navigation System */
@@ -274,7 +342,7 @@ ul {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
 }
 
 /* Ephemeral hover pill: glides between links under the cursor, then fades out.
@@ -300,6 +368,7 @@ ul {
     z-index: 1;
     font-size: 0.95rem;
     font-weight: var(--fw-medium);
+    letter-spacing: 0.01em;
     color: var(--text-secondary);
     padding: 9px 16px;
     border-radius: 999px;
@@ -327,20 +396,18 @@ ul {
             box-shadow: inset 0 0 0 1px rgba(89, 75, 66, 0.16);
         }
 
-/* Call-To-Action — pill with magnetic pull (JS) and soft sheen */
-.nav-cta {
-    margin-left: 8px;
-}
-
+/* Call-To-Action — ink pill with magnetic pull (JS) and a soft top sheen.
+   Now lives in .header-actions (right zone); spacing is handled by that flex gap. */
 .cta-button {
     position: relative;
     display: inline-block;
-    padding: 10px 22px;
+    padding: 9px 20px;
     background-color: var(--text-primary);
     color: var(--bg-primary) !important;
     border-radius: 999px;
     font-size: 0.9rem;
     font-weight: var(--fw-semibold);
+    letter-spacing: 0.01em;
     box-shadow: 0 4px 12px rgba(42, 36, 32, 0.12);
     transition: transform 0.35s var(--ease-editorial),
                 background-color 0.35s var(--ease-soft),
@@ -508,12 +575,13 @@ ul {
 
 @media (prefers-reduced-motion: reduce) {
     .hero-glow,
-    .logo-dot {
+    .header-aura {
         animation: none;
     }
 
     .nav-indicator,
     .header-shell,
+    .header-aura,
     .cta-button {
         transition: none;
     }
@@ -522,7 +590,7 @@ ul {
 /* Responsive Grid and Mobile Layout Adjustments */
 @media (max-width: 768px) {
     :root {
-        --header-height: 70px;
+        --header-height: 68px;
     }
 
     .menu-toggle {
@@ -572,16 +640,19 @@ ul {
         border-bottom: 1px solid var(--bg-secondary);
     }
 
-    .nav-cta {
-        margin-top: 16px;
-        margin-left: 0;
-        width: 100%;
+    /* CTA stays in the right cluster on mobile (beside the toggle), kept compact;
+       it is no longer a full-width item inside the drawer. */
+    .header-actions {
+        gap: 10px;
     }
 
     .cta-button {
-        display: block;
-        text-align: center;
-        width: 100%;
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+
+    .site-logo {
+        font-size: 1.45rem;
     }
 
     /* Hamburger Active State Animation */
