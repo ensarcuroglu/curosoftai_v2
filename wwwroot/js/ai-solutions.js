@@ -362,6 +362,9 @@ import * as THREE from 'three';
 
     function initContentAnimations() {
         const sections = Array.prototype.slice.call(document.querySelectorAll('.scene-section'));
+
+        // GSAP yok / hareket azaltıldı / bölüm yok → içerik kalıcı GÖRÜNÜR kalsın
+        // (erişilebilir fallback; FOUC gizleme katmanını kaldırıyoruz).
         if (!hasGSAP || reducedMotion || sections.length === 0) {
             document.documentElement.classList.remove('aicore-anim');
             setActiveStage(0);
@@ -377,10 +380,26 @@ import * as THREE from 'three';
             ? { clipPath: 'inset(0% 0% 0% 0%)', y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }
             : { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' };
 
-        const timelines = [];
+        // Bir sahneyi göster/gizle. KÖK ÇÖZÜM: görünürlük TEK kaynaktan
+        // (ScrollTrigger.isActive) belirlenir; aşağı→yukarı→aşağı gibi yön
+        // değişimlerinde veya refresh sonrası metin "takılı gizli" kalamaz.
+        const revealScene = (scene) => {
+            gsap.set(scene.box, { y: 0 });
+            scene.tl.restart();
+            scene.shown = true;
+        };
+        const hideScene = (scene, dir) => {
+            gsap.to(scene.box, {
+                opacity: 0, y: -28 * (dir || 1), duration: 0.5,
+                ease: 'power2.inOut', overwrite: true
+            });
+            scene.shown = false;
+        };
+
+        const scenes = [];
         sections.forEach((section, idx) => {
             const box = section.querySelector('.scene-content');
-            if (!box) { timelines.push(null); return; }
+            if (!box) { scenes.push(null); return; }
 
             const heading = box.querySelector('[data-reveal-heading]');
             const words = heading ? splitWords(heading) : [];
@@ -388,38 +407,42 @@ import * as THREE from 'three';
             const first = items[0] || null;          // eyebrow / indeks satırı
             const rest = items.slice(1);             // lede · status · cta ...
 
-            // İlk durumlar (FOUC önleme)
-            gsap.set(box, { opacity: 0 });
-            if (first) gsap.set(first, { y: 18, opacity: 0 });
-            if (words.length) gsap.set(words, { yPercent: 115, opacity: 0 });
-            rest.forEach((el) => gsap.set(el, hiddenState(el)));
-
+            // Tekrar oynatılabilir reveal zaman çizelgesi (paused).
             const tl = gsap.timeline({ paused: true });
-            tl.set(box, { opacity: 1 });
+            tl.set(box, { opacity: 1, y: 0 });
             if (first) tl.fromTo(first, { y: 18, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, 0.0);
             if (words.length) tl.fromTo(words, { yPercent: 115, opacity: 0 },
                 { yPercent: 0, opacity: 1, duration: 0.85, stagger: 0.045, ease: 'power4.out' }, 0.15);
             rest.forEach((el, k) => tl.fromTo(el, hiddenState(el), shownState(el), 0.42 + k * 0.13));
-            timelines.push(tl);
 
-            const hideBox = (dir) => gsap.to(box, {
-                opacity: 0, y: -28 * dir, duration: 0.5,
-                ease: 'power2.inOut', overwrite: true
-            });
+            const scene = { box, tl, shown: false, st: null };
 
-            ScrollTrigger.create({
+            // Başlangıç gizli durumu — inline yazılır; FOUC CSS katmanı kaldırılınca da
+            // gizli kalır (görünürlüğü artık yalnızca GSAP inline stilleri yönetir).
+            gsap.set(box, { opacity: 0 });
+            if (first) gsap.set(first, { y: 18, opacity: 0 });
+            if (words.length) gsap.set(words, { yPercent: 115, opacity: 0 });
+            rest.forEach((el) => gsap.set(el, hiddenState(el)));
+
+            // Dört ayrı geri-çağrı (onEnter/onLeave/...) yerine TEK onToggle:
+            // isActive → göster, değilse → gizle. Desenkron olamaz.
+            scene.st = ScrollTrigger.create({
                 trigger: section, start: 'top 72%', end: 'bottom 28%',
-                onEnter: () => { gsap.set(box, { y: 0 }); tl.restart(); setActiveStage(idx); },
-                onEnterBack: () => { gsap.set(box, { y: 0 }); tl.restart(); setActiveStage(idx); },
-                onLeave: () => hideBox(1),
-                onLeaveBack: () => hideBox(-1)
+                onToggle: (self) => {
+                    if (self.isActive) { setActiveStage(idx); revealScene(scene); }
+                    else { hideScene(scene, self.direction); }
+                }
             });
+
+            scenes.push(scene);
         });
 
-        if (timelines[0]) timelines[0].restart();
-        setActiveStage(0);
+        // FOUC katmanını kaldır: içerik artık inline stillerle gizli; CSS tabanı GÖRÜNÜR.
+        // Beklenmedik bir durumda (kaçan tetikleyici vb.) metin görünür kalır, kaybolmaz.
+        document.documentElement.classList.remove('aicore-anim');
 
+        // Kaydırma ipucu (yalnız ilk bölümde) — kaydırınca yumuşakça söner.
         const hint = document.querySelector('.scroll-hint');
         if (hint) {
             ScrollTrigger.create({
@@ -427,7 +450,18 @@ import * as THREE from 'three';
                 onUpdate: (self) => gsap.set(hint, { opacity: 1 - self.progress, overwrite: true })
             });
         }
+
         ScrollTrigger.refresh();
+
+        // Başlangıç/refresh sonrası durum uzlaştırma: o an görünürdeki bölüm(ler)i aç.
+        // onToggle ilk yüklemede tetiklenmese bile görünür bölüm güvenle açılır.
+        let anyShown = false;
+        scenes.forEach((scene, idx) => {
+            if (!scene) return;
+            if (scene.st.isActive && !scene.shown) { setActiveStage(idx); revealScene(scene); }
+            if (scene.shown) anyShown = true;
+        });
+        if (!anyShown) setActiveStage(0);
     }
 
     // ==========================================================================

@@ -195,6 +195,10 @@ body.ai-solutions-page {
    Bölümler — her biri kendi mizanpajına sahip; metin sahnenin üzerinde süzülür
    ========================================================================== */
 .ai-solutions-page .scene-section {
+    /* Metin, sitenin geri kalanıyla (.container · max-width:1200px) AYNI kenar
+       boşluklarına hizalanır; parçacık tuvali yine tam ekran kalır. 100vw yerine
+       100% (kapsayıcı genişliği) kullanılır → dikey kaydırma çubuğu hizayı bozmaz. */
+    --aic-gutter: max(24px, calc((100% - var(--max-width)) / 2));
     position: relative;
     z-index: 2;
     min-height: 100vh;
@@ -202,7 +206,8 @@ body.ai-solutions-page {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 6rem clamp(1.25rem, 7vw, 9rem);
+    padding: 6rem var(--aic-gutter);
+    scroll-margin-top: var(--header-height); /* #intro vb. çapa atlamaları header'ın altında kalmasın */
 }
 
     .ai-solutions-page .scene-section.align-left {
@@ -408,7 +413,7 @@ body.ai-solutions-page {
    AŞAMA 1 · HERO — ikiye bölünmüş editorial layout
    ========================================================================== */
 .ai-solutions-page .layout-hero .scene-content {
-    width: min(1140px, 92vw);
+    width: min(1140px, 100%);
     --scrim-x: 50%;
 }
 
@@ -442,7 +447,7 @@ body.ai-solutions-page {
    AŞAMA 2/5 · Yan kolonlar (sağ/sol) — tipografik metin alanı
    ========================================================================== */
 .ai-solutions-page .text-col {
-    width: min(38rem, 92vw);
+    width: min(38rem, 100%);
     position: relative;
 }
 
@@ -477,7 +482,7 @@ body.ai-solutions-page {
 }
 
 .ai-solutions-page .text-center-col {
-    width: min(40rem, 92vw);
+    width: min(40rem, 100%);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -492,7 +497,7 @@ body.ai-solutions-page {
    AŞAMA 6 · 05 Vizyon — ekranı kaplayan dev CTA finali
    ========================================================================== */
 .ai-solutions-page .layout-cta .scene-content {
-    width: min(1000px, 92vw);
+    width: min(1000px, 100%);
     --scrim-x: 50%;
 }
 
@@ -745,7 +750,9 @@ body.ai-solutions-page {
     .ai-solutions-page .scene-section.align-left,
     .ai-solutions-page .scene-section.align-right {
         align-items: center;
-        padding: 5rem 1.4rem;
+        /* Yatay boşluk --aic-gutter (mobilde min 24px) ile site geneliyle aynı kalır. */
+        padding-top: 5rem;
+        padding-bottom: 5rem;
     }
     /* Hero ve yan kolonlar mobilde tek sütun, ortalı */
     .ai-solutions-page .hero-grid {
