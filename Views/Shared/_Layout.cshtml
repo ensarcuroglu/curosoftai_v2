@@ -14,12 +14,13 @@
 </head>
 @{
     var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
+    var bodyClass = ViewData["BodyClass"]?.ToString();
     string NavClass(string controller) =>
         string.Equals(currentController, controller, StringComparison.OrdinalIgnoreCase)
             ? "nav-link is-active"
             : "nav-link";
 }
-<body>
+<body class="@bodyClass">
     <div class="page-progress" id="pageProgress"></div>
 
     <header class="site-header" id="siteHeader">

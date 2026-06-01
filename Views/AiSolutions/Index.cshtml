@@ -1,15 +1,211 @@
 @{
-    ViewData["Title"] = "AI Çözümler | Curosoftai";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "AI Çözümler";
+    ViewData["BodyClass"] = "ai-solutions-page";
 }
 
+@* ===== Sayfaya özel stiller (head'e enjekte edilir) ===== *@
 @section Styles {
-    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/coming-soon.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="~/css/ai-solutions.css" asp-append-version="true" />
+    @* FOUC koruması: reveal öğeleri boyanmadan gizlenir; GSAP zarifçe açar.
+       JS kapalıysa/başarısızsa sınıf kaldırılır → içerik görünür kalır (erişilebilir fallback). *@
+    <script>
+        try {
+            if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.documentElement.classList.add('aicore-anim');
+                setTimeout(function () {
+                    if (!document.documentElement.classList.contains('aicore-ready')) {
+                        document.documentElement.classList.remove('aicore-anim');
+                    }
+                }, 2500);
+            }
+        } catch (e) { }
+    </script>
 }
 
-@await Html.PartialAsync("_ComingSoon", (
-    Tag: "YAPAY ZEKA",
-    Title: "AI çözümleri çok yakında.",
-    Description: "Firma asistanı, akıllı analiz ve süreç otomasyonu modüllerimizi yakında burada inceleyebileceksiniz."
-))
+@* ===== Parçacık arka plan tuvali (Three.js buraya render eder) ===== *@
+<canvas id="ai-solutions-canvas"></canvas>
+
+@* ===== Global film greni (mix-blend-mode: overlay — çok ölçülü) ===== *@
+<div class="grain-overlay" aria-hidden="true"></div>
+
+@* ===== Yan ilerleme göstergesi (scrollytelling "HUD") ===== *@
+<aside class="stage-rail" aria-hidden="true">
+    <span class="stage-rail-track"><span class="stage-rail-fill"></span></span>
+    <ol class="stage-rail-list">
+        <li data-stage="0"><span class="dot"></span><span class="label">Giriş</span></li>
+        <li data-stage="1"><span class="dot"></span><span class="label">Bütünleşik</span></li>
+        <li data-stage="2"><span class="dot"></span><span class="label">Düzen</span></li>
+        <li data-stage="3"><span class="dot"></span><span class="label">Modüler</span></li>
+        <li data-stage="4"><span class="dot"></span><span class="label">Güvenlik</span></li>
+        <li data-stage="5"><span class="dot"></span><span class="label">Vizyon</span></li>
+    </ol>
+</aside>
+
+@* ============================================================================
+   Metin katmanı: kutusuz, sahnenin üzerinde süzülen tipografi.
+   Her bölüm kendi mizanpajına sahip (hero split · sağ · sol · merkez · CTA).
+   ============================================================================ *@
+
+@* — A�?AMA 1 · HERO — ikiye bölünmüş: solda dev başlık, sağ altta teknik alt metin — *@
+<section id="intro" class="scene-section layout-hero" data-stage="0">
+    <div class="scene-content hero-grid" data-reveal>
+        <div class="hero-main">
+            <span class="eyebrow" data-reveal-item>
+                <span class="eyebrow-dot"></span> curosoftai · Kurumsal AI
+            </span>
+            <h1 data-reveal-heading>Kurumsal zekânın yeni merkezi.</h1>
+        </div>
+        <div class="hero-aside">
+            <span class="rule" aria-hidden="true"></span>
+            <p class="lede" data-reveal-item>
+                İşletmenizin dağınık bilgisini, kurumsal web sitenizi ve iç süreçlerinizi
+                tek bir canlı zekâ katmanında topluyoruz — sade, ölçülebilir ve güven veren.
+            </p>
+            <div class="status-readout" data-reveal-item>
+                <span class="status-pulse"></span>
+                <span class="status-key">Sistem</span>
+                <span class="status-sep">//</span>
+                <span class="status-val">Çevrimiçi · Çekirdek Aktif</span>
+            </div>
+        </div>
+    </div>
+    <span class="scroll-hint">Keşfetmek için kaydırın</span>
+</section>
+
+@* — A�?AMA 2 · 01 BÜTÜNLE�?İK ZEKÂ — metin sağda, rakam vurgulu, tipografik — *@
+<section id="network" class="scene-section layout-side align-right" data-stage="1">
+    <div class="scene-content text-col" data-reveal>
+        <span class="rule" aria-hidden="true"></span>
+        <div class="index-row" data-reveal-item>
+            <span class="section-index">01</span>
+            <span class="index-label">Bütünleşik Zekâ</span>
+        </div>
+        <h2 data-reveal-heading>Tüm bilginiz, tek bir akılda buluşur.</h2>
+        <p class="lede" data-reveal-item>
+            Web sitenize ve iç sistemlerinize; firma bilgilerinizi ve dokümanlarınızı
+            yanıtlayan bir AI katmanı ekliyoruz. Dağıtık kaynaklar senkronize olur,
+            doğru cevap ilk temasta gelir.
+        </p>
+        <div class="status-readout" data-reveal-item>
+            <span class="status-pulse"></span>
+            <span class="status-key">Senkronizasyon</span>
+            <span class="status-sep">//</span>
+            <span class="status-val">Tam · Gecikme &lt; 1 sn</span>
+        </div>
+    </div>
+</section>
+
+@* — A�?AMA 3 · 02 DÜZEN & ERİ�?İM — metin solda, dikey çizgili, minimalist — *@
+<section id="order" class="scene-section layout-side align-left" data-stage="2">
+    <div class="scene-content text-col has-vline" data-reveal>
+        <div class="index-row" data-reveal-item>
+            <span class="section-index">02</span>
+            <span class="index-label">Düzen &amp; Erişim</span>
+        </div>
+        <h2 data-reveal-heading>Dağınık veriden, anında erişilebilir bilgiye.</h2>
+        <p class="lede" data-reveal-item>
+            Dokümanlarınız ve kayıtlarınız; sorgulanabilir, kaynaklı ve izlenebilir tek
+            bir mimariye oturur. Aradığınız yanıta saniyeler içinde ulaşırsınız; bilgi
+            kaybolmaz, yönetilebilir hâle gelir.
+        </p>
+        <div class="status-readout" data-reveal-item>
+            <span class="status-pulse"></span>
+            <span class="status-key">İndeksleme</span>
+            <span class="status-sep">//</span>
+            <span class="status-val">Tamamlandı · 0 Kayıp Kayıt</span>
+        </div>
+    </div>
+</section>
+
+@* — A�?AMA 4 · 03 MODÜLER MİMARİ — metin TAM MERKEZ (objeler sağa/sola dağılır) — *@
+<section id="modular" class="scene-section layout-center" data-stage="3">
+    <div class="scene-content text-center-col" data-reveal>
+        <span class="tick" aria-hidden="true"></span>
+        <div class="index-row" data-reveal-item>
+            <span class="section-index">03</span>
+            <span class="index-label">Modüler Mimari</span>
+        </div>
+        <h2 data-reveal-heading>İhtiyacınız kadar büyüyen çözümler.</h2>
+        <p class="lede" data-reveal-item>
+            Web sitesi, yönetim paneli, raporlama ve AI modülleri; birbirine kusursuz
+            oturan parçalar olarak kurgulanır. Bugün sade başlar, yarın gereksiz karmaşa
+            olmadan ölçeklenir.
+        </p>
+        <div class="status-readout" data-reveal-item>
+            <span class="status-pulse"></span>
+            <span class="status-key">Modüller</span>
+            <span class="status-sep">//</span>
+            <span class="status-val">16 / 16 Çevrimiçi</span>
+        </div>
+        <span class="tick" aria-hidden="true"></span>
+    </div>
+</section>
+
+@* — A�?AMA 5 · 04 GÜVENLİK & İZOLASYON — metin sağda, ultra-temiz "rapor" estetiği — *@
+<section id="security" class="scene-section layout-side align-right" data-stage="4">
+    <div class="scene-content text-col" data-reveal>
+        <span class="rule" aria-hidden="true"></span>
+        <div class="index-row" data-reveal-item>
+            <span class="section-index">04</span>
+            <span class="index-label">Güvenlik &amp; İzolasyon</span>
+        </div>
+        <h2 data-reveal-heading>Verileriniz izole, kontrol tamamen sizde.</h2>
+        <p class="lede" data-reveal-item>
+            Her çözümü güvenlik, performans ve test disipliniyle kuruyoruz. Bilgileriniz
+            izole bir katmanda korunur; erişim yönetilebilir, her işlem izlenebilir.
+        </p>
+        <div class="status-readout" data-reveal-item>
+            <span class="status-pulse"></span>
+            <span class="status-key">Veri İzolasyonu</span>
+            <span class="status-sep">//</span>
+            <span class="status-val">Aktif · AES-256</span>
+        </div>
+    </div>
+</section>
+
+@* — A�?AMA 6 · 05 VİZYON — ekranı kaplayan, dev puntolu CTA finali — *@
+<section id="vision" class="scene-section layout-cta" data-stage="5">
+    <div class="scene-content cta-block" data-reveal>
+        <span class="eyebrow" data-reveal-item>
+            <span class="eyebrow-num">05</span> Vizyon
+        </span>
+        <h2 class="cta-title" data-reveal-heading>Sıradaki sistem, sizinki olsun.</h2>
+        <p class="lede" data-reveal-item>
+            Karmaşıklık geri çekilir; geriye işletmeniz için sade, hızlı ve güven veren bir
+            platform kalır. Kuruluşunuza özel çözümü birlikte tasarlayalım.
+        </p>
+        <div class="cta-row" data-reveal-item>
+            <a class="btn-demo" href="mailto:ensarcuroglu19@gmail.com?subject=curosoftai%20%E2%80%94%20Demo%20Talebi&amp;body=Merhaba%2C%20kurumumuz%20i%C3%A7in%20bir%20AI%20%C3%A7%C3%B6z%C3%BCm%C3%BC%20de%C4%9Ferlendirmek%20istiyoruz.">
+                <span class="btn-demo-label">Demo İste</span>
+                <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="btn-ghost" href="#intro"><span>Baştan keşfet</span></a>
+        </div>
+        <div class="status-readout" data-reveal-item>
+            <span class="status-pulse"></span>
+            <span class="status-key">Sistem</span>
+            <span class="status-sep">//</span>
+            <span class="status-val">Tam Senkronize</span>
+        </div>
+    </div>
+</section>
+
+@* ===== AI Çözümler parçacık / scrollytelling kütüphaneleri (yalnız bu sayfada) ===== *@
+@section Scripts {
+    @* Three.js (modern, ESM). Import map, type="module" script'lerden ÖNCE gelmeli. *@
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+          }
+        }
+    </script>
+    @* GSAP klasik (global) script; modül çalışmadan önce yüklenir. *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script type="module" src="~/js/ai-solutions.js" asp-append-version="true"></script>
+}

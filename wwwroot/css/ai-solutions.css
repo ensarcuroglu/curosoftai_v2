@@ -1,0 +1,810 @@
+﻿/* ============================================================================
+   curosoftai — "AI Çözümler"  ·  "Minimalist Executive" · Editorial UI Layer
+   Palet: Siyah (zemin) · Krem (glow/ışık) · Kahve (ara ton) · Beyaz (vurgu)
+     - Buzlu cam KUTU YOK. Metinler sahnenin üzerinde süzülür: geniş negatif
+       alan, ince ayraçlar, güçlü tipografi, yumuşak okunabilirlik scrim'i.
+   Bu dosya YALNIZCA AI Çözümler sayfasında yüklenir; kurallar .ai-solutions-page
+   gövde sınıfına göre kapsanır.
+   ========================================================================== */
+
+:root {
+    --aic-bg: #060504;
+    --aic-ink: #f3ead9;
+    --aic-muted: rgba(232, 220, 196, 0.66);
+    --aic-faint: rgba(232, 220, 196, 0.40);
+    --aic-cream: #e8dcc4;
+    --aic-cream-soft: #d8c19a;
+    --aic-brown: #8a6a42;
+    --aic-line: rgba(232, 220, 196, 0.18);
+    --aic-tag: rgba(234, 217, 184, 0.90);
+    --aic-mono: ui-monospace, 'SFMono-Regular', 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace;
+}
+
+/* ---- Gövde / zemin --------------------------------------------------------- */
+body.ai-solutions-page {
+    --bg-primary: var(--aic-bg);
+    --bg-secondary: #0c0907;
+    --text-primary: var(--aic-ink);
+    --text-secondary: var(--aic-muted);
+    --text-muted: var(--aic-faint);
+    --accent: var(--aic-cream-soft);
+    --accent-soft: rgba(232, 220, 196, 0.10);
+    --border-color: var(--aic-line);
+    --header-bg: rgba(6, 5, 4, 0.72);
+    background-color: var(--aic-bg);
+    color: var(--aic-ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+.ai-solutions-page .site-main {
+    position: relative;
+    z-index: 2;
+    margin-top: 0;
+    padding-bottom: 0;
+    min-height: auto;
+    animation: none;
+}
+
+.ai-solutions-page #ai-solutions-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    pointer-events: none;
+}
+
+/* ---- Global film greni ----------------------------------------------------- */
+.ai-solutions-page .grain-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.045;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 170px 170px;
+    animation: aic-grain 6s steps(5) infinite;
+}
+
+@keyframes aic-grain {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 170px 170px;
+    }
+}
+
+/* ---- Bu projenin layout bileşenleri --------------------------------------- */
+.ai-solutions-page .page-progress {
+    background: linear-gradient(90deg, var(--aic-cream), var(--aic-brown));
+}
+
+.ai-solutions-page .site-header .header-shell {
+    border-bottom: 1px solid var(--aic-line);
+    color: var(--aic-ink);
+}
+
+.ai-solutions-page .site-header.scrolled .header-shell {
+    background-color: rgba(6, 5, 4, 0.76);
+    border-color: rgba(232, 220, 196, 0.16);
+    box-shadow: 0 1px 0 rgba(232, 220, 196, 0.08) inset,
+                0 18px 46px -18px rgba(0, 0, 0, 0.74);
+}
+
+.ai-solutions-page .site-logo,
+.ai-solutions-page .site-header .nav-link,
+.ai-solutions-page .footer-logo,
+.ai-solutions-page .footer-title {
+    color: var(--aic-ink);
+}
+
+.ai-solutions-page .site-header .nav-link:hover,
+.ai-solutions-page .site-header .nav-link.is-active,
+.ai-solutions-page .footer-list a:hover {
+    color: var(--aic-cream);
+}
+
+.ai-solutions-page .site-header .nav-link.is-active::before,
+.ai-solutions-page .nav-indicator {
+    background-color: rgba(232, 220, 196, 0.10);
+    box-shadow: inset 0 0 0 1px rgba(232, 220, 196, 0.16);
+}
+
+.ai-solutions-page .logo-dot {
+    color: var(--aic-cream);
+}
+
+.ai-solutions-page .cta-button {
+    color: #1a120a !important;
+    background: linear-gradient(180deg, #f3ead9, #d8c19a);
+    box-shadow: 0 10px 26px rgba(138, 106, 66, 0.30);
+}
+
+.ai-solutions-page .cta-button:hover,
+.ai-solutions-page .cta-button.is-active {
+    background: linear-gradient(180deg, #ffffff, #e8dcc4);
+}
+
+.ai-solutions-page .hamburger-line {
+    background-color: var(--aic-ink);
+}
+
+.ai-solutions-page .site-footer {
+    position: relative;
+    z-index: 2;
+    background: #080604;
+    border-top: 1px solid var(--aic-line);
+    color: var(--aic-muted);
+}
+
+.ai-solutions-page .footer-description,
+.ai-solutions-page .footer-list a,
+.ai-solutions-page .copyright,
+.ai-solutions-page .footer-motto {
+    color: var(--aic-muted);
+}
+
+.ai-solutions-page .footer-bottom {
+    border-top-color: var(--aic-line);
+}
+
+@media (max-width: 768px) {
+    .ai-solutions-page .site-nav {
+        background-color: rgba(6, 5, 4, 0.96);
+        border-left: 1px solid var(--aic-line);
+        box-shadow: -18px 0 44px rgba(0, 0, 0, 0.42);
+    }
+
+    .ai-solutions-page .site-header .nav-link {
+        border-bottom-color: var(--aic-line);
+    }
+}
+
+/* Eski Bootstrap layout ile kullanılırsa geriye dönük destek. */
+.ai-solutions-page header .navbar {
+    background: transparent !important;
+    border-bottom: 1px solid var(--aic-line) !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+    .ai-solutions-page header .navbar .navbar-brand,
+    .ai-solutions-page header .navbar .nav-link {
+        color: var(--aic-ink) !important;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+    }
+
+        .ai-solutions-page header .navbar .nav-link:hover {
+            color: var(--aic-cream) !important;
+        }
+
+.ai-solutions-page .navbar-toggler {
+    border-color: var(--aic-line);
+}
+
+/* ============================================================================
+   Bölümler — her biri kendi mizanpajına sahip; metin sahnenin üzerinde süzülür
+   ========================================================================== */
+.ai-solutions-page .scene-section {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 6rem clamp(1.25rem, 7vw, 9rem);
+}
+
+    .ai-solutions-page .scene-section.align-left {
+        align-items: flex-start;
+    }
+
+    .ai-solutions-page .scene-section.align-right {
+        align-items: flex-end;
+    }
+
+/* ---- Süzülen içerik + YUMUŞAK okunabilirlik scrim'i (kutu DEĞİL) ----------- */
+.ai-solutions-page .scene-content {
+    position: relative;
+    z-index: 1;
+}
+
+    .ai-solutions-page .scene-content::before { /* tüylenmiş karanlık scrim — kenar yok */
+        content: '';
+        position: absolute;
+        z-index: -1;
+        inset: -16% -18%;
+        background: radial-gradient(58% 64% at var(--scrim-x, 50%) 52%, rgba(6, 5, 4, 0.74), rgba(6, 5, 4, 0.34) 54%, rgba(6, 5, 4, 0) 78%);
+        pointer-events: none;
+    }
+
+.ai-solutions-page .align-right .scene-content {
+    --scrim-x: 66%;
+}
+
+.ai-solutions-page .align-left .scene-content {
+    --scrim-x: 34%;
+}
+
+/* ---- Tipografi: geniş, güçlü, yüksek kontrast ----------------------------- */
+.ai-solutions-page .scene-section h1,
+.ai-solutions-page .scene-section h2 {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.024em;
+    line-height: 1.0;
+    margin: 0;
+    color: #f7f0e3;
+    text-wrap: balance;
+    text-shadow: 0 2px 28px rgba(0, 0, 0, 0.5);
+}
+
+.ai-solutions-page .scene-section h2 {
+    font-size: clamp(2.1rem, 4.8vw, 3.7rem);
+}
+
+.ai-solutions-page .scene-section .lede {
+    margin: 1.5rem 0 0;
+    max-width: 40ch;
+    color: var(--aic-muted);
+    font-size: clamp(1rem, 1.15vw, 1.12rem);
+    font-weight: 400;
+    line-height: 1.74;
+    text-shadow: 0 1px 18px rgba(0, 0, 0, 0.45);
+    will-change: clip-path, transform, opacity;
+}
+
+/* Üst etiket (hero/CTA) */
+.ai-solutions-page .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.4rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--aic-tag);
+}
+
+.ai-solutions-page .eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--aic-cream);
+    box-shadow: 0 0 9px var(--aic-cream);
+}
+
+.ai-solutions-page .eyebrow-num {
+    font-family: var(--aic-mono);
+    font-weight: 600;
+    color: var(--aic-cream);
+}
+
+/* ---- Rakam vurgulu indeks satırı (01 · Bütünleşik Zekâ) ------------------- */
+.ai-solutions-page .index-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.95rem;
+    margin-bottom: 1.25rem;
+}
+
+.ai-solutions-page .section-index {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    line-height: 0.85;
+    font-size: clamp(2.4rem, 4.4vw, 3.7rem);
+    letter-spacing: -0.03em;
+    color: rgba(232, 220, 196, 0.10); /* hafif dolgu + outline = şık */
+    -webkit-text-stroke: 1px rgba(232, 220, 196, 0.6);
+}
+
+.ai-solutions-page .index-label {
+    font-family: var(--aic-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--aic-tag);
+}
+
+.ai-solutions-page .align-right .index-row {
+    justify-content: flex-end;
+}
+
+.ai-solutions-page .layout-center .index-row {
+    justify-content: center;
+}
+
+/* ---- İnce ayraçlar (separators) ------------------------------------------- */
+.ai-solutions-page .rule {
+    display: block;
+    width: 56px;
+    height: 1px;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(90deg, var(--aic-cream), transparent);
+    opacity: 0.55;
+}
+
+.ai-solutions-page .align-right .rule {
+    margin-left: auto;
+    background: linear-gradient(90deg, transparent, var(--aic-cream));
+}
+
+.ai-solutions-page .tick {
+    display: block;
+    width: 1px;
+    height: 34px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, transparent, var(--aic-cream), transparent);
+    opacity: 0.5;
+}
+
+    .ai-solutions-page .tick:first-child {
+        margin-bottom: 1.5rem;
+    }
+
+    .ai-solutions-page .tick:last-child {
+        margin-top: 1.6rem;
+    }
+
+/* ---- Sistem-durum okuması (mono mikro-tipografi) -------------------------- */
+.ai-solutions-page .status-readout {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.7rem;
+    font-family: var(--aic-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.ai-solutions-page .status-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--aic-cream);
+    box-shadow: 0 0 10px var(--aic-cream);
+    animation: aic-pulse 2.2s ease-in-out infinite;
+}
+
+.ai-solutions-page .status-key {
+    color: var(--aic-faint);
+}
+
+.ai-solutions-page .status-sep {
+    color: var(--aic-faint);
+    opacity: 0.6;
+}
+
+.ai-solutions-page .status-val {
+    color: var(--aic-cream);
+}
+
+@keyframes aic-pulse {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(0.82);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.12);
+    }
+}
+
+/* ============================================================================
+   AŞAMA 1 · HERO — ikiye bölünmüş editorial layout
+   ========================================================================== */
+.ai-solutions-page .layout-hero .scene-content {
+    width: min(1140px, 92vw);
+    --scrim-x: 50%;
+}
+
+    .ai-solutions-page .layout-hero .scene-content::before {
+        inset: -22% -10%;
+        background: radial-gradient(82% 72% at 50% 56%, rgba(6, 5, 4, 0.64), rgba(6, 5, 4, 0) 80%);
+    }
+
+.ai-solutions-page .hero-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: end;
+}
+
+.ai-solutions-page .layout-hero h1 {
+    font-size: clamp(2.8rem, 7.2vw, 6.4rem);
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+}
+
+.ai-solutions-page .hero-aside {
+    padding-bottom: 0.5rem;
+}
+
+    .ai-solutions-page .hero-aside .lede {
+        margin-top: 0;
+    }
+
+/* ============================================================================
+   AŞAMA 2/5 · Yan kolonlar (sağ/sol) — tipografik metin alanı
+   ========================================================================== */
+.ai-solutions-page .text-col {
+    width: min(38rem, 92vw);
+    position: relative;
+}
+
+.ai-solutions-page .align-right .text-col {
+    text-align: right;
+}
+
+.ai-solutions-page .align-left .text-col {
+    text-align: left;
+}
+
+/* Dikey çizgi aksanı (02 Düzen & Erişim) */
+.ai-solutions-page .layout-side.align-left .has-vline {
+    padding-left: 1.7rem;
+}
+
+    .ai-solutions-page .layout-side.align-left .has-vline::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.4rem;
+        bottom: 0.4rem;
+        width: 1px;
+        background: linear-gradient(180deg, transparent, rgba(232, 220, 196, 0.55), transparent);
+    }
+
+/* ============================================================================
+   AŞAMA 4 · 03 Modüler — merkez metin (objeler sağa/sola dağılır)
+   ========================================================================== */
+.ai-solutions-page .layout-center .scene-content {
+    --scrim-x: 50%;
+}
+
+.ai-solutions-page .text-center-col {
+    width: min(40rem, 92vw);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .ai-solutions-page .text-center-col .status-readout {
+        justify-content: center;
+    }
+
+/* ============================================================================
+   AŞAMA 6 · 05 Vizyon — ekranı kaplayan dev CTA finali
+   ========================================================================== */
+.ai-solutions-page .layout-cta .scene-content {
+    width: min(1000px, 92vw);
+    --scrim-x: 50%;
+}
+
+    .ai-solutions-page .layout-cta .scene-content::before {
+        inset: -28% -14%;
+        background: radial-gradient(78% 80% at 50% 50%, rgba(6, 5, 4, 0.72), rgba(6, 5, 4, 0) 82%);
+    }
+
+.ai-solutions-page .cta-block {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ai-solutions-page .cta-title {
+    font-size: clamp(3rem, 8.4vw, 6.6rem) !important;
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+    margin-top: 0.4rem;
+}
+
+.ai-solutions-page .cta-block .lede {
+    max-width: 48ch;
+}
+
+/* ============================================================================
+   Maskeli metin reveal altyapısı (KORUNDU) — beyaz→krem gradient kelimeler
+   ========================================================================== */
+.ai-solutions-page [data-reveal-heading] .rw {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+}
+
+.ai-solutions-page [data-reveal-heading] .rw-i {
+    display: inline-block;
+    will-change: transform;
+    background: linear-gradient(180deg, #ffffff 0%, #d8c19a 130%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* JS etkin + hareket açıkken: içerik başta gizli (FOUC önleme). */
+.aicore-anim .ai-solutions-page .scene-content,
+.ai-solutions-page.aicore-anim .scene-content {
+    opacity: 0;
+}
+
+/* ============================================================================
+   CTA butonları — minimalist, hover'da zarifçe parlayan
+   ========================================================================== */
+.ai-solutions-page .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    margin-top: 2.2rem;
+}
+
+.ai-solutions-page .btn-demo {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.95rem 1.9rem;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+    color: #1a120a;
+    background: linear-gradient(180deg, #f3ead9, #d8c19a);
+    border: 1px solid rgba(243, 234, 217, 0.7);
+    border-radius: 13px;
+    text-decoration: none;
+    box-shadow: 0 12px 34px rgba(138, 106, 66, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+
+    .ai-solutions-page .btn-demo::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -120%;
+        width: 70%;
+        height: 100%;
+        background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+        transform: skewX(-18deg);
+        transition: left 0.6s ease;
+    }
+
+    .ai-solutions-page .btn-demo:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 22px 60px rgba(232, 220, 196, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+        color: #1a120a;
+    }
+
+        .ai-solutions-page .btn-demo:hover::before {
+            left: 130%;
+        }
+
+    .ai-solutions-page .btn-demo .arrow {
+        transition: transform 0.25s ease;
+    }
+
+    .ai-solutions-page .btn-demo:hover .arrow {
+        transform: translateX(5px);
+    }
+
+.ai-solutions-page .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.95rem 1.6rem;
+    font-weight: 500;
+    font-size: 0.96rem;
+    color: var(--aic-ink);
+    border: 1px solid var(--aic-line);
+    border-radius: 13px;
+    text-decoration: none;
+    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+}
+
+    .ai-solutions-page .btn-ghost:hover {
+        border-color: rgba(232, 220, 196, 0.5);
+        color: var(--aic-cream);
+        background: rgba(232, 220, 196, 0.06);
+    }
+
+/* ============================================================================
+   Yan ilerleme göstergesi (stage rail)
+   ========================================================================== */
+.ai-solutions-page .stage-rail {
+    position: fixed;
+    right: clamp(1rem, 2.4vw, 2.3rem);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 6;
+    padding-right: 9px;
+}
+
+.ai-solutions-page .stage-rail-track {
+    position: absolute;
+    right: 3px;
+    top: 4px;
+    bottom: 4px;
+    width: 1px;
+    background: rgba(232, 220, 196, 0.14);
+    overflow: hidden;
+}
+
+.ai-solutions-page .stage-rail-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: var(--aic-progress, 0%);
+    background: linear-gradient(180deg, var(--aic-cream), var(--aic-brown));
+    box-shadow: 0 0 8px rgba(232, 220, 196, 0.55);
+}
+
+.ai-solutions-page .stage-rail-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1.15rem;
+}
+
+    .ai-solutions-page .stage-rail-list li {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        gap: 0.7rem;
+    }
+
+    .ai-solutions-page .stage-rail-list .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        border: 1px solid rgba(232, 220, 196, 0.34);
+        background: transparent;
+        transition: transform 0.35s ease, background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .ai-solutions-page .stage-rail-list .label {
+        font-family: var(--aic-mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: transparent;
+        transform: translateX(6px);
+        transition: color 0.35s ease, transform 0.35s ease;
+    }
+
+    .ai-solutions-page .stage-rail-list li.active .dot {
+        background: var(--aic-cream);
+        border-color: var(--aic-cream);
+        box-shadow: 0 0 12px var(--aic-cream);
+        transform: scale(1.3);
+    }
+
+    .ai-solutions-page .stage-rail-list li.active .label {
+        color: var(--aic-cream);
+        transform: translateX(0);
+    }
+
+/* ---- Kaydırma ipucu (yalnız ilk bölümde) ---------------------------------- */
+.ai-solutions-page .scroll-hint {
+    position: absolute;
+    bottom: 2.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--aic-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--aic-muted);
+    animation: aicFloat 2.4s ease-in-out infinite;
+}
+
+@keyframes aicFloat {
+    0%, 100% {
+        transform: translate(-50%, 0);
+        opacity: 0.45;
+    }
+
+    50% {
+        transform: translate(-50%, 9px);
+        opacity: 1;
+    }
+}
+
+/* ============================================================================
+   Duyarlı (responsive)
+   ========================================================================== */
+@media (max-width: 991px) {
+    .ai-solutions-page .stage-rail {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .ai-solutions-page .scene-section,
+    .ai-solutions-page .scene-section.align-left,
+    .ai-solutions-page .scene-section.align-right {
+        align-items: center;
+        padding: 5rem 1.4rem;
+    }
+    /* Hero ve yan kolonlar mobilde tek sütun, ortalı */
+    .ai-solutions-page .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 1.6rem;
+    }
+
+    .ai-solutions-page .text-col,
+    .ai-solutions-page .align-right .text-col,
+    .ai-solutions-page .align-left .text-col {
+        text-align: center;
+        width: 100%;
+    }
+
+    .ai-solutions-page .align-right .rule,
+    .ai-solutions-page .rule {
+        margin-left: auto;
+        margin-right: auto;
+        background: linear-gradient(90deg, transparent, var(--aic-cream), transparent);
+    }
+
+    .ai-solutions-page .align-right .index-row,
+    .ai-solutions-page .index-row {
+        justify-content: center;
+    }
+
+    .ai-solutions-page .status-readout {
+        justify-content: center;
+    }
+
+    .ai-solutions-page .layout-side.align-left .has-vline {
+        padding-left: 0;
+    }
+
+        .ai-solutions-page .layout-side.align-left .has-vline::after {
+            display: none;
+        }
+
+    .ai-solutions-page .scene-section h2 {
+        font-size: clamp(1.9rem, 7.5vw, 2.4rem);
+    }
+
+    .ai-solutions-page .layout-hero h1 {
+        font-size: clamp(2.5rem, 11vw, 3.4rem);
+    }
+
+    .ai-solutions-page .cta-title {
+        font-size: clamp(2.7rem, 12vw, 3.6rem) !important;
+    }
+}
+
+/* ============================================================================
+   Hareket azaltma
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    .ai-solutions-page .scroll-hint,
+    .ai-solutions-page .status-pulse,
+    .ai-solutions-page .eyebrow-dot,
+    .ai-solutions-page .grain-overlay {
+        animation: none;
+    }
+}
