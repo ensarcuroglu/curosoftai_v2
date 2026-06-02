@@ -1,4 +1,4 @@
-﻿/* curosoftai Design System Stylesheet
+/* curosoftai Design System Stylesheet
    Theme: Modern, Soft, Minimalist, Trustworthy Corporate
 */
 
@@ -12,7 +12,9 @@
     --accent: #594B42;                 /* Zengin koyu kahve (vurgu) */
     --accent-soft: #ECE5DB;            /* Açık krem (vurgu zemini) */
     --border-color: #D6CDC2;           /* Taupe border */
-    --header-bg: rgba(245, 242, 237, 0.85);
+    /* Dock glass — kept genuinely see-through (low opacity) and carried by a
+       strong backdrop blur so the page reads through it on every screen. */
+    --header-bg: rgba(247, 244, 239, 0.6);
 
     /* OKLCH Glow / Status Tokens */
     --glow-warm: oklch(0.82 0.06 60);  /* Soft amber radial */
@@ -271,8 +273,11 @@ ul {
     z-index: 1;
 }
 
-/* Warm aurora — the header's signature. Lives only inside the frosted dock and
-   is invisible at rest, so it never bleeds onto the page. */
+/* Warm aurora — the header's signature. The outer layer is a STATIC clip mask
+   pinned to the dock (overflow:hidden + dock radius); the glow that drifts left
+   and right lives on the inner ::before. Because only the inner layer moves, the
+   warm light can never spill past the dock's rounded edges (the old version
+   translated the clip box itself, which leaked the glow on every cycle). */
 .header-aura {
     position: absolute;
     inset: 0;
@@ -281,11 +286,20 @@ ul {
     pointer-events: none;
     overflow: hidden;
     opacity: 0;
-    background:
-        radial-gradient(58% 140% at 15% 0%, var(--glow-warm), transparent 60%),
-        radial-gradient(48% 130% at 90% 130%, var(--glow-warm), transparent 62%);
     transition: opacity 0.6s var(--ease-soft);
 }
+
+    .header-aura::before {
+        content: "";
+        position: absolute;
+        /* Bleeds well beyond the dock so neither edge of the gradient is ever
+           revealed at the extremes of the drift. */
+        inset: -60% -30%;
+        background:
+            radial-gradient(42% 120% at 24% 50%, var(--glow-warm), transparent 60%),
+            radial-gradient(40% 120% at 76% 50%, var(--glow-warm), transparent 62%);
+        will-change: transform;
+    }
 
 .site-header.scrolled {
     padding: 12px 16px;
@@ -298,19 +312,25 @@ ul {
         border-radius: var(--header-dock-radius);
         background-color: var(--header-bg);
         border-color: var(--header-edge);
-        backdrop-filter: blur(22px) saturate(1.7);
-        -webkit-backdrop-filter: blur(22px) saturate(1.7);
+        backdrop-filter: blur(24px) saturate(1.8);
+        -webkit-backdrop-filter: blur(24px) saturate(1.8);
         box-shadow: var(--header-shadow);
     }
 
     .site-header.scrolled .header-aura {
         opacity: 0.5;
-        animation: headerAura 18s var(--ease-soft) infinite;
     }
 
+        .site-header.scrolled .header-aura::before {
+            animation: headerAura 20s ease-in-out infinite;
+        }
+
+/* A smooth, symmetric left↔right glide (mirrored 0 → 50 → 100) so the loop never
+   jumps when it repeats. Opacity is owned by .header-aura, not the keyframes. */
 @keyframes headerAura {
-    0%, 100% { transform: translate3d(-4%, 0, 0) scale(1.06); opacity: 0.42; }
-    50%      { transform: translate3d(4%, 0, 0) scale(1.13);  opacity: 0.6; }
+    0%   { transform: translate3d(-9%, 0, 0) scale(1.05); }
+    50%  { transform: translate3d(9%, 0, 0)  scale(1.1); }
+    100% { transform: translate3d(-9%, 0, 0) scale(1.05); }
 }
 
 /* Logo Design — editorial Instrument Serif wordmark with a warm accent dot.
@@ -379,6 +399,12 @@ ul {
         color: var(--text-primary);
     }
 
+    .nav-link:focus-visible {
+        outline: none;
+        color: var(--text-primary);
+        box-shadow: 0 0 0 2px var(--accent-soft), inset 0 0 0 1px var(--accent);
+    }
+
 /* Active link — persistent, page-driven indicator. Pure CSS so it stays put
    regardless of where the hover pill is, and is always visible on its page. */
     .nav-link.is-active {
@@ -396,46 +422,37 @@ ul {
             box-shadow: inset 0 0 0 1px rgba(89, 75, 66, 0.16);
         }
 
-/* Call-To-Action — ink pill with magnetic pull (JS) and a soft top sheen.
-   Now lives in .header-actions (right zone); spacing is handled by that flex gap. */
+/* Call-To-Action — Soft, modern, minimal button.
+   A gentle fill that softly deepens its background colour on hover.
+   Lives in .header-actions; spacing handled by that flex row. */
 .cta-button {
-    position: relative;
-    display: inline-block;
-    padding: 9px 20px;
-    background-color: var(--text-primary);
-    color: var(--bg-primary) !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 22px;
+    background-color: var(--accent-soft);
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color);
     border-radius: 999px;
     font-size: 0.9rem;
-    font-weight: var(--fw-semibold);
+    font-weight: var(--fw-medium);
     letter-spacing: 0.01em;
-    box-shadow: 0 4px 12px rgba(42, 36, 32, 0.12);
-    transition: transform 0.35s var(--ease-editorial),
-                background-color 0.35s var(--ease-soft),
-                box-shadow 0.35s var(--ease-soft);
-    will-change: transform;
+    white-space: nowrap;
+    transition: background-color 0.4s var(--ease-soft), border-color 0.4s var(--ease-soft);
 }
 
-    .cta-button::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background: radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.28), transparent 60%);
-        opacity: 0;
-        transition: opacity 0.35s var(--ease-soft);
-    }
-
     .cta-button:hover {
-        background-color: var(--accent);
-        box-shadow: 0 12px 28px -8px rgba(89, 75, 66, 0.42);
+        background-color: var(--border-color);
+        border-color: var(--text-muted);
     }
 
-        .cta-button:hover::before {
-            opacity: 1;
-        }
+    .cta-button:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--accent-soft);
+    }
 
 .cta-button.is-active {
-    background-color: var(--accent);
+    background-color: var(--border-color);
 }
 
 /* Mobile Toggle Hamburger */
@@ -447,8 +464,16 @@ ul {
     flex-direction: column;
     gap: 6px;
     padding: 8px;
+    border-radius: 12px;
     z-index: 1100;
+    transition: background-color 0.3s var(--ease-soft);
 }
+
+    .menu-toggle:hover,
+    .menu-toggle:focus-visible {
+        outline: none;
+        background-color: var(--accent-soft);
+    }
 
 .hamburger-line {
     display: block;
@@ -461,8 +486,8 @@ ul {
 
 /* Main Content Area */
 .site-main {
-    margin-top: var(--header-height);
-    min-height: calc(100vh - var(--header-height) - 350px);
+    margin-top: 0;
+    min-height: calc(100vh - 350px);
     padding-bottom: 60px;
     animation: fadeInPage 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -575,7 +600,8 @@ ul {
 
 @media (prefers-reduced-motion: reduce) {
     .hero-glow,
-    .header-aura {
+    .header-aura,
+    .header-aura::before {
         animation: none;
     }
 

@@ -14,11 +14,11 @@
    Hero burada sadece layout ritmine uygun ilk nefesi ve kendi alt alanını yönetir. */
 .about-hero {
     position: relative;
-    min-height: min(calc(100svh - var(--header-height)), 760px);
+    min-height: min(100svh, 760px);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: clamp(40px, 6vh, 72px) 0 clamp(88px, 12vh, 120px);
+    padding: calc(var(--header-height) + clamp(40px, 6vh, 72px)) 0 clamp(88px, 12vh, 120px);
     isolation: isolate;
 }
 
@@ -297,8 +297,8 @@
 
 @media (max-width: 768px) {
     .about-hero {
-        min-height: min(calc(100svh - var(--header-height)), 620px);
-        padding: clamp(36px, 6vh, 56px) 0 clamp(80px, 12vh, 104px);
+        min-height: min(100svh, 620px);
+        padding: calc(var(--header-height) + clamp(36px, 6vh, 56px)) 0 clamp(80px, 12vh, 104px);
     }
 
     .about-hero-meta { margin-bottom: 20px; }

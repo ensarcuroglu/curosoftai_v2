@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initPageProgressBar();
     initNavIndicator();
-    initMagneticCta();
     initHeaderEntrance();
 });
 
@@ -112,36 +111,6 @@ function initNavIndicator() {
 
     navList.addEventListener('mouseleave', () => {
         indicator.style.opacity = '0';
-    });
-}
-
-/**
- * Gives the header CTA a subtle magnetic pull toward the cursor
- */
-function initMagneticCta() {
-    if (prefersReducedMotion()) return;
-
-    const cta = document.querySelector('.header-actions .cta-button');
-    if (!cta) return;
-
-    const strength = 0.35;
-    let centerX = 0;
-    let centerY = 0;
-
-    // Capture the resting center once per hover — avoids a layout read on every
-    // mousemove and measures against the original (not the translated) position.
-    cta.addEventListener('mouseenter', () => {
-        const rect = cta.getBoundingClientRect();
-        centerX = rect.left + rect.width / 2;
-        centerY = rect.top + rect.height / 2;
-    });
-
-    cta.addEventListener('mousemove', (e) => {
-        cta.style.transform = `translate(${(e.clientX - centerX) * strength}px, ${(e.clientY - centerY) * strength}px)`;
-    });
-
-    cta.addEventListener('mouseleave', () => {
-        cta.style.transform = '';
     });
 }
 

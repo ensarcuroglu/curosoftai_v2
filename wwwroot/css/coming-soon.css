@@ -4,11 +4,11 @@
 
 .coming-soon {
     position: relative;
-    min-height: calc(100vh - var(--header-height));
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(80px, 12vh, 140px) 0;
+    padding: calc(var(--header-height) + clamp(80px, 12vh, 140px)) 0 clamp(80px, 12vh, 140px);
     background-color: var(--bg-primary);
     isolation: isolate;
     overflow: hidden;
