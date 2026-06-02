@@ -9,12 +9,6 @@
 <div class="services-page">
 
     <section class="svc-hero" aria-labelledby="servicesHeroHeading">
-        <div class="svc-hero__bg" aria-hidden="true">
-            <span class="svc-hero__grid"></span>
-            <span class="svc-hero__beam svc-hero__beam--one"></span>
-            <span class="svc-hero__beam svc-hero__beam--two"></span>
-        </div>
-
         <div class="svc-container svc-hero__layout">
             <div class="svc-hero__copy">
                 <div class="svc-eyebrow-pill" data-svc-anim="hero">
@@ -46,29 +40,50 @@
                 </div>
             </div>
 
-            <aside class="svc-hero-panel" data-svc-anim="hero" aria-label="Teslimat yaklaşımı">
+            <aside class="svc-hero-panel" data-svc-anim="hero" aria-label="Ne teslim ediyoruz">
                 <div class="svc-hero-panel__top">
-                    <span class="svc-hero-panel__label">Teslimat standardı</span>
-                    <span class="svc-hero-panel__status">Aktif</span>
+                    <span class="svc-hero-panel__label">Ne teslim ediyoruz</span>
+                    <span class="svc-hero-panel__status">Uçtan uca</span>
                 </div>
-                <ol class="svc-hero-panel__list">
+                <ul class="svc-hero-panel__list">
                     <li>
-                        <span>01</span>
-                        <strong>Keşif ve teknik kapsam</strong>
+                        <span class="svc-hero-panel__check" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6 9 17l-5-5" />
+                            </svg>
+                        </span>
+                        <span class="svc-hero-panel__item">
+                            <strong>Ölçülebilir kapsam</strong>
+                            <em>Net hedef, kullanıcı akışı ve kabul kriteri</em>
+                        </span>
                     </li>
                     <li>
-                        <span>02</span>
-                        <strong>Mimari ve arayüz planı</strong>
+                        <span class="svc-hero-panel__check" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6 9 17l-5-5" />
+                            </svg>
+                        </span>
+                        <span class="svc-hero-panel__item">
+                            <strong>Sürdürülebilir mimari</strong>
+                            <em>Büyümeyi engellemeyen kod ve veri yapısı</em>
+                        </span>
                     </li>
                     <li>
-                        <span>03</span>
-                        <strong>Geliştirme, test ve yayın</strong>
+                        <span class="svc-hero-panel__check" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6 9 17l-5-5" />
+                            </svg>
+                        </span>
+                        <span class="svc-hero-panel__item">
+                            <strong>Performans ve güven</strong>
+                            <em>Hız, erişilebilirlik ve güvenlik dahil</em>
+                        </span>
                     </li>
-                    <li>
-                        <span>04</span>
-                        <strong>Bakım, ölçümleme ve iyileştirme</strong>
-                    </li>
-                </ol>
+                </ul>
+                <div class="svc-hero-panel__proof">
+                    <strong>Yayın sonrası sahiplik</strong>
+                    <span>Canlı sistem izlenir, bakımı yapılır ve sürekli iyileştirilir.</span>
+                </div>
             </aside>
         </div>
     </section>
@@ -265,8 +280,8 @@
             </header>
 
             <div class="svc-steps-wrapper">
-                <div class="svc-track" aria-hidden="true">
-                    <div class="svc-track__orb"></div>
+                <div class="svc-steps__line" aria-hidden="true">
+                    <span class="svc-steps__line-fill"></span>
                 </div>
 
                 <div class="svc-steps">
@@ -307,7 +322,6 @@
     <section class="svc-cta-section" aria-labelledby="servicesCtaHeading" data-svc-anim="fade">
         <div class="svc-container">
             <div class="svc-cta-wrapper">
-                <div class="svc-cta__border-spin" aria-hidden="true"></div>
                 <div class="svc-cta">
                     <span class="svc-section__eyebrow">Sonraki adım</span>
                     <h2 id="servicesCtaHeading" class="svc-cta__title">
@@ -317,7 +331,7 @@
                         Mevcut fikrinizi, sisteminizi veya operasyonel probleminizi dinleyelim.
                         Size gerçekçi kapsam, teknik yol ve teslimat yaklaşımı önerelim.
                     </p>
-                    <a class="svc-btn svc-btn--pill-primary svc-btn--shimmer" asp-controller="Contact" asp-action="Index">
+                    <a class="svc-btn svc-btn--pill-primary" asp-controller="Contact" asp-action="Index">
                         İletişime geç
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M5 12h14M13 5l7 7-7 7" />

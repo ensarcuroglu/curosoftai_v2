@@ -1,8 +1,11 @@
-﻿/* ============================================================
+/* ============================================================
    curosoftai — Services Page Animations
-   GSAP + ScrollTrigger layout.cshtml içinde (defer ile) yüklüdür.
-   Bu dosya da defer ile yüklendiği için onlardan sonra çalışır.
-   JS yoksa veya reduced-motion ise içerik tam görünür kalır.
+   "Sakin editöryal" hareket: yalnızca niyet-odaklı (scroll-reveal)
+   animasyon. Sürekli/dekoratif efekt yok.
+
+   GSAP + ScrollTrigger layout.cshtml içinde (defer ile) yüklüdür;
+   bu dosya da defer ile yüklendiği için onlardan sonra çalışır.
+   GSAP yoksa veya reduced-motion ise içerik tam görünür kalır.
    ============================================================ */
 (function () {
     "use strict";
@@ -29,33 +32,33 @@
 
         var ease = "power3.out";
 
-        /* ---------- HERO (sayfa yüklenince staggered) ---------- */
+        /* ---------- HERO (sayfa yüklenince yumuşak staggered fade-up) ---------- */
         var heroEls = gsap.utils.toArray('[data-svc-anim="hero"]');
-        gsap.set(heroEls, { opacity: 0, y: 26 });
+        gsap.set(heroEls, { opacity: 0, y: 24 });
         gsap.to(heroEls, {
             opacity: 1,
             y: 0,
-            duration: 0.9,
+            duration: 0.95,
             ease: ease,
-            stagger: 0.12,
-            delay: 0.15
+            stagger: 0.1,
+            delay: 0.12
         });
 
         /* ---------- Genel fade-in (section başlıkları, CTA) ---------- */
         gsap.utils.toArray('[data-svc-anim="fade"]').forEach(function (el) {
-            gsap.set(el, { opacity: 0, y: 30 });
+            gsap.set(el, { opacity: 0, y: 28 });
             gsap.to(el, {
                 opacity: 1,
                 y: 0,
                 duration: 0.85,
                 ease: ease,
-                scrollTrigger: { trigger: el, start: "top 85%" }
+                scrollTrigger: { trigger: el, start: "top 86%" }
             });
         });
 
         /* ---------- Hizmet kartları (staggered reveal) ---------- */
         var cards = gsap.utils.toArray('[data-svc-anim="card"]');
-        gsap.set(cards, { opacity: 0, y: 44 });
+        gsap.set(cards, { opacity: 0, y: 40 });
         ScrollTrigger.batch(cards, {
             start: "top 88%",
             onEnter: function (batch) {
@@ -64,40 +67,31 @@
                     y: 0,
                     duration: 0.8,
                     ease: ease,
-                    stagger: 0.12,
+                    stagger: 0.1,
                     overwrite: true
                 });
             }
         });
 
-        /* ---------- Kart hover glow takibi (pointer) ---------- */
-        cards.forEach(function (card) {
-            card.addEventListener("pointermove", function (e) {
-                var r = card.getBoundingClientRect();
-                card.style.setProperty("--mx", (e.clientX - r.left) + "px");
-                card.style.setProperty("--my", (e.clientY - r.top) + "px");
-            });
-        });
-
         /* ---------- Süreç adımları (sıralı reveal) ---------- */
         var steps = gsap.utils.toArray('[data-svc-anim="step"]');
-        gsap.set(steps, { opacity: 0, y: 36 });
+        gsap.set(steps, { opacity: 0, y: 32 });
         gsap.to(steps, {
             opacity: 1,
             y: 0,
             duration: 0.7,
             ease: ease,
-            stagger: 0.15,
+            stagger: 0.14,
             scrollTrigger: {
                 trigger: ".svc-steps",
-                start: "top 78%"
+                start: "top 80%"
             }
         });
 
-        /* ---------- Süreç bağlantı çizgisi (scroll ile çizilir) ---------- */
+        /* ---------- Süreç çizgisi (scroll ile dolar — sayfanın tek imza hareketi) ---------- */
         var lineFill = document.querySelector(".svc-steps__line-fill");
         if (lineFill) {
-            // CSS, desktop'ta scaleX(0) / mobilde scaleY(0) başlangıcı verir;
+            // CSS desktop'ta scaleX(0), mobilde scaleY(0) başlangıcı verir;
             // her iki ekseni de 1'e çekmek iki düzende de doğru çalışır.
             gsap.to(lineFill, {
                 scaleX: 1,
@@ -105,24 +99,9 @@
                 ease: "none",
                 scrollTrigger: {
                     trigger: ".svc-steps",
-                    start: "top 70%",
-                    end: "bottom 70%",
+                    start: "top 72%",
+                    end: "bottom 72%",
                     scrub: 0.6
-                }
-            });
-        }
-
-        /* ---------- Hero glow hafif parallax ---------- */
-        var glow = document.querySelector(".svc-hero__glow");
-        if (glow) {
-            gsap.to(glow, {
-                yPercent: 18,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: ".svc-hero",
-                    start: "top top",
-                    end: "bottom top",
-                    scrub: true
                 }
             });
         }
