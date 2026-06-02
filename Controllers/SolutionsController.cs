@@ -13,5 +13,10 @@ namespace curosoftai_v2.Controllers
         {
             return View();
         }
+
+        public IActionResult OperationalSoftware()
+        {
+            return View();
+        }
     }
 }

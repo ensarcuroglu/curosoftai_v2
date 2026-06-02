@@ -1,75 +1,52 @@
-/**
-   Curosoftai v2 - Brand & Web Experience Engine
-   Concept: Soft Editorial Minimalism
-   Handles elegant micro-reveals and liquid custom cursor tracking.
- */
-
-document.addEventListener('DOMContentLoaded', () => {
-    // GSAP Core & ScrollTrigger Verification
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. GSAP ScrollTrigger Kaydý (Layout'ta yüklü olduðu varsayýlýr)
     gsap.registerPlugin(ScrollTrigger);
 
-    /* ----------------------------------------------------
-       1. SMOOTH LIQUID CUSTOM CURSOR
-    ---------------------------------------------------- */
-    const cursor = document.querySelector('.studio-cursor');
+    // 2. Sayfa içi Fade-Up Elementlerinin Animasyonu
+    const fadeElements = gsap.utils.toArray('.fade-up');
 
-    if (cursor && window.matchMedia("(pointer: fine)").matches) {
-        document.addEventListener('mousemove', (e) => {
-            gsap.to(cursor, {
-                x: e.clientX,
-                y: e.clientY,
-                duration: 0.1,
-                ease: "power2.out"
-            });
+    fadeElements.forEach(element => {
+        // Elementi görünür yapýp baþlangýç durumunu ayarlýyoruz
+        gsap.set(element, { autoAlpha: 0, y: 40 });
+
+        gsap.to(element, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: element,
+                start: "top 85%", // Ekranýn %85'ine geldiðinde baþla
+                toggleActions: "play none none none"
+            }
+        });
+    });
+
+    // 3. CTA Bölümündeki Tarayýcý Ýçin Mouse Parallax Efekti
+    const ctaWrapper = document.querySelector('.web-cta-wrapper');
+    const browser = document.querySelector('.glass-browser');
+
+    if (ctaWrapper && browser) {
+        ctaWrapper.addEventListener('mousemove', (e) => {
+            const rect = ctaWrapper.getBoundingClientRect();
+            // Mouse pozisyonunu box merkezine göre hesapla
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            // Hassasiyet ayarý (ne kadar büyükse o kadar az döner)
+            const moveX = (x - centerX) / 40;
+            const moveY = (y - centerY) / 40;
+
+            // X ekseninde hareket Y rotasyonunu, Y ekseninde hareket X rotasyonunu etkiler
+            browser.style.transform = `rotateY(${moveX}deg) rotateX(${-moveY}deg) scale(1.02)`;
         });
 
-        // Expand cursor smoothly on elite interaction points
-        const clickables = document.querySelectorAll('a, button, .studio-card, .timeline-row');
-        clickables.forEach(target => {
-            target.addEventListener('mouseenter', () => cursor.classList.add('is-hovered'));
-            target.addEventListener('mouseleave', () => cursor.classList.remove('is-hovered'));
+        // Mouse çýktýðýnda baþlangýç konumuna (hafif eðik yapýya) geri dön
+        ctaWrapper.addEventListener('mouseleave', () => {
+            browser.style.transform = `rotateY(-5deg) rotateX(5deg) scale(1)`;
         });
     }
-
-    /* ----------------------------------------------------
-       2. HERO EDITORIAL ENTRANCE (SILENT SEQUENCING)
-    ---------------------------------------------------- */
-    const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-    heroTl.to(".studio-tag", { y: 0, opacity: 1, duration: 1.2, delay: 0.3 })
-        .to(".studio-hero__title", { y: 0, opacity: 1, duration: 1.2 }, "-=0.9")
-        .to(".studio-hero__lead", { y: 0, opacity: 1, duration: 1.0 }, "-=0.9")
-        .to(".studio-hero__actions", { y: 0, opacity: 1, duration: 0.8 }, "-=0.8");
-
-    /* ----------------------------------------------------
-       3. LINEAR SCROLL REVEALS (JOURNEY & BENTO CARDS)
-    ---------------------------------------------------- */
-    // Timeline rows step-by-step reveal
-    gsap.utils.toArray('.timeline-row').forEach((row) => {
-        gsap.to(row, {
-            scrollTrigger: {
-                trigger: row,
-                start: "top 85%"
-            },
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: "power2.out"
-        });
-    });
-
-    // Bento grids stagger card reveal
-    gsap.utils.toArray('.studio-card').forEach((card, index) => {
-        gsap.to(card, {
-            scrollTrigger: {
-                trigger: card,
-                start: "top 88%"
-            },
-            y: 0,
-            opacity: 1,
-            duration: 0.9,
-            ease: "power3.out",
-            delay: index * 0.05
-        });
-    });
 });

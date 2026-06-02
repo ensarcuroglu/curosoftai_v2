@@ -1,182 +1,156 @@
 @{
     ViewData["Title"] = "Marka ve Web Deneyimi";
-    ViewData["BodyClass"] = "studio-minimal-body";
+    /* Gerekirse layout'taki body class'ını tetiklemek için */
+    ViewData["BodyClass"] = "solution-detail-body";
 }
 
 @section Styles {
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/brandweb.css" asp-append-version="true" />
 }
 
-<div class="studio-cursor"></div>
+<div class="brand-web-page">
 
-<main id="brandWebMain">
+    <div class="container">
 
-    <section class="studio-hero">
-        <div class="studio-container">
-            <span class="studio-tag animate-fade">// Marka & Web Deneyimi</span>
+        <header class="solution-hero fade-up">
+            <span class="section-tag">Marka & Web Deneyimi</span>
 
-            <h1 class="studio-hero__title">
+            <h1 class="hero-title">
                 Fikir ile fonksiyonun <br />
-                <span class="editorial-serif">kusursuz</span> birlikteliği.
+                <span class="highlight-serif">kusursuz birlikteliği.</span>
             </h1>
 
-            <p class="studio-hero__lead">
-                Stratejik marka DNA'sını pürüzsüz arayüz tasarımlarına dönüştürüyoruz. Karmaşık kod yığınları yerine, markanızın hikayesini en sade ve ikonik şekilde anlatan kesintisiz dijital deneyimler.
+            <p class="hero-lead">
+                Stratejik marka DNA'sını pürüzsüz arayüz tasarımlarına dönüştürüyoruz. Karmaşık kod yığınları yerine, markanızın hikayesini milisaniyeler içinde anlatan kesintisiz dijital deneyimler.
             </p>
 
-            <div class="studio-hero__actions">
-                <a href="#dna-journey" class="studio-btn">
-                    Yaklaşımımızı İnceleyin
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                </a>
+            <div class="stats-row fade-up">
+                <div class="stat-item">
+                    <h4>%99+</h4>
+                    <span>Performans Skoru</span>
+                </div>
+                <div class="stat-item">
+                    <h4>3x</h4>
+                    <span>Etkileşim Artışı</span>
+                </div>
+                <div class="stat-item">
+                    <h4>0</h4>
+                    <span>Şişirilmiş Kod</span>
+                </div>
             </div>
-        </div>
-    </section>
+        </header>
 
-    <section id="dna-journey" class="studio-section journey-section">
-        <div class="studio-container">
-            <div class="studio-section__header">
-                <span class="section-num">[ 01 ]</span>
-                <h2 class="section-title">Marka Özyapısından Canlı Web Deneyimine</h2>
-                <p class="section-subtitle">Tasarımı sadece bir kabuk olarak değil, markanızın genetiğinden beslenen lineer bir akış ve strateji olarak kurguluyoruz.</p>
+        <section class="challenge-section fade-up">
+            <h2 class="section-title">Sıradanlık Markanızı Görünmez Kılar</h2>
+            <p class="section-subtitle">Kullanıcıların tahammülü saniyelerle değil, milisaniyelerle ölçülüyor.</p>
+
+            <div class="content-grid">
+                <div class="glass-box light-glass">
+                    <div class="box-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>
+                    </div>
+                    <h3>Şablonlara Sıkışmış Kimlikler</h3>
+                    <p>Standart temalar ve hantal altyapılar, kullanıcının markanızla kuracağı bağı anında koparır. Rakiplerinizin arasından sıyrılmak için özgünlüğe ihtiyacınız var.</p>
+                </div>
+
+                <div class="glass-box active-glass">
+                    <div class="box-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2" /><polyline points="2 17 12 22 22 17" /><polyline points="2 12 12 17 22 12" /></svg>
+                    </div>
+                    <h3>Sıfırıncı Saniye Etkisi</h3>
+                    <p>Markanıza özel, editoryal tipografi ve modüler modern mimari (Headless/API-first) ile optimize edilmiş sistemler, ziyaretçiyi ilk saniyede yakalar.</p>
+                </div>
             </div>
+        </section>
 
-            <div class="studio-timeline">
-                <div class="timeline-row">
-                    <div class="timeline-meta"><span>01 / Analiz</span></div>
-                    <div class="timeline-content">
-                        <h3>Marka DNA Haritası</h3>
+        <section class="use-cases-section fade-up">
+            <h2 class="section-title">Ekranın Arkasındaki Mimari</h2>
+
+            <div class="uc-list">
+                <div class="uc-item">
+                    <div class="uc-number">01</div>
+                    <div class="uc-content">
+                        <h3>Marka DNA'sı ve Strateji</h3>
                         <p>Şirketinizin vizyonunu, tipografik karakterini ve temel değerlerini çözümlüyor; dijital dünyadaki pazar konumlandırmasının omurgasını oluşturuyoruz.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-row">
-                    <div class="timeline-meta"><span>02 / Yapı</span></div>
-                    <div class="timeline-content">
-                        <h3>Deneyim Mimarisi (UX)</h3>
-                        <p>Ziyaretçinin ihtiyaç duyduğu bilgiye en sezgisel, en zahmetsiz yoldan ulaşmasını sağlayan duru ve empati odaklı kullanıcı yolculukları tasarlıyoruz.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-row">
-                    <div class="timeline-meta"><span>03 / Dil</span></div>
-                    <div class="timeline-content">
-                        <h3>Tasarım Sistemi & UI</h3>
-                        <p>Markanıza özel, oranların ve tipografinin mükemmel uyum içinde olduğu, gelecekte büyüyebilen modüler komponent kütüphaneleri inşa ediyoruz.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-row">
-                    <div class="timeline-meta"><span>04 / Kod</span></div>
-                    <div class="timeline-content">
-                        <h3>Performans Odaklı Entegrasyon</h3>
-                        <p>Sıfır şişirilmiş framework prensibiyle, Google standartlarında en üst düzey hız skorlarına ulaşan, temiz ve saf mimarili kod blokları üretiyoruz.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="studio-section bento-section">
-        <div class="studio-container">
-            <div class="studio-section__header">
-                <span class="section-num">[ 02 ]</span>
-                <h2 class="section-title">Neden Çoğu Web Projesi Başarısız Olur?</h2>
-                <p class="section-subtitle">Kullanıcıların tahammülü saniyelerle ölçülüyor. Karmaşık tasarımlar ve yavaş altyapılar müşterilerinizi rakiplerinize kaptırır. Biz, bu engelleri saf zanaat kalitesiyle ortadan kaldırıyoruz.</p>
-            </div>
-
-            <div class="studio-bento">
-                <div class="studio-card bento-8">
-                    <div class="card-body">
-                        <span class="card-tag">PERFORMANS</span>
-                        <h3 class="card-heading">Milisaniyelerle Ölçülen Hız</h3>
-                        <p class="card-desc">Hafif ve temiz bir mimariyle optimize edilmiş sistemler kuruyoruz. Hızlı yüklenen sayfalar kullanıcıyı içeride tutar, hemen çıkma oranlarını düşürür ve arama motorlarında (SEO) kalıcı bir güç sağlar.</p>
-                    </div>
-                    <div class="card-visual">
-                        <div class="minimal-speed-indicator">
-                            <span class="speed-value">99%</span>
-                            <span class="speed-label">Optimal Dağıtım</span>
+                        <div class="uc-tags">
+                            <span class="tag">Brand Strategy</span>
+                            <span class="tag">Identity</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="studio-card bento-4">
-                    <div class="card-body">
-                        <span class="card-tag font-meta">TİPOGRAFİ</span>
-                        <h3 class="card-heading">Okunabilirlik Sanatı</h3>
-                        <p class="card-desc">Gözü yormayan dengeli boşluklar (whitespace) ve editoryal bir font hiyerarşisi kullanarak markanızın dijital olgunluğunu ve premium algısını yükseltiyoruz.</p>
+                <div class="uc-item">
+                    <div class="uc-number">02</div>
+                    <div class="uc-content">
+                        <h3>Deneyim Mimarisi (UX/UI)</h3>
+                        <p>Ziyaretçinin ihtiyaç duyduğu bilgiye en sezgisel yoldan ulaşmasını sağlayan empati odaklı akışlar ve modüler komponent kütüphaneleri inşa ediyoruz.</p>
+                        <div class="uc-tags">
+                            <span class="tag">UX Flow</span>
+                            <span class="tag">Design Systems</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="studio-card bento-4">
-                    <div class="card-body">
-                        <span class="card-tag">MİMARİ</span>
-                        <h3 class="card-heading">Modüler & Ölçeklenebilir</h3>
-                        <p class="card-desc">İşiniz büyüdükçe darboğaz yaratmayan esnek komponent yapıları sayesinde gelecekteki tüm ihtiyaçlarınıza organik olarak adapte olabilen sistemler teslim ediyoruz.</p>
-                    </div>
-                </div>
-
-                <div class="studio-card bento-8">
-                    <div class="card-body">
-                        <span class="card-tag">DENEYİM</span>
-                        <h3 class="card-heading">Kullanıcıyı Anlayan Net Akışlar</h3>
-                        <p class="card-desc">Ziyaretçilerinizi labirentlerde yormuyoruz. Davranışsal UX analizleriyle, potansiyel müşteriyi en doğru bilgiye ve doğrudan "iletişim" aksiyonuna götüren pürüzsüz dönüşüm hunileri kurguluyoruz.</p>
-                    </div>
-                    <div class="card-visual visual-line-art">
-                        <div class="minimal-ux-flow-lines">
-                            <span class="flow-dot"></span>
-                            <span class="flow-line"></span>
-                            <span class="flow-dot accent-dot"></span>
+                <div class="uc-item">
+                    <div class="uc-number">03</div>
+                    <div class="uc-content">
+                        <h3>Performans Odaklı Geliştirme</h3>
+                        <p>Sıfır framework şişkinliği prensibiyle, Google standartlarında en üst düzey hız skorlarına ulaşan, temiz ve saf mimarili kod blokları üretiyoruz.</p>
+                        <div class="uc-tags">
+                            <span class="tag">Headless</span>
+                            <span class="tag">Clean Code</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="studio-cta-section">
-        <div class="studio-container">
-            <div class="studio-cta-box">
-                <div class="cta-content">
-                    <span class="cta-tag">// Geleceği Kurgulamak</span>
-                    <h2 class="cta-title">Vizyonunuzu dijital dünyada <br /><span class="editorial-serif text-muted-inline">kalıcı bir ize</span> dönüştürelim.</h2>
-                    <p class="cta-desc">İşinizi bir sonraki seviyeye taşıyacak, dönüşüm odaklı ve modern dijital deneyim merkezini birlikte inşa edelim. İlk adımı atmak çok kolay.</p>
+        <section class="industry-cta fade-up">
+            <div class="web-cta-wrapper">
+                <div class="cta-glow-bg"></div>
 
-                    <a class="studio-btn btn-dark" asp-controller="Contact" asp-action="Index">
-                        Projeyi Başlatın
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </a>
-                </div>
-
-                <div class="cta-perks">
-                    <div class="perk-item">
-                        <h4>Ücretsiz Analiz</h4>
-                        <p>Mevcut web sitenizin performans ve UX eksiklerini raporluyoruz.</p>
+                <div class="web-content-row">
+                    <div class="web-text-col">
+                        <div class="creative-badge">
+                            <span class="cursor-icon">✨</span>
+                            <span>Dijital Zanaat</span>
+                        </div>
+                        <h2 class="cta-heading">Dijital Dünyada <br> <span class="highlight-serif" style="color: var(--bg-primary);">İz Bırakın.</span></h2>
+                        <p class="cta-desc">
+                            İşinizi bir sonraki seviyeye taşıyacak, dönüşüm odaklı ve modern dijital deneyim merkezini birlikte inşa edelim.
+                        </p>
+                        <a asp-controller="Contact" asp-action="Index" class="btn btn-primary cta-action-btn">
+                            Projeyi Başlatın
+                        </a>
                     </div>
-                    <div class="perk-item">
-                        <h4>Hızlı Teknik Dönüş</h4>
-                        <p>Taleplerinize 24 saat içerisinde zanaat odaklı teknik yanıt üretiyoruz.</p>
-                    </div>
-                    <div class="perk-item">
-                        <h4>Premium Teslimat</h4>
-                        <p>Tasarım sisteminden kod mimarisine kadar en ince ayrıntısı düşünülmüş bir ekosistem.</p>
+
+                    <div class="web-visual-col">
+                        <div class="glass-browser">
+                            <div class="browser-header">
+                                <div class="mac-dots">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <div class="url-bar">curosoftai.com/gelecek</div>
+                            </div>
+                            <div class="browser-body">
+                                <div class="skeleton-hero"></div>
+                                <div class="skeleton-cards">
+                                    <div class="s-card"></div>
+                                    <div class="s-card delay"></div>
+                                </div>
+                                <div class="floating-cursor">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#E8E2D8" stroke="#2A2420" stroke-width="1.5"><polygon points="3 3 10.5 21 13.5 13.5 21 10.5 3 3"></polygon></svg>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-</main>
+    </div>
+</div>
 
 @section Scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.2/ScrollTrigger.min.js"></script>
     <script src="~/js/brandweb.js" asp-append-version="true" defer></script>
 }
