@@ -1,0 +1,150 @@
+@{
+    ViewData["Title"] = "Projeler";
+    // Body class (projects-page) ProjectController.Index içinde set edilir.
+
+    var projects = new[]
+    {
+        new {
+            Num = "01",
+            Category = "Depo & Lojistik · Yapay Zeka · Simülasyon",
+            Name = "AI Destekli Depo Yönetim Sistemi (WMS)",
+            Desc = "Lot ve palet takibi, putaway/pick görev akışları, PWA mobil terminal ve 3D AGV/AMR simülasyonunu bir araya getiren full-stack platform. LangGraph tabanlı depo asistanı (HITL), İrsaliye AI ve Excel AI modülleriyle operasyonel zekâyı merkeze alır.",
+            Image = "~/images/projects/depo-yonetim-sistemi.jpg",
+            Alt = "AI Destekli Depo Yönetim Sistemi admin paneli ve mobil terminal arayüzü",
+            Tags = new[] { "FastAPI", "React 19", "RabbitMQ", "LangGraph AI", "3D AGV Sim" },
+            Stats = new[] {
+                new { Value = "6+", Label = "Bağımsız AI & Yardımcı Servis" },
+                new { Value = "PWA", Label = "Offline Mobil Terminal" }
+            }
+        },
+        new {
+            Num = "02",
+            Category = "Kurumsal Web Sitesi · Dijital Altyapı",
+            Name = "Özbektaşoğulları İnşaat Kurumsal Web Platformu",
+            Desc = "Markanın kurumsal dijital kimliğini güçlendiren; video arka plan, scroll animasyonları, dark mode ve Gmail SMTP altyapılı iletişim formuna sahip modern web sitesi. Yönetim paneli barındırmayan yalın, hızlı ve kod sadeleştirmesi yapılmış güçlü bir yapı sunar.",
+            Image = "~/images/projects/ozbektasogullari-kurumsal.jpg",
+            Alt = "Özbektaşoğulları İnşaat kurumsal web sitesi ana sayfa tasarımı",
+            Tags = new[] { "ASP.NET Core MVC", "Razor Pages", "Bootstrap", "SEO Optimizasyonu" },
+            Stats = new[] {
+                new { Value = "%100", Label = "Lighthouse SEO Skoru" },
+                new { Value = "Yalın", Label = "Panelsiz Güçlü Mimari" }
+            }
+        },
+        new {
+            Num = "03",
+            Category = "Eğitim Teknolojileri · Yapay Zeka · Bilgisayarlı Görü",
+            Name = "EduMind.AI: Akıllı Öğrenci Performans Koçu",
+            Desc = "Öğrencilerin akademik performanslarını XGBoost ile yüksek doğrulukla tahmin eden ve hedeflenen başarıya ulaşılması için optimum yol haritaları sunan çok modlu (multi-modal) karar destek sistemi. Genetik algoritmalarla kısıt tabanlı ders programı üretirken; YOLOv8 ile fiziksel çalışma ortamını, MediaPipe ile postür ve odaklanmayı analiz eder.",
+            Image = "~/images/projects/ogrenci-performans-tahmin.jpg",
+            Alt = "EduMind.AI yapay zeka destekli mentörlük ve ortam analizi arayüzü",
+            Tags = new[] { "ASP.NET Core MVC", "FastAPI", "XGBoost", "YOLOv8", "Gemini AI" },
+            Stats = new[] {
+                new { Value = "0.8960", Label = "R² Tahmin Başarısı" },
+                new { Value = "Kısıtlı", Label = "Zaman & Biyoloji Optimizasyonu" }
+            }
+        }
+    };
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/project.css" asp-append-version="true" />
+}
+
+<div class="projects-container">
+
+    <header class="projects-hero">
+        <span class="projects-hero__eyebrow" data-reveal>Seçme İşler / Vaka Analizleri</span>
+        <h1 class="projects-hero__title" data-reveal>
+            Kurumsal problemlere getirdiğimiz <em>sade ve etkili</em> çözümler.
+        </h1>
+        <p class="projects-hero__lead" data-reveal>
+            Her proje; net bir problem, ölçülebilir bir sonuç ve sürdürülebilir bir mimari üzerine kuruludur. Seçtiğimiz birkaç vaka aşağıda.
+        </p>
+    </header>
+
+    <div class="case-list">
+        @for (var i = 0; i < projects.Length; i++)
+        {
+            var p = projects[i];
+            var isFeatured = i == 0;
+            var isReverse = !isFeatured && i % 2 == 1;
+            var itemClass = "case-item"
+                + (isFeatured ? " case-item--featured" : string.Empty)
+                + (isReverse ? " case-item--reverse" : string.Empty);
+
+            <article class="@itemClass" data-reveal>
+                <div class="case-item__media">
+                    <div class="case-item__media-inner">
+                        <img class="case-item__image" src="@Url.Content(p.Image)" alt="@p.Alt"
+                             loading="@(isFeatured ? "eager" : "lazy")" />
+                        <div class="case-item__reveal" aria-hidden="true">
+                            <span class="case-item__reveal-cat">@p.Category</span>
+                            <span class="case-item__reveal-name">@p.Name</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="case-item__info">
+                    @if (isFeatured)
+                    {
+                        <span class="case-item__flag"><span class="case-item__flag-dot"></span>Öne Çıkan Vaka</span>
+                    }
+
+                    <div class="case-item__meta">
+                        <span class="case-item__num">@p.Num</span>
+                        <span class="case-item__rule" aria-hidden="true"></span>
+                        <span class="case-item__category">@p.Category</span>
+                    </div>
+
+                    <h2 class="case-item__name">@p.Name</h2>
+                    <p class="case-item__desc">@p.Desc</p>
+
+                    <ul class="case-item__tags">
+                        @foreach (var tag in p.Tags)
+                        {
+                            <li class="case-tag">@tag</li>
+                        }
+                    </ul>
+
+                    <div class="case-item__stats">
+                        @foreach (var s in p.Stats)
+                        {
+                            <div class="case-stat">
+                                <strong>@s.Value</strong>
+                                <span>@s.Label</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+
+</div>
+
+<section class="case-cta-section">
+    <div class="projects-container">
+        <div class="case-cta-wrapper" data-reveal>
+            <span class="case-cta__border-spin" aria-hidden="true"></span>
+            <div class="case-cta">
+                <span class="case-cta__eyebrow">Sıradaki Vaka</span>
+                <h2 class="case-cta__title">Sırada <em>sizin projeniz</em> olabilir.</h2>
+                <p class="case-cta__desc">
+                    Net bir problemden ölçülebilir bir sonuca giden yolu birlikte tasarlayalım.
+                </p>
+                <a class="case-btn case-btn--primary" asp-controller="Contact" asp-action="Index">
+                    Projenizi konuşalım
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/project.js" asp-append-version="true"></script>
+}

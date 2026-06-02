@@ -1,0 +1,497 @@
+/* ============================================================
+   curosoftai — Projeler (Projects) Stylesheet
+   Tasarım: "Quiet Editorial · Vaka Dosyaları"
+   - Bare/sakin editöryal hero (glow & grain YOK)
+   - Numaralı, dönüşümlü vaka blokları + featured flagship
+   - Görsel hover: zoom + alttan kayan reveal katmanı
+   layout.css token'ları üzerine kuruludur. Yerel token'lar
+   .projects-page'de tanımlanır; custom property'ler DOM'da
+   aşağı miras alındığı için tüm alt sınıflara ulaşır.
+   ============================================================ */
+
+.projects-page {
+    --case-gap: clamp(80px, 11vw, 160px);
+    --case-radius: 16px;
+    --case-num-size: clamp(2.4rem, 5vw, 4rem);
+    --case-card-bg: #FBF9F5;
+    color: var(--text-primary);
+}
+
+/* Reveal init — yalnızca JS aktifken gizle (no-JS'te görünür kalır) */
+.projects-page[data-ready] [data-reveal] {
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.projects-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ============================================================
+   HERO — bare / sakin editöryal
+   ============================================================ */
+.projects-hero {
+    padding: calc(var(--header-height) + clamp(70px, 11vw, 140px)) 0 clamp(56px, 8vw, 96px);
+    max-width: 920px;
+}
+
+.projects-hero__eyebrow {
+    display: inline-block;
+    font-size: 0.82rem;
+    font-weight: var(--fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    margin-bottom: 22px;
+}
+
+.projects-hero__title {
+    font-family: var(--font-display);
+    font-weight: var(--fw-regular);
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height: 1.06;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+}
+
+    .projects-hero__title em {
+        font-style: italic;
+        color: var(--accent);
+    }
+
+.projects-hero__lead {
+    margin-top: 26px;
+    max-width: 560px;
+    font-size: var(--fs-lead);
+    line-height: 1.65;
+    color: var(--text-secondary);
+}
+
+/* ============================================================
+   CASE LIST
+   ============================================================ */
+.case-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--case-gap);
+    padding-bottom: clamp(80px, 11vw, 150px);
+}
+
+.case-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(36px, 5vw, 72px);
+    align-items: center;
+}
+
+/* Dönüşümlü: ters bloklarda görsel sağa geçer */
+.case-item--reverse .case-item__media { order: 2; }
+.case-item--reverse .case-item__info  { order: 1; }
+
+/* Featured / flagship — daha büyük görsel + tipografi, alt çizgiyle ayrılır */
+.case-item--featured {
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(40px, 5vw, 80px);
+    padding-bottom: var(--case-gap);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* ---------- Media ---------- */
+.case-item__media-inner {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--case-radius);
+    background: var(--bg-secondary);
+    aspect-ratio: 4 / 3;
+    box-shadow: 0 4px 24px rgba(42, 36, 32, 0.05), 0 1px 2px rgba(42, 36, 32, 0.03);
+}
+
+.case-item--featured .case-item__media-inner {
+    aspect-ratio: 16 / 11;
+}
+
+.case-item__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.85s var(--ease-editorial);
+}
+
+/* Reveal katmanı — hover'da alttan belirir */
+.case-item__reveal {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 6px;
+    padding: 28px;
+    background: linear-gradient(to top, rgba(42, 36, 32, 0.74) 0%, rgba(42, 36, 32, 0.14) 52%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-soft);
+    pointer-events: none;
+}
+
+.case-item__reveal-cat {
+    font-size: 0.74rem;
+    font-weight: var(--fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(245, 242, 237, 0.82);
+    transform: translateY(10px);
+    transition: transform 0.5s var(--ease-editorial);
+}
+
+.case-item__reveal-name {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.65rem;
+    line-height: 1.1;
+    color: var(--bg-primary);
+    transform: translateY(12px);
+    transition: transform 0.55s var(--ease-editorial);
+}
+
+.case-item__media-inner:hover .case-item__image {
+    transform: scale(1.05);
+}
+
+.case-item__media-inner:hover .case-item__reveal {
+    opacity: 1;
+}
+
+.case-item__media-inner:hover .case-item__reveal-cat,
+.case-item__media-inner:hover .case-item__reveal-name {
+    transform: translateY(0);
+}
+
+/* ---------- Info ---------- */
+.case-item__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.case-item__flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: var(--fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid var(--border-color);
+    padding: 6px 13px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+}
+
+.case-item__flag-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--status-live);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--status-live) 20%, transparent);
+}
+
+.case-item__meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.case-item__num {
+    font-family: var(--font-display);
+    font-size: var(--case-num-size);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    opacity: 0.22;
+}
+
+.case-item__rule {
+    flex-shrink: 0;
+    height: 1px;
+    width: clamp(28px, 5vw, 64px);
+    background: var(--border-color);
+}
+
+.case-item__category {
+    font-size: 0.78rem;
+    font-weight: var(--fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+}
+
+.case-item__name {
+    font-family: var(--font-display);
+    font-weight: var(--fw-regular);
+    font-size: clamp(1.9rem, 3vw, 2.9rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    margin-bottom: 18px;
+}
+
+.case-item--featured .case-item__name {
+    font-size: clamp(2.2rem, 3.6vw, 3.4rem);
+}
+
+.case-item__desc {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 46ch;
+    margin-bottom: 26px;
+}
+
+/* ---------- Tech tags ---------- */
+.case-item__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-bottom: 30px;
+}
+
+.case-tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.82rem;
+    font-weight: var(--fw-medium);
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    border: 1px solid rgba(42, 36, 32, 0.05);
+    padding: 7px 15px;
+    border-radius: 999px;
+    transition: color 0.3s var(--ease-soft), background 0.3s var(--ease-soft), border-color 0.3s var(--ease-soft);
+}
+
+    .case-tag::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0.5;
+        margin-right: 8px;
+    }
+
+    .case-tag:hover {
+        color: var(--text-primary);
+        background: #FFFFFF;
+        border-color: var(--text-muted);
+    }
+
+/* ---------- Stats ---------- */
+.case-item__stats {
+    display: flex;
+    gap: clamp(28px, 4vw, 48px);
+    width: 100%;
+    border-top: 1px solid var(--border-color);
+    padding-top: 22px;
+}
+
+.case-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+    .case-stat strong {
+        font-family: var(--font-display);
+        font-size: clamp(1.5rem, 2.2vw, 2rem);
+        font-weight: var(--fw-regular);
+        line-height: 1;
+        color: var(--text-primary);
+    }
+
+    .case-stat span {
+        font-size: 0.82rem;
+        font-weight: var(--fw-medium);
+        letter-spacing: 0.01em;
+        color: var(--text-muted);
+    }
+
+/* ============================================================
+   ALT CTA — animasyonlu conic border (Services dili, proje-scope)
+   ============================================================ */
+.case-cta-section {
+    padding: 0 0 clamp(80px, 11vw, 130px);
+}
+
+.case-cta-wrapper {
+    position: relative;
+    border-radius: 28px;
+    padding: 1px; /* border kalınlığı */
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(42, 36, 32, 0.06);
+}
+
+.case-cta__border-spin {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent 0%, transparent 35%, var(--accent) 50%, transparent 65%, transparent 100%);
+    animation: caseSpinBorder 6s linear infinite;
+    z-index: 0;
+}
+
+@keyframes caseSpinBorder {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.case-cta {
+    position: relative;
+    z-index: 1;
+    background: var(--case-card-bg);
+    border-radius: 27px;
+    padding: clamp(48px, 7vw, 84px) clamp(28px, 5vw, 72px);
+    text-align: center;
+}
+
+.case-cta__eyebrow {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: var(--fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 16px;
+}
+
+.case-cta__title {
+    font-family: var(--font-display);
+    font-weight: var(--fw-regular);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    max-width: 20ch;
+    margin: 0 auto;
+}
+
+    .case-cta__title em {
+        font-style: italic;
+        color: var(--accent);
+    }
+
+.case-cta__desc {
+    margin: 20px auto 34px;
+    max-width: 46ch;
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.case-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 30px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: var(--fw-semibold);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.case-btn--primary {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    box-shadow: 0 8px 24px rgba(42, 36, 32, 0.16);
+}
+
+    .case-btn--primary:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(89, 75, 66, 0.24);
+    }
+
+.case-btn svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s var(--ease-soft);
+}
+
+.case-btn--primary:hover svg {
+    transform: translateX(3px);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 992px) {
+    .case-item,
+    .case-item--featured {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    /* Mobilde her zaman görsel üstte, bilgi altta */
+    .case-item__media,
+    .case-item--reverse .case-item__media {
+        order: 1;
+    }
+
+    .case-item__info,
+    .case-item--reverse .case-item__info {
+        order: 2;
+    }
+
+    .case-item__media-inner,
+    .case-item--featured .case-item__media-inner {
+        aspect-ratio: 16 / 10;
+    }
+}
+
+@media (max-width: 640px) {
+    .projects-hero {
+        padding-top: calc(var(--header-height) + 56px);
+    }
+
+    .case-item__desc {
+        max-width: none;
+    }
+
+    .case-item__stats {
+        gap: 22px;
+    }
+
+    .case-item__reveal {
+        padding: 20px;
+    }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    .projects-page[data-ready] [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .case-item__image,
+    .case-item__reveal,
+    .case-item__reveal-cat,
+    .case-item__reveal-name,
+    .case-btn,
+    .case-tag {
+        transition: none;
+    }
+
+    .case-cta__border-spin {
+        animation: none;
+    }
+}
