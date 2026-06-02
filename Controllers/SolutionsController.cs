@@ -8,5 +8,10 @@ namespace curosoftai_v2.Controllers
         {
             return View();
         }
+
+        public IActionResult BrandWeb()
+        {
+            return View();
+        }
     }
 }
