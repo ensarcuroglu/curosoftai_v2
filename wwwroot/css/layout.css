@@ -4,50 +4,38 @@
 
 :root {
     /* Color Palette — Modern Taupe / Mocha (cool, gray-leaning brown) */
-    --bg-primary: #F5F2ED;             /* Kırık beyaz */
-    --bg-secondary: #E8E2D8;           /* Açık taupe krem */
-    --text-primary: #2A2420;           /* Çok koyu mocha (ana metin) */
-    --text-secondary: #5A5148;         /* Orta gri-kahve */
-    --text-muted: #998F84;             /* Açık taupe */
-    --accent: #594B42;                 /* Zengin koyu kahve (vurgu) */
-    --accent-soft: #ECE5DB;            /* Açık krem (vurgu zemini) */
-    --border-color: #D6CDC2;           /* Taupe border */
+    --bg-primary: #F5F2ED; /* Kırık beyaz */
+    --bg-secondary: #E8E2D8; /* Açık taupe krem */
+    --text-primary: #2A2420; /* Çok koyu mocha (ana metin) */
+    --text-secondary: #5A5148; /* Orta gri-kahve */
+    --text-muted: #998F84; /* Açık taupe */
+    --accent: #594B42; /* Zengin koyu kahve (vurgu) */
+    --accent-soft: #ECE5DB; /* Açık krem (vurgu zemini) */
+    --border-color: #D6CDC2; /* Taupe border */
     /* Dock glass — kept genuinely see-through (low opacity) and carried by a
        strong backdrop blur so the page reads through it on every screen. */
     --header-bg: rgba(247, 244, 239, 0.6);
-
     /* OKLCH Glow / Status Tokens */
-    --glow-warm: oklch(0.82 0.06 60);  /* Soft amber radial */
+    --glow-warm: oklch(0.82 0.06 60); /* Soft amber radial */
     --status-live: oklch(0.62 0.16 145); /* Living green */
-
     /* Typography */
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
     --font-display: 'Instrument Serif', 'Times New Roman', Georgia, serif;
     --fs-hero: clamp(2rem, 5vw, 3.8rem);
     --fs-lead: clamp(1.05rem, 1.4vw, 1.25rem);
-
     /* Layout Variables */
     --max-width: 1200px;
     --header-height: 76px;
     --header-height-scroll: 62px;
-
-    /* Header — at rest it fully dissolves into the page (no chrome on any page);
-       on scroll it condenses into a soft, frosted "dock" (rounded card) with a
-       warm aurora drifting inside. Edge / shadow / radius / width are tokenised so
-       each page theme (light + dark immersive) recolours the dock without
-       touching the morph logic. */
+    /* Header Dock Settings */
     --header-dock-w: 1100px;
     --header-dock-radius: 20px;
     --header-edge: rgba(255, 255, 255, 0.6);
-    --header-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset,
-                     0 26px 60px -28px rgba(42, 36, 32, 0.34),
-                     0 8px 24px -14px rgba(42, 36, 32, 0.18);
-
+    --header-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 26px 60px -28px rgba(42, 36, 32, 0.34), 0 8px 24px -14px rgba(42, 36, 32, 0.18);
     /* Motion Tokens */
     --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
     --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
     /* Font Weights */
     --fw-light: 300;
     --fw-regular: 400;
@@ -56,7 +44,6 @@
     --fw-bold: 700;
 }
 
-/* Animatable custom property for breathing glow */
 @property --hero-glow-opacity {
     syntax: '<number>';
     inherits: false;
@@ -177,8 +164,15 @@ ul {
 }
 
 @keyframes heroBreath {
-    0%, 100% { --hero-glow-opacity: 0.45; transform: translateX(-50%) scale(1); }
-    50%      { --hero-glow-opacity: 0.7;  transform: translateX(-50%) scale(1.08); }
+    0%, 100% {
+        --hero-glow-opacity: 0.45;
+        transform: translateX(-50%) scale(1);
+    }
+
+    50% {
+        --hero-glow-opacity: 0.7;
+        transform: translateX(-50%) scale(1.08);
+    }
 }
 
 .hero-grain {
@@ -204,14 +198,7 @@ ul {
     transition: width 0.2s ease;
 }
 
-/* ============================================================================
-   Site Header — "Quiet Editorial · Dissolve-to-Dock"
-   Rest (scroll=0): zero chrome on EVERY page — the wordmark, centred nav and CTA
-   float directly on the page (light or dark immersive), nothing separates them
-   from it. On scroll the shell condenses into a soft, frosted cream "dock"
-   (rounded card) with a warm aurora drifting inside. Three-zone grid keeps the
-   nav optically centred regardless of logo / CTA widths.
-   ========================================================================== */
+/* Site Header */
 .site-header {
     position: fixed;
     top: 0;
@@ -237,23 +224,32 @@ ul {
     background-color: transparent;
     backdrop-filter: blur(0);
     -webkit-backdrop-filter: blur(0);
-    transition: max-width 0.6s var(--ease-editorial),
-                height 0.5s var(--ease-editorial),
-                padding 0.5s var(--ease-editorial),
-                background-color 0.5s var(--ease-soft),
-                border-color 0.5s var(--ease-soft),
-                border-radius 0.6s var(--ease-editorial),
-                box-shadow 0.5s var(--ease-soft),
-                backdrop-filter 0.5s var(--ease-soft);
+    transition: max-width 0.6s var(--ease-editorial), height 0.5s var(--ease-editorial), padding 0.5s var(--ease-editorial), background-color 0.5s var(--ease-soft), border-color 0.5s var(--ease-soft), border-radius 0.6s var(--ease-editorial), box-shadow 0.5s var(--ease-soft), backdrop-filter 0.5s var(--ease-soft);
 }
 
-/* Three zones — explicit columns so the right cluster never drifts to centre
-   when the nav goes off-canvas (mobile drawer). They sit above the aura layer. */
 .site-logo {
     grid-column: 1;
     justify-self: start;
     position: relative;
     z-index: 1;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.7rem;
+    font-weight: var(--fw-regular);
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--text-primary);
+    transition: opacity 0.3s var(--ease-soft);
+}
+
+    .site-logo:hover {
+        opacity: 0.6;
+    }
+
+.logo-dot {
+    display: inline-block;
+    color: var(--accent);
+    font-style: normal;
 }
 
 .site-nav {
@@ -273,11 +269,6 @@ ul {
     z-index: 1;
 }
 
-/* Warm aurora — the header's signature. The outer layer is a STATIC clip mask
-   pinned to the dock (overflow:hidden + dock radius); the glow that drifts left
-   and right lives on the inner ::before. Because only the inner layer moves, the
-   warm light can never spill past the dock's rounded edges (the old version
-   translated the clip box itself, which leaked the glow on every cycle). */
 .header-aura {
     position: absolute;
     inset: 0;
@@ -292,12 +283,8 @@ ul {
     .header-aura::before {
         content: "";
         position: absolute;
-        /* Bleeds well beyond the dock so neither edge of the gradient is ever
-           revealed at the extremes of the drift. */
         inset: -60% -30%;
-        background:
-            radial-gradient(42% 120% at 24% 50%, var(--glow-warm), transparent 60%),
-            radial-gradient(40% 120% at 76% 50%, var(--glow-warm), transparent 62%);
+        background: radial-gradient(42% 120% at 24% 50%, var(--glow-warm), transparent 60%), radial-gradient(40% 120% at 76% 50%, var(--glow-warm), transparent 62%);
         will-change: transform;
     }
 
@@ -325,39 +312,23 @@ ul {
             animation: headerAura 20s ease-in-out infinite;
         }
 
-/* A smooth, symmetric left↔right glide (mirrored 0 → 50 → 100) so the loop never
-   jumps when it repeats. Opacity is owned by .header-aura, not the keyframes. */
 @keyframes headerAura {
-    0%   { transform: translate3d(-9%, 0, 0) scale(1.05); }
-    50%  { transform: translate3d(9%, 0, 0)  scale(1.1); }
-    100% { transform: translate3d(-9%, 0, 0) scale(1.05); }
-}
-
-/* Logo Design — editorial Instrument Serif wordmark with a warm accent dot.
-   The serif against the sans nav is the typographic "studio" signal; the dot
-   stays upright so it reads as a deliberate full stop, not a slanted glyph. */
-.site-logo {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: 1.7rem;
-    font-weight: var(--fw-regular);
-    line-height: 1;
-    letter-spacing: 0;
-    color: var(--text-primary);
-    transition: opacity 0.3s var(--ease-soft);
-}
-
-    .site-logo:hover {
-        opacity: 0.6;
+    0% {
+        transform: translate3d(-9%, 0, 0) scale(1.05);
     }
 
-.logo-dot {
-    display: inline-block;
-    color: var(--accent);
-    font-style: normal;
+    50% {
+        transform: translate3d(9%, 0, 0) scale(1.1);
+    }
+
+    100% {
+        transform: translate3d(-9%, 0, 0) scale(1.05);
+    }
 }
 
-/* Navigation System */
+/* ============================================================================
+   Navigation System - ZARİF ALT ÇİZGİ KONSEPTİ
+   ========================================================================== */
 .nav-list {
     position: relative;
     display: flex;
@@ -365,22 +336,17 @@ ul {
     gap: 2px;
 }
 
-/* Ephemeral hover pill: glides between links under the cursor, then fades out.
-   Active state is handled separately in CSS so it is never disturbed by hover. */
+/* Sadece metnin altını çizecek zarif ve yatay kayan çizgi (Hover) */
 .nav-indicator {
     position: absolute;
-    top: 50%;
+    bottom: 0; /* Nav container'ın tabanına hizala */
     left: 0;
-    width: 0;
-    height: 38px;
-    transform: translateY(-50%);
-    background-color: var(--accent-soft);
-    border-radius: 999px;
+    height: 1.5px;
+    background-color: var(--accent);
+    border-radius: 2px;
     opacity: 0;
     pointer-events: none;
-    transition: transform 0.45s var(--ease-editorial),
-                width 0.45s var(--ease-editorial),
-                opacity 0.35s var(--ease-soft);
+    transition: transform 0.45s var(--ease-editorial), width 0.45s var(--ease-editorial), opacity 0.35s var(--ease-soft);
 }
 
 .nav-link {
@@ -405,26 +371,25 @@ ul {
         box-shadow: 0 0 0 2px var(--accent-soft), inset 0 0 0 1px var(--accent);
     }
 
-/* Active link — persistent, page-driven indicator. Pure CSS so it stays put
-   regardless of where the hover pill is, and is always visible on its page. */
+    /* Aktif link (Sayfa içindeyken) alt çizgisi çok daha zarif ve saydam */
     .nav-link.is-active {
         color: var(--text-primary);
         font-weight: var(--fw-semibold);
     }
 
-        .nav-link.is-active::before {
+        .nav-link.is-active::after {
             content: "";
             position: absolute;
-            inset: 0;
-            z-index: -1;
-            background-color: var(--accent-soft);
-            border-radius: 999px;
-            box-shadow: inset 0 0 0 1px rgba(89, 75, 66, 0.16);
+            bottom: 0;
+            left: 16px;
+            right: 16px; /* Padding genişliği kadar içeriden (sadece metin hizasında) */
+            height: 1.5px;
+            background-color: var(--accent);
+            opacity: 0.3; /* Soft bir duruş için saydamlık */
+            border-radius: 2px;
         }
 
-/* Call-To-Action — Soft, modern, minimal button.
-   A gentle fill that softly deepens its background colour on hover.
-   Lives in .header-actions; spacing handled by that flex row. */
+/* Call-To-Action */
 .cta-button {
     display: inline-flex;
     align-items: center;
@@ -451,9 +416,9 @@ ul {
         box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--accent-soft);
     }
 
-.cta-button.is-active {
-    background-color: var(--border-color);
-}
+    .cta-button.is-active {
+        background-color: var(--border-color);
+    }
 
 /* Mobile Toggle Hamburger */
 .menu-toggle {
@@ -492,7 +457,6 @@ ul {
     animation: fadeInPage 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-    /* About sayfası: kendi CTA section'ı footer'a bağlanmalı, ek alt padding olmasın */
     .site-main:has(.about-page) {
         padding-bottom: 0;
         min-height: auto;
@@ -648,8 +612,9 @@ ul {
         width: 100%;
     }
 
-    /* Liquid pill is desktop-only; the drawer stacks links vertically */
-    .nav-indicator {
+    /* Mobile menüde hover/aktif çizgiye gerek yok */
+    .nav-indicator,
+    .nav-link.is-active::after {
         display: none;
     }
 
@@ -666,8 +631,6 @@ ul {
         border-bottom: 1px solid var(--bg-secondary);
     }
 
-    /* CTA stays in the right cluster on mobile (beside the toggle), kept compact;
-       it is no longer a full-width item inside the drawer. */
     .header-actions {
         gap: 10px;
     }
@@ -681,7 +644,6 @@ ul {
         font-size: 1.45rem;
     }
 
-    /* Hamburger Active State Animation */
     .menu-toggle.is-active .line-1 {
         transform: translateY(8px) rotate(45deg);
     }

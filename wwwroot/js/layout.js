@@ -11,16 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeaderEntrance();
 });
 
-/**
- * Respect the user's motion preferences for all non-essential animation
- */
 function prefersReducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-/**
- * Manages header background shifts and height reductions on page scrolling
- */
 function initHeaderScroll() {
     const header = document.getElementById('siteHeader');
     if (!header) return;
@@ -28,9 +22,6 @@ function initHeaderScroll() {
     const scrollThreshold = 16;
     let ticking = false;
 
-    // At the very top the header is chrome-less and merges with the page; past the
-    // threshold it condenses into the floating capsule. The toggle is rAF-throttled
-    // so it never runs more than once per frame, however fast the user scrolls.
     const applyState = () => {
         const scrolled = window.scrollY > scrollThreshold;
         header.classList.toggle('scrolled', scrolled);
@@ -49,9 +40,6 @@ function initHeaderScroll() {
     window.addEventListener('scroll', onScroll, { passive: true });
 }
 
-/**
- * Seamlessly toggles mobile responsive sliding drawer navigation menu
- */
 function initMobileMenu() {
     const menuToggle = document.getElementById('menuToggle');
     const siteNav = document.getElementById('siteNav');
@@ -66,13 +54,11 @@ function initMobileMenu() {
         menuToggle.classList.toggle('is-active');
         siteNav.classList.toggle('is-active');
 
-        // Prevent background scrolling when menu drawer is visible
         document.body.style.overflow = !isExpanded ? 'hidden' : '';
     };
 
     menuToggle.addEventListener('click', toggleMenu);
 
-    // Dynamic clean up: close menu when clicking outside the navigation box
     document.addEventListener('click', (e) => {
         if (siteNav.classList.contains('is-active') && !siteNav.contains(e.target) && e.target !== menuToggle) {
             menuToggle.setAttribute('aria-expanded', 'false');
@@ -84,9 +70,9 @@ function initMobileMenu() {
 }
 
 /**
- * Glides a soft "liquid" pill behind the link under the cursor, fading it out
- * when the pointer leaves the navigation. The active link has its own
- * persistent CSS indicator, so this layer is purely a hover affordance.
+ * Zarif Alt Çizgi Konsepti:
+ * Linkin padding alanını dışarıda bırakarak sadece metnin genişliğine göre
+ * alt çizgi oluşturur ve yatay eksende (X ekseni) yumuşakça kaydırır.
  */
 function initNavIndicator() {
     const navList = document.getElementById('navList');
@@ -98,13 +84,19 @@ function initNavIndicator() {
 
     links.forEach((link) => {
         link.addEventListener('mouseenter', () => {
-            // Measure against the nav-list via client rects rather than offsetLeft:
-            // a transform left on an ancestor (e.g. by GSAP) would otherwise become
-            // the offsetParent and collapse offsetLeft to ~0 for every link.
             const listRect = navList.getBoundingClientRect();
             const linkRect = link.getBoundingClientRect();
-            indicator.style.width = linkRect.width + 'px';
-            indicator.style.transform = `translate(${linkRect.left - listRect.left}px, -50%)`;
+
+            // CSS'teki yatay padding değerimiz (her bir yan için 16px)
+            const paddingX = 16;
+
+            // Çizgi genişliği sadece linkin iç metni (text) kadar olsun
+            const textWidth = linkRect.width - (paddingX * 2);
+
+            indicator.style.width = textWidth + 'px';
+
+            // X ekseninde, padding kadar içeriden başlatıyoruz
+            indicator.style.transform = `translateX(${linkRect.left - listRect.left + paddingX}px)`;
             indicator.style.opacity = '1';
         });
     });
@@ -114,9 +106,6 @@ function initNavIndicator() {
     });
 }
 
-/**
- * Soft staggered entrance for the logo and navigation on first paint (GSAP)
- */
 function initHeaderEntrance() {
     if (prefersReducedMotion() || typeof gsap === 'undefined') return;
 
@@ -132,20 +121,14 @@ function initHeaderEntrance() {
         ease: 'power3.out',
         stagger: 0.07,
         delay: 0.1,
-        // Clear the leftover identity transform so nav items don't linger as the
-        // offsetParent / containing block of their links after the entrance.
         clearProps: 'transform'
     });
 }
 
-/**
- * Minimal top loading simulation to offer soft native transition feedback
- */
 function initPageProgressBar() {
     const progressBar = document.getElementById('pageProgress');
     if (!progressBar) return;
 
-    // Simulate complete progression during page render stages
     progressBar.style.width = '30%';
 
     window.addEventListener('load', () => {
