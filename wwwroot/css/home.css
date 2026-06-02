@@ -1,4 +1,4 @@
-﻿/* curosoftai - Home Page Stylesheet
+/* curosoftai - Home Page Stylesheet
    Dependent on layout.css design system tokens
 */
 
@@ -32,8 +32,8 @@
    ============================================ */
 .hero-section {
     position: relative;
-    min-height: calc(100vh - var(--header-height));
-    padding: clamp(32px, 5vh, 64px) 0 clamp(48px, 7vh, 80px);
+    min-height: 100vh;
+    padding: calc(var(--header-height) + clamp(32px, 5vh, 64px)) 0 clamp(48px, 7vh, 80px);
     background-color: var(--bg-primary);
     overflow: hidden;
     isolation: isolate;

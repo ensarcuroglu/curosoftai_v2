@@ -10,8 +10,8 @@
    ============================================ */
 .contact-page {
     position: relative;
-    min-height: calc(100svh - var(--header-height));
-    padding: clamp(40px, 6vh, 72px) 0 clamp(72px, 12vh, 120px);
+    min-height: 100svh;
+    padding: calc(var(--header-height) + clamp(40px, 6vh, 72px)) 0 clamp(72px, 12vh, 120px);
     background-color: var(--bg-primary);
     overflow: hidden;
     isolation: isolate;
