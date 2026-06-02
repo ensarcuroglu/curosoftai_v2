@@ -1,0 +1,205 @@
+@{
+    ViewData["Title"] = "Çözümler";
+    ViewData["BodyClass"] = "solutions-page-body";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/solutions.css" asp-append-version="true" />
+}
+
+<div class="solutions-page">
+    <section class="sol-hero" aria-labelledby="solutionsHeading">
+        <div class="sol-container sol-hero__layout">
+            <div class="sol-hero__copy" data-sol-anim="hero">
+                <span class="sol-kicker">
+                    <span class="sol-kicker__dot" aria-hidden="true"></span>
+                    Çözüm merkezi
+                </span>
+
+                <h1 id="solutionsHeading" class="sol-hero__title">
+                    İşletmenizin ihtiyacına göre büyüyen dijital çözüm başlıkları.
+                </h1>
+
+                <p class="sol-hero__lead">
+                    AI çözümlerinden kurumsal web sitelerine, özel yazılım ve otomasyon
+                    altyapılarına kadar her başlık tek bir düzen içinde planlanır.
+                </p>
+
+                <div class="sol-hero__actions">
+                    <a class="sol-btn sol-btn--primary" asp-controller="AiSolutions" asp-action="Index">
+                        AI çözümlerini incele
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14M13 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                    <a class="sol-btn sol-btn--secondary" asp-controller="Contact" asp-action="Index">
+                        Projenizi konuşalım
+                    </a>
+                </div>
+            </div>
+
+            <div class="sol-hero__visual" data-sol-anim="visual" aria-label="Örnek dijital çözüm arayüzleri">
+                <img class="sol-visual__image sol-visual__image--main" src="~/images/projects/depo-yonetim-sistemi.jpg" alt="Depo yönetimi ve AI otomasyon arayüzü" />
+                <img class="sol-visual__image sol-visual__image--small sol-visual__image--top" src="~/images/projects/ogrenci-performans-tahmin.jpg" alt="AI eğitim performans koçu arayüzü" />
+                <img class="sol-visual__image sol-visual__image--small sol-visual__image--bottom" src="~/images/projects/ozbektasogullari-kurumsal.jpg" alt="Kurumsal web sitesi arayüzü" />
+            </div>
+        </div>
+    </section>
+
+    <section class="sol-section" aria-labelledby="solutionGroupsHeading">
+        <div class="sol-container">
+            <header class="sol-section__header" data-sol-anim="fade">
+                <span class="sol-section__eyebrow">Alt başlıklar</span>
+                <h2 id="solutionGroupsHeading" class="sol-section__title">Çözüm alanları</h2>
+                <p class="sol-section__desc">
+                    Ana başlıklar mevcut sayfalara bağlanır; yeni alanlar da aynı yapı altında
+                    kolayca genişletilebilir.
+                </p>
+            </header>
+
+            <div class="sol-grid" aria-label="Çözüm başlıkları">
+                <article class="sol-card sol-card--featured" data-sol-anim="card">
+                    <a class="sol-card__link" asp-controller="AiSolutions" asp-action="Index" aria-label="AI Çözümleri sayfasına git"></a>
+                    <div class="sol-card__media">
+                        <img src="~/images/projects/ogrenci-performans-tahmin.jpg" alt="AI destekli analiz ve koçluk arayüzü" />
+                    </div>
+                    <div class="sol-card__body">
+                        <div class="sol-card__meta">
+                            <span class="sol-card__num">01</span>
+                            <span class="sol-card__pill sol-card__pill--live">Mevcut sayfa</span>
+                        </div>
+                        <h3 class="sol-card__title">AI Çözümleri</h3>
+                        <p class="sol-card__text">
+                            Firma asistanı, doküman yorumlama, doğal dilde sorgulama ve kaynaklı
+                            cevap üretimi için mevcut AI çözüm sayfasına bağlanır.
+                        </p>
+                        <span class="sol-card__cta">
+                            Detayları incele
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M5 12h14M13 5l7 7-7 7" />
+                            </svg>
+                        </span>
+                    </div>
+                </article>
+
+                <article class="sol-card" data-sol-anim="card">
+                    <a class="sol-card__link" asp-controller="Services" asp-action="Index" aria-label="Kurumsal Web Çözümleri detaylarına git"></a>
+                    <div class="sol-card__media">
+                        <img src="~/images/projects/ozbektasogullari-kurumsal.jpg" alt="Kurumsal web sitesi masaüstü ve mobil görünümü" />
+                    </div>
+                    <div class="sol-card__body">
+                        <div class="sol-card__meta">
+                            <span class="sol-card__num">02</span>
+                            <span class="sol-card__pill">Web</span>
+                        </div>
+                        <h3 class="sol-card__title">Kurumsal Web Çözümleri</h3>
+                        <p class="sol-card__text">
+                            Hızlı, güven veren ve yönetilebilir kurumsal web siteleri ile marka
+                            görünürlüğünü güçlendiren yapı.
+                        </p>
+                        <span class="sol-card__cta">Hizmetlere git</span>
+                    </div>
+                </article>
+
+                <article class="sol-card" data-sol-anim="card">
+                    <a class="sol-card__link" asp-controller="Services" asp-action="Index" aria-label="Özel Yazılım Çözümleri detaylarına git"></a>
+                    <div class="sol-card__body sol-card__body--solo">
+                        <div class="sol-card__meta">
+                            <span class="sol-card__num">03</span>
+                            <span class="sol-card__pill">Yazılım</span>
+                        </div>
+                        <h3 class="sol-card__title">Özel Yazılım Çözümleri</h3>
+                        <p class="sol-card__text">
+                            Operasyon panelleri, takip ekranları, müşteri portalları ve işletmeye
+                            özel veri akışları.
+                        </p>
+                        <ul class="sol-card__tags" aria-label="Özel yazılım kapsamları">
+                            <li>Panel</li>
+                            <li>API</li>
+                            <li>Raporlama</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="sol-card" data-sol-anim="card">
+                    <a class="sol-card__link" asp-controller="Contact" asp-action="Index" aria-label="Süreç Otomasyonu için iletişime geç"></a>
+                    <div class="sol-card__media">
+                        <img src="~/images/projects/depo-yonetim-sistemi.jpg" alt="Depo ve süreç otomasyonu görsel arayüzü" />
+                    </div>
+                    <div class="sol-card__body">
+                        <div class="sol-card__meta">
+                            <span class="sol-card__num">04</span>
+                            <span class="sol-card__pill">Otomasyon</span>
+                        </div>
+                        <h3 class="sol-card__title">Süreç Otomasyonu</h3>
+                        <p class="sol-card__text">
+                            Tekrarlayan iş akışlarını, onay süreçlerini ve operasyonel kontrolleri
+                            ölçülebilir hale getiren sistemler.
+                        </p>
+                        <span class="sol-card__cta">Kapsamı konuşalım</span>
+                    </div>
+                </article>
+
+                <article class="sol-card sol-card--quiet" data-sol-anim="card">
+                    <a class="sol-card__link" asp-controller="Contact" asp-action="Index" aria-label="Veri ve Raporlama çözümü için iletişime geç"></a>
+                    <div class="sol-card__body sol-card__body--solo">
+                        <div class="sol-card__meta">
+                            <span class="sol-card__num">05</span>
+                            <span class="sol-card__pill">Veri</span>
+                        </div>
+                        <h3 class="sol-card__title">Veri &amp; Raporlama</h3>
+                        <p class="sol-card__text">
+                            Karar destek ekranları, KPI panelleri ve departmanlar arası görünürlük.
+                        </p>
+                        <ul class="sol-card__tags" aria-label="Veri ve raporlama kapsamları">
+                            <li>KPI</li>
+                            <li>Dashboard</li>
+                            <li>Analitik</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="sol-card sol-card--quiet" data-sol-anim="card">
+                    <a class="sol-card__link" asp-controller="Contact" asp-action="Index" aria-label="E-ticaret ve müşteri portalı için iletişime geç"></a>
+                    <div class="sol-card__body sol-card__body--solo">
+                        <div class="sol-card__meta">
+                            <span class="sol-card__num">06</span>
+                            <span class="sol-card__pill">Portal</span>
+                        </div>
+                        <h3 class="sol-card__title">E-Ticaret &amp; Müşteri Portalları</h3>
+                        <p class="sol-card__text">
+                            Sipariş, teklif, destek ve müşteri hesabı yönetimini tek merkezde
+                            toplayan web uygulamaları.
+                        </p>
+                        <ul class="sol-card__tags" aria-label="Portal kapsamları">
+                            <li>Teklif</li>
+                            <li>Sipariş</li>
+                            <li>Destek</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="sol-cta-section" aria-labelledby="solutionsCtaHeading">
+        <div class="sol-container">
+            <div class="sol-cta" data-sol-anim="fade">
+                <div>
+                    <span class="sol-section__eyebrow">Sonraki adım</span>
+                    <h2 id="solutionsCtaHeading" class="sol-cta__title">Hangi başlığın size uygun olduğunu birlikte netleştirelim.</h2>
+                </div>
+                <a class="sol-btn sol-btn--primary" asp-controller="Contact" asp-action="Index">
+                    İletişime geç
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M5 12h14M13 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/js/solutions.js" asp-append-version="true" defer></script>
+}

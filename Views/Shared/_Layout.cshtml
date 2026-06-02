@@ -15,8 +15,8 @@
 @{
     var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
     var bodyClass = ViewData["BodyClass"]?.ToString();
-    string NavClass(string controller) =>
-        string.Equals(currentController, controller, StringComparison.OrdinalIgnoreCase)
+    string NavClass(params string[] controllers) =>
+        controllers.Any(controller => string.Equals(currentController, controller, StringComparison.OrdinalIgnoreCase))
             ? "nav-link is-active"
             : "nav-link";
 }
@@ -41,7 +41,7 @@
                         <a class="@NavClass("Services")" asp-area="" asp-controller="Services" asp-action="Index">Hizmetler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="@NavClass("AiSolutions")" asp-area="" asp-controller="AiSolutions" asp-action="Index">AI Çözümler</a>
+                        <a class="@NavClass("Solutions", "AiSolutions")" asp-area="" asp-controller="Solutions" asp-action="Index">Çözümler</a>
                     </li>
                     <li class="nav-item">
                         <a class="@NavClass("Project")" asp-area="" asp-controller="Project" asp-action="Index">Projeler</a>
@@ -86,10 +86,10 @@
                 <div class="footer-group">
                     <h3 class="footer-title">Çözümler</h3>
                     <ul class="footer-list">
-                        <li><a asp-controller="Services" asp-action="Index">Kurumsal Web Sitesi</a></li>
-                        <li><a asp-controller="AiSolutions" asp-action="Index">AI Firma Asistanı</a></li>
-                        <li><a asp-controller="Services" asp-action="Index">Özel Yazılım Çözümleri</a></li>
-                        <li><a asp-controller="AiSolutions" asp-action="Index">Yapay Zeka Modülleri</a></li>
+                        <li><a asp-controller="Solutions" asp-action="Index">Çözüm Merkezi</a></li>
+                        <li><a asp-controller="AiSolutions" asp-action="Index">AI Çözümleri</a></li>
+                        <li><a asp-controller="Services" asp-action="Index">Kurumsal Web Çözümleri</a></li>
+                        <li><a asp-controller="Services" asp-action="Index">Özel Yazılım &amp; Otomasyon</a></li>
                     </ul>
                 </div>
                 <div class="footer-group">
