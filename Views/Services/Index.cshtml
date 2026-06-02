@@ -9,27 +9,38 @@
 <div class="services-page">
 
     <!-- ============ HERO ============ -->
-    <section class="svc-hero">
-        <div class="svc-hero__glow" aria-hidden="true"></div>
+    <section class="svc-hero svc-hero--centered">
+        <div class="svc-hero__bg" aria-hidden="true">
+            <div class="svc-hero__mesh-1"></div>
+            <div class="svc-hero__mesh-2"></div>
+            <div class="svc-hero__mesh-3"></div>
+        </div>
+        
         <div class="svc-container">
-            <p class="svc-eyebrow" data-svc-anim="hero">
-                <span class="svc-eyebrow__dot"></span>Hizmetler
-            </p>
-            <h1 class="svc-hero__title" data-svc-anim="hero">
-                Fikirden çalışan ürüne,
-                <span class="svc-italic">uçtan uca</span> dijital çözümler.
-            </h1>
-            <p class="svc-hero__lead" data-svc-anim="hero">
-                Kurumsal web sitelerinden yapay zeka destekli modüllere kadar; işletmenizin
-                ihtiyaçlarını sade, ölçülebilir ve sürdürülebilir çözümlere dönüştürüyoruz.
-            </p>
-            <div class="svc-hero__actions" data-svc-anim="hero">
-                <a class="svc-btn svc-btn--primary" asp-controller="Contact" asp-action="Index">
-                    Projenizi Konuşalım
-                </a>
-                <a class="svc-btn svc-btn--ghost" asp-controller="Portfolio" asp-action="Index">
-                    Projeleri İncele
-                </a>
+            <div class="svc-hero__content">
+                <div class="svc-eyebrow-pill" data-svc-anim="hero">
+                    <span class="svc-eyebrow-pill__dot"></span>
+                    <span class="svc-eyebrow-pill__text">Hizmetlerimiz</span>
+                </div>
+                
+                <h1 class="svc-hero__title" data-svc-anim="hero">
+                    Fikirden çalışan ürüne,<br/>
+                    <span class="svc-italic svc-gradient-text">uçtan uca</span> dijital çözümler.
+                </h1>
+                
+                <p class="svc-hero__lead" data-svc-anim="hero">
+                    Kurumsal web sitelerinden yapay zeka destekli modüllere kadar; işletmenizin
+                    ihtiyaçlarını sade, ölçülebilir ve sürdürülebilir çözümlere dönüştürüyoruz.
+                </p>
+                
+                <div class="svc-hero__actions" data-svc-anim="hero">
+                    <a class="svc-btn svc-btn--pill-primary" asp-controller="Contact" asp-action="Index">
+                        Projenizi Konuşalım
+                    </a>
+                    <a class="svc-btn svc-btn--pill-glass" asp-controller="Portfolio" asp-action="Index">
+                        Projeleri İncele
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -37,7 +48,7 @@
     <!-- ============ SERVICES ============ -->
     <section class="svc-section svc-services">
         <div class="svc-container">
-            <header class="svc-section__head" data-svc-anim="fade">
+            <header class="svc-section__head svc-section__head--centered" data-svc-anim="fade">
                 <h2 class="svc-section__title">Neler Yapıyoruz</h2>
                 <p class="svc-section__desc">
                     Her proje, işletmenizin gerçek bir ihtiyacından başlar. Teknolojiyi değil,
@@ -45,13 +56,41 @@
                 </p>
             </header>
 
-            <div class="svc-grid">
+            <div class="svc-bento-grid">
 
-                <!-- 01 -->
+                <!-- 01: AI Firma Asistanı (Full width / featured) -->
+                <article class="svc-card svc-card--featured" data-svc-anim="card">
+                    <span class="svc-card__watermark">01</span>
+                    <div class="svc-card__content-wrapper">
+                        <div class="svc-card__info">
+                            <div class="svc-card__top">
+                                <span class="svc-card__icon-pill">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
+                                        <path d="M12 8.2l.9 1.9 1.9.9-1.9.9-.9 1.9-.9-1.9-1.9-.9 1.9-.9z" />
+                                    </svg>
+                                </span>
+                                <span class="svc-card__badge-pill">Öne Çıkan</span>
+                            </div>
+                            <h3 class="svc-card__title">AI Firma Asistanı</h3>
+                            <p class="svc-card__desc">
+                                Web sitenize, firma bilgilerinizi ve dokümanlarınızı 7/24 yanıtlayan akıllı bir asistan ekliyoruz.
+                            </p>
+                        </div>
+                        <div class="svc-card__tags">
+                            <span class="svc-tag">Site içinde çalışan AI asistan</span>
+                            <span class="svc-tag">SSS & doküman bazlı yanıtlama</span>
+                            <span class="svc-tag">Bilgi tabanı altyapısı</span>
+                            <span class="svc-tag">Türkçe doğal dil desteği</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 02: Kurumsal Web Sitesi -->
                 <article class="svc-card" data-svc-anim="card">
+                    <span class="svc-card__watermark">02</span>
                     <div class="svc-card__top">
-                        <span class="svc-card__index">01</span>
-                        <span class="svc-card__icon" aria-hidden="true">
+                        <span class="svc-card__icon-pill">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="4" width="18" height="16" rx="2" />
                                 <path d="M3 9h18" />
@@ -62,47 +101,20 @@
                     </div>
                     <h3 class="svc-card__title">Kurumsal Web Sitesi</h3>
                     <p class="svc-card__desc">
-                        Firmanızı ilk izlenimde güçlü temsil eden; hızlı, mobil uyumlu ve
-                        güven veren kurumsal web siteleri.
+                        Firmanızı ilk izlenimde güçlü temsil eden; hızlı, mobil uyumlu ve güven veren siteler.
                     </p>
-                    <ul class="svc-card__list">
-                        <li>Firma tanıtım & hizmet sayfaları</li>
-                        <li>Blog / içerik alanı</li>
-                        <li>İletişim formu & yönetim paneli</li>
-                        <li>SEO ve performans temelleri</li>
-                    </ul>
-                </article>
-
-                <!-- 02 -->
-                <article class="svc-card svc-card--feature" data-svc-anim="card">
-                    <span class="svc-card__badge">Öne Çıkan</span>
-                    <div class="svc-card__top">
-                        <span class="svc-card__index">02</span>
-                        <span class="svc-card__icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
-                                <path d="M12 8.2l.9 1.9 1.9.9-1.9.9-.9 1.9-.9-1.9-1.9-.9 1.9-.9z" />
-                            </svg>
-                        </span>
+                    <div class="svc-card__tags">
+                        <span class="svc-tag">Firma tanıtım sayfaları</span>
+                        <span class="svc-tag">İletişim & yönetim paneli</span>
+                        <span class="svc-tag">SEO & performans temelleri</span>
                     </div>
-                    <h3 class="svc-card__title">AI Firma Asistanı</h3>
-                    <p class="svc-card__desc">
-                        Web sitenize, firma bilgilerinizi ve dokümanlarınızı 7/24 yanıtlayan
-                        akıllı bir asistan ekliyoruz.
-                    </p>
-                    <ul class="svc-card__list">
-                        <li>Site içinde çalışan AI asistan</li>
-                        <li>SSS & doküman bazlı yanıtlama</li>
-                        <li>Bilgi tabanı altyapısı</li>
-                        <li>Türkçe doğal dil desteği</li>
-                    </ul>
                 </article>
 
-                <!-- 03 -->
+                <!-- 03: Özel Yazılım Geliştirme -->
                 <article class="svc-card" data-svc-anim="card">
+                    <span class="svc-card__watermark">03</span>
                     <div class="svc-card__top">
-                        <span class="svc-card__index">03</span>
-                        <span class="svc-card__icon" aria-hidden="true">
+                        <span class="svc-card__icon-pill">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M8 8l-4 4 4 4" />
                                 <path d="M16 8l4 4-4 4" />
@@ -112,22 +124,20 @@
                     </div>
                     <h3 class="svc-card__title">Özel Yazılım Geliştirme</h3>
                     <p class="svc-card__desc">
-                        İşinize özel paneller, raporlama ekranları ve süreç otomasyonları ile
-                        operasyonunuzu ölçülebilir hale getiriyoruz.
+                        İşinize özel paneller, raporlama ekranları ve süreç otomasyonları.
                     </p>
-                    <ul class="svc-card__list">
-                        <li>İşletmeye özel panel & dashboard</li>
-                        <li>Raporlama ekranları</li>
-                        <li>Operasyonel takip sistemleri</li>
-                        <li>İç süreç otomasyonları</li>
-                    </ul>
+                    <div class="svc-card__tags">
+                        <span class="svc-tag">İşletmeye özel panel</span>
+                        <span class="svc-tag">Raporlama ekranları</span>
+                        <span class="svc-tag">Operasyonel takip sistemleri</span>
+                    </div>
                 </article>
 
-                <!-- 04 -->
-                <article class="svc-card" data-svc-anim="card">
+                <!-- 04: AI Ürün & Modüller -->
+                <article class="svc-card svc-card--span-3-mobile" data-svc-anim="card">
+                    <span class="svc-card__watermark">04</span>
                     <div class="svc-card__top">
-                        <span class="svc-card__index">04</span>
-                        <span class="svc-card__icon" aria-hidden="true">
+                        <span class="svc-card__icon-pill">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="6" y="6" width="12" height="12" rx="2" />
                                 <path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2" />
@@ -135,17 +145,15 @@
                             </svg>
                         </span>
                     </div>
-                    <h3 class="svc-card__title">AI Ürün &amp; Modüller</h3>
+                    <h3 class="svc-card__title">AI Ürün & Modüller</h3>
                     <p class="svc-card__desc">
-                        Verilerinizi ve dokümanlarınızı anlamlı, sorgulanabilir bilgiye
-                        dönüştüren yapay zeka modülleri.
+                        Verilerinizi anlamlı, sorgulanabilir bilgiye dönüştüren modüller.
                     </p>
-                    <ul class="svc-card__list">
-                        <li>Doküman & Excel yorumlama asistanı</li>
-                        <li>Raporlama asistanı</li>
-                        <li>Doğal dilde sorgulama (Text-to-SQL)</li>
-                        <li>Kurumsal bilgi asistanı</li>
-                    </ul>
+                    <div class="svc-card__tags">
+                        <span class="svc-tag">Doküman yorumlama</span>
+                        <span class="svc-tag">Doğal dilde sorgulama</span>
+                        <span class="svc-tag">Kurumsal bilgi asistanı</span>
+                    </div>
                 </article>
 
             </div>
@@ -155,7 +163,7 @@
     <!-- ============ PROCESS ============ -->
     <section class="svc-section svc-process">
         <div class="svc-container">
-            <header class="svc-section__head" data-svc-anim="fade">
+            <header class="svc-section__head svc-section__head--centered" data-svc-anim="fade">
                 <h2 class="svc-section__title">Nasıl Çalışıyoruz</h2>
                 <p class="svc-section__desc">
                     Net, şeffaf ve sürdürülebilir bir süreç. Her adımda ne yaptığımızı
@@ -163,33 +171,35 @@
                 </p>
             </header>
 
-            <div class="svc-steps">
-                <div class="svc-steps__line" aria-hidden="true">
-                    <span class="svc-steps__line-fill"></span>
+            <div class="svc-steps-wrapper">
+                <div class="svc-track" aria-hidden="true">
+                    <div class="svc-track__orb"></div>
                 </div>
 
-                <div class="svc-step" data-svc-anim="step">
-                    <span class="svc-step__num">01</span>
-                    <h3 class="svc-step__title">Keşif &amp; Analiz</h3>
-                    <p class="svc-step__desc">İhtiyacı ve çözülecek problemi birlikte netleştiriyoruz.</p>
-                </div>
+                <div class="svc-steps">
+                    <div class="svc-step">
+                        <span class="svc-step__num-pill">01</span>
+                        <h3 class="svc-step__title">Keşif &amp; Analiz</h3>
+                        <p class="svc-step__desc">İhtiyacı ve çözülecek problemi birlikte netleştiriyoruz.</p>
+                    </div>
 
-                <div class="svc-step" data-svc-anim="step">
-                    <span class="svc-step__num">02</span>
-                    <h3 class="svc-step__title">Planlama &amp; Tasarım</h3>
-                    <p class="svc-step__desc">Kapsamı ve kullanıcı deneyimini sade biçimde kurguluyoruz.</p>
-                </div>
+                    <div class="svc-step">
+                        <span class="svc-step__num-pill">02</span>
+                        <h3 class="svc-step__title">Planlama &amp; Tasarım</h3>
+                        <p class="svc-step__desc">Kapsamı ve kullanıcı deneyimini sade biçimde kurguluyoruz.</p>
+                    </div>
 
-                <div class="svc-step" data-svc-anim="step">
-                    <span class="svc-step__num">03</span>
-                    <h3 class="svc-step__title">Geliştirme</h3>
-                    <p class="svc-step__desc">Temiz, sürdürülebilir kodla çözümü hayata geçiriyoruz.</p>
-                </div>
+                    <div class="svc-step">
+                        <span class="svc-step__num-pill">03</span>
+                        <h3 class="svc-step__title">Geliştirme</h3>
+                        <p class="svc-step__desc">Temiz, sürdürülebilir kodla çözümü hayata geçiriyoruz.</p>
+                    </div>
 
-                <div class="svc-step" data-svc-anim="step">
-                    <span class="svc-step__num">04</span>
-                    <h3 class="svc-step__title">Teslim &amp; Destek</h3>
-                    <p class="svc-step__desc">Yayına alıyor, ölçüyor ve zamanla geliştiriyoruz.</p>
+                    <div class="svc-step">
+                        <span class="svc-step__num-pill">04</span>
+                        <h3 class="svc-step__title">Teslim &amp; Destek</h3>
+                        <p class="svc-step__desc">Yayına alıyor, ölçüyor ve zamanla geliştiriyoruz.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -198,21 +208,23 @@
     <!-- ============ CTA ============ -->
     <section class="svc-cta-section" data-svc-anim="fade">
         <div class="svc-container">
-            <div class="svc-cta">
-                <div class="svc-cta__glow" aria-hidden="true"></div>
-                <h2 class="svc-cta__title">
-                    Bir sonraki projenizi
-                    <span class="svc-italic">birlikte</span> kuralım.
-                </h2>
-                <p class="svc-cta__desc">
-                    İhtiyacınızı dinleyelim, size en uygun çözümü sade bir dille konuşalım.
-                </p>
-                <a class="svc-btn svc-btn--light" asp-controller="Contact" asp-action="Index">
-                    İletişime Geç
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                </a>
+            <div class="svc-cta-wrapper">
+                <div class="svc-cta__border-spin" aria-hidden="true"></div>
+                <div class="svc-cta">
+                    <h2 class="svc-cta__title">
+                        Bir sonraki projenizi
+                        <span class="svc-gradient-text">birlikte</span> kuralım.
+                    </h2>
+                    <p class="svc-cta__desc">
+                        İhtiyacınızı dinleyelim, size en uygun çözümü sade bir dille konuşalım.
+                    </p>
+                    <a class="svc-btn svc-btn--pill-primary svc-btn--shimmer" asp-controller="Contact" asp-action="Index">
+                        İletişime Geç
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
