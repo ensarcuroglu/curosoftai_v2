@@ -1,240 +1,291 @@
-/* curosoftai - Contact Page Stylesheet
-   Dependent on layout.css design system tokens
-*/
-
 /* ============================================
-   PAGE SHELL
-   .site-main zaten margin-top: var(--header-height) ekliyor.
-   Bu yüzden burada header yüksekliğini tekrar uygulamıyoruz;
-   aksi halde header iki kere itilir ve hero başlangıcı boş kalır.
+   PAGE SHELL & SOFT AMBIENT FX
    ============================================ */
 .contact-page {
     position: relative;
     min-height: 100svh;
-    padding: calc(var(--header-height) + clamp(40px, 6vh, 72px)) 0 clamp(72px, 12vh, 120px);
-    background-color: var(--bg-primary);
+    padding: calc(var(--header-height) + clamp(60px, 8vh, 100px)) 0 clamp(80px, 12vh, 140px);
+    background-color: var(--bg-primary); /* #F5F2ED */
     overflow: hidden;
     isolation: isolate;
 }
 
-/* home.css'teki .container ile aynı davranış — bu sayfa home.css yüklemiyor */
-.contact-container {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 clamp(20px, 4vw, 48px);
-}
-
-/* Background Ambient FX (home hero glow ile aynı dil) */
-.contact-glow {
-    position: absolute;
-    top: -10%;
-    left: -10%;
-    width: clamp(420px, 60vw, 900px);
-    height: clamp(420px, 60vw, 900px);
-    background: radial-gradient(circle, var(--glow-warm) 0%, transparent 60%);
-    opacity: 0.45;
-    filter: blur(80px);
-    z-index: -1;
-    pointer-events: none;
-}
-
-.contact-grain {
+.contact-ambient {
     position: absolute;
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    opacity: 0.4;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.14 0 0 0 0 0.12 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    background-size: 220px 220px;
+}
+
+/* Yumuşak, gren barındırmayan difüz ışıklar */
+.ambient-glow {
+    position: absolute;
+    background: radial-gradient(circle, var(--glow-warm) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+    animation: drift 20s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+    top: -10%;
+    left: -5%;
+    width: clamp(500px, 60vw, 900px);
+    height: clamp(500px, 60vw, 900px);
+}
+
+.orb-2 {
+    bottom: -10%;
+    right: -5%;
+    width: clamp(400px, 50vw, 800px);
+    height: clamp(400px, 50vw, 800px);
+    animation-delay: -10s;
+}
+
+@keyframes drift {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(4%, 4%) scale(1.05);
+    }
 }
 
 .contact-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-    gap: clamp(48px, 6vw, 80px);
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(50px, 8vw, 120px);
     align-items: start;
 }
 
 /* ============================================
-   LEFT COLUMN: INFO
+   LEFT COLUMN: INFO & NEW FEATURES
    ============================================ */
 .contact-header {
-    margin-bottom: clamp(40px, 6vh, 60px);
+    margin-bottom: 40px;
 }
 
-.contact-eyebrow {
+.status-pill {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    font-size: 0.78rem;
-    font-weight: var(--fw-semibold);
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--text-secondary);
-    margin-bottom: 24px;
-    padding: 7px 14px 7px 12px;
-    background: rgba(245, 242, 237, 0.7);
-    border: 1px solid var(--border-color);
+    gap: 8px;
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px solid rgba(89, 75, 66, 0.1);
     border-radius: 999px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    margin-bottom: 28px;
 }
 
-    /* Layout'taki .status-dot ile uyumlu — aynı yeşil/pulse */
-    .contact-eyebrow .status-dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: var(--status-live);
-        box-shadow: 0 0 0 0 rgba(99, 158, 90, 0.55);
-        animation: contactStatusPulse 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--status-live);
+    box-shadow: 0 0 0 0 rgba(99, 158, 90, 0.3);
+    animation: pulseSoft 2.5s infinite;
+}
+
+@keyframes pulseSoft {
+    0% {
+        box-shadow: 0 0 0 0 rgba(99, 158, 90, 0.3);
     }
 
-@keyframes contactStatusPulse {
-    0%   { box-shadow: 0 0 0 0 rgba(99, 158, 90, 0.55); }
-    80%  { box-shadow: 0 0 0 8px rgba(99, 158, 90, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(99, 158, 90, 0); }
+    70% {
+        box-shadow: 0 0 0 5px rgba(99, 158, 90, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(99, 158, 90, 0);
+    }
+}
+
+.status-text {
+    font-size: 0.75rem;
+    font-weight: var(--fw-medium);
+    color: var(--text-secondary);
 }
 
 .contact-title {
     font-family: var(--font-display);
-    font-size: clamp(2.4rem, 5vw, 4.5rem);
-    line-height: 1.08;
+    font-size: clamp(2.8rem, 5vw, 4.8rem);
+    line-height: 1.05;
     font-weight: var(--fw-regular);
     color: var(--text-primary);
-    letter-spacing: -0.02em;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
 }
 
 .title-em {
     font-style: italic;
     color: var(--accent);
-    padding: 0 0.04em;
 }
 
 .contact-lead {
-    font-size: var(--fs-lead);
-    line-height: 1.65;
+    font-size: 1.1rem;
+    line-height: 1.6;
     color: var(--text-secondary);
     font-weight: var(--fw-light);
-    max-width: 460px;
+    max-width: 440px;
 }
 
-.contact-details {
+.contact-meta {
     display: flex;
     flex-direction: column;
-    gap: 36px;
+    gap: 32px;
+    margin-bottom: 40px;
 }
 
-.detail-block {
+.meta-row {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    flex-wrap: wrap;
+}
+
+.meta-item {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
-.detail-label {
-    font-size: 0.72rem;
-    font-weight: var(--fw-semibold);
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
+.meta-label {
+    font-size: 0.75rem;
+    font-weight: var(--fw-medium);
     color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
-.detail-text,
-.detail-link {
-    font-size: 1.05rem;
+.meta-link--hero {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2vw, 2rem);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: opacity 0.3s var(--ease-soft);
+}
+
+    .meta-link--hero:hover {
+        opacity: 0.6;
+    }
+
+.meta-text {
+    font-size: 1rem;
+    color: var(--text-primary);
+    /* Saat sayılarının değişirken titremesini (genişleyip daralmasını) engeller */
+    font-variant-numeric: tabular-nums;
+}
+
+/* Dijital Varlıklar (Sosyal Linkler) */
+.social-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+    .social-links a {
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        text-decoration: none;
+        position: relative;
+        padding-bottom: 2px;
+    }
+
+        .social-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--text-muted);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s var(--ease-soft);
+        }
+
+        .social-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+.contact-process {
+    padding-top: 30px;
+    margin-bottom: 30px;
+}
+
+.process-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+    .process-list li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .process-list svg {
+        width: 16px;
+        height: 16px;
+        color: var(--text-muted);
+    }
+
+/* Alternatif Toplantı Linki Alanı */
+.contact-alternative {
+    padding-top: 24px;
+    border-top: 1px solid rgba(89, 75, 66, 0.1);
+}
+
+    .contact-alternative p {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+    }
+
+.meeting-link {
+    display: inline-block;
     color: var(--text-primary);
     font-weight: var(--fw-medium);
-}
-
-.detail-link--large {
-    font-family: var(--font-display);
-    font-size: clamp(1.4rem, 2vw, 1.8rem);
-    text-decoration: none;
+    margin-top: 4px;
     position: relative;
-    display: inline-block;
-    width: fit-content;
-    letter-spacing: -0.01em;
 }
 
-    .detail-link--large::after {
+    .meeting-link::after {
         content: '';
         position: absolute;
         bottom: -2px;
         left: 0;
         width: 100%;
         height: 1px;
-        background: var(--accent);
-        transform: scaleX(0.3);
-        transform-origin: left;
-        transition: transform 0.5s var(--ease-editorial);
+        background: var(--text-primary);
+        opacity: 0.3;
+        transition: opacity 0.3s var(--ease-soft);
     }
 
-    .detail-link--large:hover::after {
-        transform: scaleX(1);
+    .meeting-link:hover::after {
+        opacity: 1;
     }
-
-.btn-calendar {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 20px;
-    background: rgba(245, 242, 237, 0.6);
-    border: 1px solid var(--border-color);
-    border-radius: 999px;
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    font-weight: var(--fw-semibold);
-    text-decoration: none;
-    transition: background-color 0.35s var(--ease-soft),
-                border-color 0.35s var(--ease-soft),
-                transform 0.35s var(--ease-editorial);
-    width: fit-content;
-}
-
-    .btn-calendar svg {
-        width: 18px;
-        height: 18px;
-        color: var(--text-muted);
-        transition: color 0.3s var(--ease-soft);
-    }
-
-    .btn-calendar:hover {
-        background: var(--bg-primary);
-        border-color: var(--text-muted);
-        transform: translateY(-1px);
-    }
-
-        .btn-calendar:hover svg {
-            color: var(--accent);
-        }
 
 /* ============================================
-   RIGHT COLUMN: FORM
-   home'daki demo-panel ile aynı yüzey dili (cam + soft shadow)
+   RIGHT COLUMN: FORM PANEL (Soft & Clean)
    ============================================ */
-.contact-form-wrapper {
-    perspective: 1400px;
-}
-
 .form-panel {
-    background: linear-gradient(160deg, rgba(245, 242, 237, 0.95), rgba(236, 229, 219, 0.85));
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--border-color);
-    border-radius: 22px;
-    padding: clamp(32px, 5vw, 50px) clamp(24px, 4vw, 48px);
-    box-shadow:
-        0 30px 70px -30px rgba(42, 36, 32, 0.32),
-        0 12px 24px -12px rgba(42, 36, 32, 0.14),
-        inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 24px;
+    padding: clamp(32px, 5vw, 48px);
+    box-shadow: 0 20px 40px -20px rgba(42, 36, 32, 0.04);
 }
 
 .minimal-form {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 28px;
 }
 
 .form-row {
@@ -245,238 +296,196 @@
 .split-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    gap: 20px;
 }
 
+/* Yumuşak Input Tasarımı */
 .input-group {
     position: relative;
     display: flex;
     flex-direction: column;
 }
 
-/* Floating Label Mechanics */
 .form-input {
     width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(89, 75, 66, 0.2);
-    padding: 12px 0;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid transparent;
+    border-radius: 14px;
+    padding: 22px 16px 10px 16px;
     font-family: var(--font-sans);
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--text-primary);
     outline: none;
-    transition: border-color 0.3s var(--ease-soft);
-    position: relative;
-    z-index: 2;
+    transition: background 0.3s var(--ease-soft), border-color 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
     resize: none;
 }
 
-.form-label {
-    position: absolute;
-    left: 0;
-    top: 12px;
-    font-size: 1rem;
-    color: var(--text-muted);
-    pointer-events: none;
-    transition: top 0.35s var(--ease-editorial),
-                font-size 0.35s var(--ease-editorial),
-                color 0.35s var(--ease-soft);
-    z-index: 1;
-}
-
-/* Active State */
-.form-input:focus,
-.form-input:not(:placeholder-shown) {
-    border-bottom-color: var(--text-primary);
-}
-
-    .form-input:focus ~ .form-label,
-    .form-input:not(:placeholder-shown) ~ .form-label {
-        top: -16px;
-        font-size: 0.75rem;
-        font-weight: var(--fw-medium);
-        letter-spacing: 0.02em;
-        color: var(--accent);
+    .form-input:hover {
+        background: rgba(255, 255, 255, 0.7);
     }
 
-/* Input Ambient Glow */
-.input-glow {
+    .form-input:focus {
+        background: #ffffff;
+        border-color: rgba(89, 75, 66, 0.1);
+        box-shadow: 0 4px 12px rgba(42, 36, 32, 0.02);
+    }
+
+.form-label {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: var(--text-primary);
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 0.5s var(--ease-editorial);
-    box-shadow: 0 -2px 10px rgba(89, 75, 66, 0.2);
-    z-index: 3;
+    left: 16px;
+    top: 16px;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    pointer-events: none;
+    transform-origin: left top;
+    transition: transform 0.3s var(--ease-soft), color 0.3s var(--ease-soft);
 }
 
-.form-input:focus ~ .input-glow {
-    transform: scaleX(1);
+.form-input:focus ~ .form-label,
+.form-input:not(:placeholder-shown) ~ .form-label {
+    transform: translateY(-8px) scale(0.8);
+    color: var(--text-secondary);
 }
 
-/* Chips Selection */
+/* Minimal Hata Durumu */
+.input-group.is-error .form-input {
+    border-color: rgba(217, 83, 79, 0.4);
+}
+
+.error-text {
+    position: absolute;
+    bottom: -18px;
+    left: 4px;
+    font-size: 0.75rem;
+    color: #d9534f;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.input-group.is-error .error-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Minimal Shake Animasyonu */
+@keyframes softShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-3px);
+    }
+
+    75% {
+        transform: translateX(3px);
+    }
+}
+
+.apply-shake {
+    animation: softShake 0.3s ease-in-out both;
+}
+
+/* Chips (Seçenekler) */
 .form-row--chips {
-    gap: 16px;
-    display: flex;
-    flex-direction: column;
+    gap: 10px;
 }
 
-.chip-group-label {
+.form-group-label {
     font-size: 0.8rem;
     font-weight: var(--fw-medium);
-    color: var(--text-secondary);
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    display: block;
 }
 
 .chip-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 8px;
 }
 
-.service-chip {
-    cursor: pointer;
+.chip-item input {
+    display: none;
 }
 
-.service-chip input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.chip-text {
+.chip-content {
     display: inline-flex;
-    padding: 10px 18px;
-    font-size: 0.82rem;
-    font-weight: var(--fw-medium);
+    padding: 8px 18px;
+    font-size: 0.85rem;
     color: var(--text-secondary);
+    background: transparent;
     border: 1px solid rgba(89, 75, 66, 0.15);
     border-radius: 999px;
     cursor: pointer;
-    transition: background-color 0.3s var(--ease-soft),
-                color 0.3s var(--ease-soft),
-                border-color 0.3s var(--ease-soft),
-                box-shadow 0.3s var(--ease-soft),
-                transform 0.3s var(--ease-editorial);
-    background: rgba(255, 255, 255, 0.45);
+    transition: all 0.3s var(--ease-soft);
 }
 
-.service-chip:hover .chip-text {
-    border-color: rgba(89, 75, 66, 0.3);
-    color: var(--text-primary);
-}
+    .chip-content:hover {
+        border-color: rgba(89, 75, 66, 0.3);
+    }
 
-.service-chip input[type="radio"]:checked + .chip-text {
+.chip-item input:checked + .chip-content {
     background: var(--text-primary);
     color: var(--bg-primary);
     border-color: var(--text-primary);
-    box-shadow: 0 4px 12px rgba(42, 36, 32, 0.18);
 }
 
-.service-chip input[type="radio"]:focus-visible + .chip-text {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-}
-
-/* ============================================
-   SUBMIT BUTTON — home'daki .btn-editorial--primary
-   ile aynı dil; home.css yüklenmediği için burada lokal kopyası var
-   ============================================ */
-.form-submit {
-    margin-top: 10px;
-}
-
-.w-100 {
+/* Minimal Submit Button */
+.btn-submit {
     width: 100%;
-}
-
-.btn-editorial {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    font-weight: var(--fw-medium);
-    letter-spacing: -0.005em;
-    cursor: pointer;
-    border: none;
-    transition: color 0.4s var(--ease-editorial),
-                background-color 0.4s var(--ease-editorial),
-                transform 0.4s var(--ease-editorial),
-                box-shadow 0.4s var(--ease-editorial);
-}
-
-.btn-editorial--primary {
-    padding: 15px 24px;
-    background-color: var(--text-primary);
+    padding: 16px;
+    background: var(--text-primary);
     color: var(--bg-primary);
-    border-radius: 999px;
-    box-shadow: 0 1px 2px rgba(42, 36, 32, 0.12),
-                0 8px 28px rgba(42, 36, 32, 0.10);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: var(--fw-medium);
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s var(--ease-soft), transform 0.3s var(--ease-soft);
 }
 
-    .btn-editorial--primary svg {
-        width: 16px;
-        height: 16px;
-        transition: transform 0.4s var(--ease-editorial);
+    .btn-submit:hover {
+        background: var(--accent);
+        transform: translateY(-1px);
     }
 
-    .btn-editorial--primary:hover {
-        background-color: var(--accent);
-        transform: translateY(-2px);
-        box-shadow: 0 2px 4px rgba(42, 36, 32, 0.10),
-                    0 14px 36px rgba(89, 75, 66, 0.22);
-    }
-
-        .btn-editorial--primary:hover svg {
-            transform: translateX(4px);
-        }
-
-.btn-editorial:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 4px;
-}
-
-/* ============================================
-   SUCCESS MESSAGE
-   ============================================ */
-.form-success-msg {
+/* Soft Success Box */
+.form-status {
     display: none;
     align-items: center;
-    gap: 10px;
-    padding: 16px 18px;
-    margin-top: 20px;
-    background: oklch(0.62 0.16 145 / 0.10);
-    border: 1px solid oklch(0.62 0.16 145 / 0.28);
-    border-radius: 12px;
-    color: oklch(0.42 0.10 145);
-    font-size: 0.9rem;
-    font-weight: var(--fw-medium);
+    gap: 14px;
+    margin-top: 10px;
+    padding: 16px;
+    background: rgba(99, 158, 90, 0.05);
+    border-radius: 14px;
+    color: #4a7a45;
 }
 
-    .form-success-msg.is-visible {
+    .form-status.is-active {
         display: flex;
-        animation: contactFadeIn 0.5s var(--ease-editorial) forwards;
+        animation: fadeInSoft 0.4s var(--ease-soft) forwards;
     }
 
-.success-icon {
-    color: var(--status-live);
-    font-size: 1rem;
+.status-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(99, 158, 90, 0.15);
+    border-radius: 50%;
 }
 
-@keyframes contactFadeIn {
+@keyframes fadeInSoft {
     from {
         opacity: 0;
-        transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
-        transform: translateY(0);
     }
 }
 
@@ -486,41 +495,24 @@
 @media (max-width: 992px) {
     .contact-grid {
         grid-template-columns: 1fr;
-        gap: 60px;
+        gap: 50px;
     }
 }
 
 @media (max-width: 640px) {
     .split-row {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 28px;
     }
 
     .form-panel {
-        border-radius: 18px;
+        padding: 28px 20px;
+        border-radius: 20px;
     }
 
-    .contact-details {
-        gap: 28px;
-    }
-}
-
-/* ============================================
-   REDUCED MOTION
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
-    .contact-eyebrow .status-dot,
-    .form-input ~ .form-label,
-    .input-glow,
-    .detail-link--large::after,
-    .btn-editorial,
-    .btn-calendar,
-    .chip-text {
-        transition: none;
-        animation: none;
-    }
-
-    .form-success-msg.is-visible {
-        animation: none;
+    .meta-row {
+        gap: 24px;
+        flex-direction: column;
+        align-items: flex-start;
     }
 }

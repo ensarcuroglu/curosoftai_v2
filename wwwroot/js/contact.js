@@ -1,128 +1,152 @@
 /**
  * curosoftai - Contact Page Interactions
- * GSAP & ScrollTrigger _Layout.cshtml içinden defer ile yükleniyor;
- * DOMContentLoaded sırasında hazır olmaları beklenir.
+ * Minimal & Soft UI Sürümü + Canlı Yerel Saat
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    initContactAnimations();
+    initSoftAnimations();
     initTextareaAutoResize();
-    initFormHandling();
+    initFormValidationAndSubmit();
+    initLiveLocalTime(); // Yeni eklendi
 });
 
 /**
- * GSAP Entrance Animations
+ * Canlı Yerel Saat (Türkiye / GMT+3)
  */
-function initContactAnimations() {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const fadeElements = document.querySelectorAll('[data-gsap="fade-up"]');
-    const formPanel = document.querySelector('[data-gsap="form-reveal"]');
+function initLiveLocalTime() {
+    const timeElement = document.getElementById('liveLocalTime');
+    if (!timeElement) return;
 
-    // Fallback: GSAP yoksa veya kullanıcı reduced-motion istiyorsa
-    if (typeof gsap === 'undefined' || reduceMotion) {
-        fadeElements.forEach(el => {
-            el.style.opacity = 1;
-            el.style.transform = 'none';
-        });
-        if (formPanel) {
-            formPanel.style.opacity = 1;
-            formPanel.style.transform = 'none';
-        }
+    const updateClock = () => {
+        // Türkiye saati (GMT+3) için formatlayıcı
+        const now = new Date();
+        const timeString = new Intl.DateTimeFormat('tr-TR', {
+            timeZone: 'Europe/Istanbul',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        }).format(now);
+
+        timeElement.textContent = timeString;
+    };
+
+    // İlk güncellemeyi yap ve her saniye tekrarla
+    updateClock();
+    setInterval(updateClock, 1000);
+}
+
+/**
+ * GSAP Giriş Animasyonları
+ */
+function initSoftAnimations() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || typeof gsap === 'undefined') {
+        gsap.set('[data-gsap]', { opacity: 1, y: 0, x: 0, transform: 'none' });
         return;
     }
 
-    // about.js ile aynı plugin kaydı — ileride scroll bazlı reveal eklenirse hazır
-    if (typeof ScrollTrigger !== 'undefined' && !gsap.core.globals().ScrollTrigger) {
-        gsap.registerPlugin(ScrollTrigger);
-    }
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
+    const fadeElements = document.querySelectorAll('[data-gsap="fade-up"]');
     if (fadeElements.length) {
         tl.fromTo(fadeElements,
-            { opacity: 0, y: 30 },
-            { opacity: 1, y: 0, duration: 1, stagger: 0.15 },
-            0.2
+            { opacity: 0, y: 25 },
+            { opacity: 1, y: 0, duration: 1.2, stagger: 0.1 },
+            0.1
         );
     }
 
+    const formPanel = document.querySelector('[data-gsap="form-reveal"]');
     if (formPanel) {
         tl.fromTo(formPanel,
-            { opacity: 0, x: 40, rotationY: -5 },
-            { opacity: 1, x: 0, rotationY: 0, duration: 1.2, clearProps: 'transform' },
-            0.4
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 1.4, clearProps: 'transform' },
+            0.2
         );
     }
 }
 
 /**
- * Textarea Auto-Resize
+ * Dinamik Textarea Boyutlandırma
  */
 function initTextareaAutoResize() {
     const textarea = document.querySelector('.form-textarea');
     if (!textarea) return;
 
     const resize = () => {
-        textarea.style.height = 'auto';
+        textarea.style.height = '48px';
         textarea.style.height = textarea.scrollHeight + 'px';
     };
 
     textarea.addEventListener('input', resize);
+    window.addEventListener('load', resize);
 }
 
 /**
- * Form Handling (Demo)
- * NOT: Gerçek gönderim eklenince fetch() ile değiştirin.
+ * Minimal Form Validasyonu ve Submit
  */
-function initFormHandling() {
+function initFormValidationAndSubmit() {
     const form = document.getElementById('contactForm');
     if (!form) return;
 
-    const successMsg = document.getElementById('formSuccess');
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const btnTextEl = submitBtn?.querySelector('.btn-text');
+    const inputs = form.querySelectorAll('.form-input[required]');
+    const submitBtn = form.querySelector('.btn-submit');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const statusBox = document.getElementById('formStatus');
+
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            const group = input.closest('.input-group');
+            if (group.classList.contains('is-error')) {
+                group.classList.remove('is-error', 'apply-shake');
+            }
+        });
+    });
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
+        let isValid = true;
 
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
+        inputs.forEach(input => {
+            const group = input.closest('.input-group');
+            if (!input.value.trim() || (input.type === 'email' && !isValidEmail(input.value))) {
+                isValid = false;
 
-        const originalText = btnTextEl ? btnTextEl.textContent : '';
-
-        if (btnTextEl) btnTextEl.textContent = 'Gönderiliyor...';
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.style.opacity = '0.7';
-        }
-
-        // Simüle edilmiş ağ gecikmesi — gerçek entegrasyonda fetch ile değiştir
-        setTimeout(() => {
-            if (successMsg) {
-                successMsg.classList.add('is-visible');
-                successMsg.setAttribute('aria-hidden', 'false');
+                group.classList.remove('apply-shake');
+                void group.offsetWidth;
+                group.classList.add('is-error', 'apply-shake');
             }
+        });
 
+        if (!isValid) return;
+
+        const originalText = btnText.textContent;
+        btnText.textContent = 'Gönderiliyor...';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        submitBtn.style.cursor = 'wait';
+
+        setTimeout(() => {
             form.reset();
-
             const textarea = form.querySelector('.form-textarea');
-            if (textarea) textarea.style.height = 'auto';
+            if (textarea) textarea.style.height = '48px';
 
-            if (btnTextEl) btnTextEl.textContent = 'Gönderildi';
+            statusBox.classList.add('is-active');
+            btnText.textContent = 'Gönderildi';
 
             setTimeout(() => {
-                if (successMsg) {
-                    successMsg.classList.remove('is-visible');
-                    successMsg.setAttribute('aria-hidden', 'true');
-                }
-                if (btnTextEl) btnTextEl.textContent = originalText;
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.style.opacity = '';
-                }
+                statusBox.classList.remove('is-active');
+                btnText.textContent = originalText;
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                submitBtn.style.cursor = 'pointer';
             }, 5000);
+
         }, 1500);
     });
+}
+
+function isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
 }
