@@ -1,8 +1,8 @@
 /* =========================================
-   DATA & DECISION SUPPORT - SCOPED STYLES
+   E-COMMERCE & PORTALS - SCOPED STYLES
    ========================================= */
 
-.data-decision-page {
+.ecommerce-page {
     position: relative;
     padding-top: 60px;
     padding-bottom: 80px;
@@ -247,14 +247,14 @@
 }
 
 /* =========================================
-   PREMIUM DATA CTA SECTION
+   PREMIUM E-COMMERCE CTA SECTION
    ========================================= */
 
 .industry-cta {
     margin-bottom: 60px;
 }
 
-.data-cta-wrapper {
+.ecom-cta-wrapper {
     position: relative;
     background-color: var(--text-primary);
     border-radius: 32px;
@@ -265,20 +265,19 @@
     perspective: 1200px;
 }
 
-/* Soft Emerald/Teal Glow representing Data Insights */
-.data-aura-bg {
+/* Warm glow to signify commerce/gold/premium */
+.ecom-aura-bg {
     position: absolute;
-    top: -30%;
-    right: -10%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(167, 243, 208, 0.08) 0%, transparent 65%);
-    filter: blur(50px);
+    bottom: -40%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+    filter: blur(40px);
     z-index: 0;
-    pointer-events: none;
 }
 
-.data-content-row {
+.ecom-content-row {
     position: relative;
     z-index: 1;
     display: flex;
@@ -287,11 +286,11 @@
     gap: 60px;
 }
 
-.data-text-col {
+.ecom-text-col {
     max-width: 500px;
 }
 
-.analytics-badge {
+.commerce-badge {
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -307,27 +306,10 @@
     backdrop-filter: blur(4px);
 }
 
-.pulse-ring {
-    width: 8px;
-    height: 8px;
-    background-color: var(--status-live);
-    border-radius: 50%;
-    position: relative;
-    box-shadow: 0 0 12px var(--status-live);
-}
-
-.pulse-ring::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    border: 1px solid var(--status-live);
-    animation: ringScale 2s infinite ease-out;
-}
-
-@keyframes ringScale {
-    0% { transform: scale(0.5); opacity: 1; }
-    100% { transform: scale(2); opacity: 0; }
+.secure-icon {
+    display: flex;
+    align-items: center;
+    color: #FBBF24; /* Soft Gold */
 }
 
 .cta-heading {
@@ -366,13 +348,13 @@
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Data Visual Col - Interactive Dashboard */
-.data-visual-col {
+/* --- Checkout / Portal UI Visual --- */
+.ecom-visual-col {
     flex: 0 0 420px;
-    perspective: 1000px;
+    perspective: 1200px;
 }
 
-.glass-dashboard {
+.portal-ui {
     width: 100%;
     background: rgba(30, 26, 23, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -385,11 +367,11 @@
     transform-style: preserve-3d;
 }
 
-.glass-dashboard:hover {
+.portal-ui:hover {
     transform: rotateY(-4deg) rotateX(4deg) translateY(-5px);
 }
 
-.dash-header {
+.ui-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -399,127 +381,119 @@
     transform: translateZ(10px);
 }
 
-.dash-title {
+.ui-title {
     font-family: monospace;
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.5);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
 }
 
-.dash-metrics {
-    font-size: 0.75rem;
-    font-weight: var(--fw-semibold);
-    color: rgba(255, 255, 255, 0.8);
+.avatar {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+    border-radius: 50%;
 }
 
-.chart-container {
-    position: relative;
-    height: 140px;
-    margin-bottom: 20px;
+.ui-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     transform: translateZ(20px);
 }
 
-.bar-chart {
+.cart-items {
     display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    height: 100%;
-    padding: 0 10px;
-    position: relative;
-    z-index: 1;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.bar-group {
-    width: 14%;
-    height: 100%;
+.cart-item {
     display: flex;
-    align-items: flex-end;
-    position: relative;
+    gap: 16px;
+    align-items: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.bar {
-    width: 100%;
+.item-img {
+    width: 48px;
+    height: 48px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px 4px 0 0;
-    transition: height 1s var(--ease-soft), background 0.3s ease;
+    border-radius: 8px;
 }
 
-/* Initial bar heights set to 0 for GSAP to animate */
-.value-1 { height: 0%; }
-.value-2 { height: 0%; }
-.value-3 { height: 0%; }
-.value-4 { height: 0%; }
-.value-5 { height: 0%; }
-.value-6 { height: 0%; }
-
-.active-bar .bar {
-    background: var(--bg-primary);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-}
-
-.bar-tooltip {
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    font-size: 0.6rem;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: var(--fw-semibold);
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.active-bar:hover .bar-tooltip {
-    opacity: 1;
-}
-
-/* SVG Line Chart Overlay */
-.trend-line {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    pointer-events: none;
-    opacity: 0.8;
-}
-
-.trend-line path {
-    stroke-dasharray: 200;
-    stroke-dashoffset: 200;
-    animation: drawLine 3s ease-out forwards 1s;
-}
-
-@keyframes drawLine {
-    to { stroke-dashoffset: 0; }
-}
-
-.data-footer {
+.item-details {
+    flex: 1;
     display: flex;
+    flex-direction: column;
     gap: 8px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 16px;
+}
+
+.item-line {
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.item-line.title { width: 85%; }
+.item-line.subtitle { width: 45%; opacity: 0.5; }
+
+.cart-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 8px 0;
+}
+
+.checkout-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     transform: translateZ(30px);
 }
 
-.data-pill {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.65rem;
-    color: rgba(255, 255, 255, 0.5);
-    font-family: monospace;
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    font-weight: 600;
 }
 
-.sync {
-    color: var(--status-live);
-    background: rgba(255, 255, 255, 0.1);
+.total-row .amount {
+    color: var(--bg-primary);
+    font-size: 1.25rem;
+}
+
+.checkout-btn {
+    position: relative;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    text-align: center;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: var(--fw-bold);
+    overflow: hidden;
+}
+
+.btn-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    transform: skewX(-20deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    20%, 100% { left: 200%; }
 }
 
 .fade-up {
@@ -528,22 +502,22 @@
 
 /* --- RESPONSIVE ADJUSTMENTS --- */
 @media (max-width: 992px) {
-    .data-content-row {
+    .ecom-content-row {
         flex-direction: column;
         text-align: center;
     }
 
-    .data-visual-col {
+    .ecom-visual-col {
         flex: none;
         width: 100%;
         max-width: 100%;
     }
     
-    .glass-dashboard {
+    .portal-ui {
         transform: none;
     }
     
-    .glass-dashboard:hover {
+    .portal-ui:hover {
         transform: translateY(-5px);
     }
     
@@ -581,7 +555,7 @@
         padding: 32px;
     }
 
-    .data-cta-wrapper {
+    .ecom-cta-wrapper {
         padding: 48px 24px;
     }
 
