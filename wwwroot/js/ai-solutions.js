@@ -15,7 +15,7 @@
  *  Palet "Minimalist Executive": Siyah zemin · Krem/Kahve parçacıklar · Beyaz
  *  vurgular (additive glow). pixelRatio ≤ 1.5.
  *
- *  6 AŞAMA: 0 çekirdek(merkez) · 1 bulut(sol) · 2 grid(sağ) · 3 bloklar(merkez)
+ *  6 AŞAMA: 0 jiroskop(merkez) · 1 bulut(sol) · 2 grid(sağ) · 3 bloklar(merkez)
  *           · 4 kalkan(sol) · 5 zemin/dalga(merkez).
  *  B2B metinleri + GSAP kelime-kelime reveal koreografisi KORUNDU.
  * ========================================================================== */
@@ -119,11 +119,38 @@ import * as THREE from 'three';
         for (let i = 0; i < N; i++) {
             const o = i * 3;
 
-            // ---- 0 · ÇEKİRDEK: yoğun küre (merkez) ----
+            // ---- 0 · KİNETİK JİROSKOP: yoğun çekirdek + 3 konsantrik katman ----
+            //  Yapay zekânın "kesin · düzenli · kontrollü" doğası: homojen küre
+            //  yerine 4 ayrık katman (aralarında BOŞLUK = negatif alan). Katman
+            //  kimliği parçacığın yarıçapından okunur → shader her katmanı farklı
+            //  EKSEN/YÖN/HIZ ile döndürür. Yeni attribute GEREKMEZ (yarıçap yeter).
             {
-                const r = 1.9 * Math.cbrt(Math.random());
-                randDir(dir);
-                p0[o] = dir.x * r; p0[o + 1] = dir.y * r; p0[o + 2] = dir.z * r;
+                const q = Math.random();
+                if (q < 0.54) {
+                    // İç ÇEKİRDEK — yoğun hacimsel küre (parçacıkların çoğu burada)
+                    const r = 1.05 * Math.cbrt(Math.random());   // r ∈ [0, 1.05]
+                    randDir(dir);
+                    p0[o] = dir.x * r; p0[o + 1] = dir.y * r; p0[o + 2] = dir.z * r;
+                } else if (q < 0.70) {
+                    // Halka A — XY düzlemi (kameraya bakar); shader Z ekseninde döndürür
+                    const a = Math.random() * TAU;
+                    const rr = 1.40 + (Math.random() - 0.5) * 0.12;
+                    p0[o] = Math.cos(a) * rr;
+                    p0[o + 1] = Math.sin(a) * rr;
+                    p0[o + 2] = (Math.random() - 0.5) * 0.10;     // ince düzlem-dışı dağılım
+                } else if (q < 0.86) {
+                    // Halka B — XZ düzlemi (yatay); shader Y ekseninde döndürür (çekirdeğe ters)
+                    const a = Math.random() * TAU;
+                    const rr = 1.80 + (Math.random() - 0.5) * 0.12;
+                    p0[o] = Math.cos(a) * rr;
+                    p0[o + 1] = (Math.random() - 0.5) * 0.10;
+                    p0[o + 2] = Math.sin(a) * rr;
+                } else {
+                    // Dış SEYREK KABUK — tam küresel kabuk; shader yavaş ters döndürür
+                    randDir(dir);
+                    const R = 2.20 + (Math.random() - 0.5) * 0.16;
+                    p0[o] = dir.x * R; p0[o + 1] = dir.y * R; p0[o + 2] = dir.z * R;
+                }
             }
 
             // ---- 1 · AĞ/GALAKSİ: HACİMLİ 3B sarmal (sol) — açılı kamerayla derinlik ----
@@ -236,11 +263,30 @@ import * as THREE from 'three';
                     float wBlocks = 1.0 - clamp(abs(uMorph - 3.0), 0.0, 1.0);  // bloklar
                     float wFloor  = clamp(uMorph - 4.0, 0.0, 1.0);             // zemin/dalga
 
-                    // Çekirdek: nefes + yerinde Y dönüşü (merkezde olduğu için yerinde döner)
-                    p *= 1.0 + sin(uTime * 0.8) * 0.04 * wCore;
-                    float ang = uTime * 0.12 * wCore;
-                    float s = sin(ang), c = cos(ang);
-                    p.xz = mat2(c, -s, s, c) * p.xz;
+                    // ── Aşama 0 · KİNETİK JİROSKOP ──────────────────────────────
+                    // Katman kimliği p0 yarıçapından (length(position)) okunur →
+                    // ek attribute YOK. Her katman farklı eksen + yön + hızda döner;
+                    // yalnız ucuz mat2 rotasyon kullanılır (noise/branch yok).
+                    p *= 1.0 + sin(uTime * 0.8) * 0.035 * wCore;     // ölçülü "nefes"
+                    float r0 = length(position);
+                    // Katman maskeleri — boşluklarla ayrık tam bölümleme (Σ = 1.0):
+                    float mCore = (1.0 - step(1.20, r0)) * wCore;            // iç çekirdek
+                    float mA    = (step(1.20, r0) - step(1.60, r0)) * wCore; // Halka A (XY)
+                    float mB    = (step(1.60, r0) - step(2.00, r0)) * wCore; // Halka B (XZ)
+                    float mC    = step(2.00, r0) * wCore;                    // dış kabuk
+                    // Çekirdek — Y ekseni (XZ), HIZLI saat yönü + aSeed ile diferansiyel
+                    // dönüş (iç çalkantı görünür olur; mekanik ama ölü değil):
+                    float aCore = uTime * (0.42 + aSeed * 0.30) * mCore;
+                    { float s = sin(aCore), c = cos(aCore); p.xz = mat2(c, -s, s, c) * p.xz; }
+                    // Halka A — Z ekseni (XY düzlemi), TERS yön, orta hız (rijit):
+                    float aRA = -uTime * 0.36 * mA;
+                    { float s = sin(aRA), c = cos(aRA); p.xy = mat2(c, -s, s, c) * p.xy; }
+                    // Halka B — Y ekseni (XZ düzlemi), çekirdeğe TERS, orta hız (rijit):
+                    float aRB = -uTime * 0.22 * mB;
+                    { float s = sin(aRB), c = cos(aRB); p.xz = mat2(c, -s, s, c) * p.xz; }
+                    // Dış kabuk — Y ekseni (XZ), EN YAVAŞ ve çekirdeğe ters (counter-rotation):
+                    float aSh = -uTime * (0.11 + aSeed * 0.05) * mC;
+                    { float s = sin(aSh), c = cos(aSh); p.xz = mat2(c, -s, s, c) * p.xz; }
 
                     // Bloklar: bağımsız ama ahenkli salınım
                     p.x += sin(uTime * 0.8 + aSeed * 6.2831) * 0.10 * wBlocks;
