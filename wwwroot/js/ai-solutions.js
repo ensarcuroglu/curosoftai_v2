@@ -304,6 +304,11 @@ import * as THREE from 'three';
             return;
         }
         gsap.registerPlugin(ScrollTrigger);
+        // Mobil adres-çubuğu (URL bar) açılıp kapanırken yükseklik değişimi
+        // ScrollTrigger.refresh tetikler; bu da reveal/hide tetikleyicilerini
+        // uçuş hâlindeyken yeniden hesaplayıp metni "takılı gizli" bırakabiliyordu.
+        // ignoreMobileResize → yalnızca genişlik değişiminde yenile (kararlı).
+        ScrollTrigger.config({ ignoreMobileResize: true });
         const uMorph = pointsMat.uniforms.uMorph;
         const tl = gsap.timeline({
             defaults: { ease: 'power2.inOut' },
@@ -380,22 +385,19 @@ import * as THREE from 'three';
             ? { clipPath: 'inset(0% 0% 0% 0%)', y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }
             : { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' };
 
-        // Bir sahneyi göster/gizle. KÖK ÇÖZÜM: görünürlük TEK kaynaktan
-        // (ScrollTrigger.isActive) belirlenir; aşağı→yukarı→aşağı gibi yön
-        // değişimlerinde veya refresh sonrası metin "takılı gizli" kalamaz.
-        const revealScene = (scene) => {
-            gsap.set(scene.box, { y: 0 });
-            scene.tl.restart();
-            scene.shown = true;
-        };
-        const hideScene = (scene, dir) => {
-            gsap.to(scene.box, {
-                opacity: 0, y: -28 * (dir || 1), duration: 0.5,
-                ease: 'power2.inOut', overwrite: true
-            });
-            scene.shown = false;
-        };
-
+        // ── KÖK ÇÖZÜM ──────────────────────────────────────────────────────────
+        // Eski mimaride görünürlük İKİ ayrı tween'le yönetiliyordu: reveal (tl.set
+        // opacity:1) + hide (gsap.to opacity:0, overwrite:true). `overwrite` yalnız
+        // tween BAŞLARKEN çözülür; yön hızlıca değişince (aşağı→yukarı) uçuştaki
+        // 0.5sn'lik hide tween'i reveal tarafından ÖLDÜRÜLMÜYOR ve her karede
+        // opacity'yi tekrar 0'a çekerek metni "takılı gizli" bırakıyordu → metin
+        // bazen kayboluyordu (yarış durumu / race condition).
+        //
+        // Yeni mimari: her sahne için TEK, geri-sarılabilir (reversible) zaman
+        // çizelgesi. progress 0 = gizli, 1 = görünür. Göster = play(), gizle =
+        // reverse(). Tek tween örneği kendisiyle yarışamaz; yön değişimi yalnızca
+        // oynatma yönünü çevirir → kusursuz, kesintisiz, çakışmasız.
+        // ────────────────────────────────────────────────────────────────────────
         const scenes = [];
         sections.forEach((section, idx) => {
             const box = section.querySelector('.scene-content');
@@ -407,39 +409,54 @@ import * as THREE from 'three';
             const first = items[0] || null;          // eyebrow / indeks satırı
             const rest = items.slice(1);             // lede · status · cta ...
 
-            // Tekrar oynatılabilir reveal zaman çizelgesi (paused).
-            const tl = gsap.timeline({ paused: true });
-            tl.set(box, { opacity: 1, y: 0 });
+            // Tek görünürlük zaman çizelgesi. `overwrite: 'auto'` → aynı özelliğe
+            // dokunan kaçak tween'leri otomatik temizler. `autoAlpha` opacity +
+            // visibility'yi birlikte yönetir (gizliyken pointer/erişim de kapanır).
+            const tl = gsap.timeline({
+                paused: true,
+                defaults: { overwrite: 'auto' }
+            });
+            // immediateRender (fromTo varsayılanı) sayesinde "from" durumu inline
+            // olarak hemen yazılır → içerik daha ilk karede gizlidir (FOUC yok).
+            tl.fromTo(box, { autoAlpha: 0 },
+                { autoAlpha: 1, duration: 0.45, ease: 'power2.out' }, 0);
             if (first) tl.fromTo(first, { y: 18, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, 0.0);
+                { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, 0.05);
             if (words.length) tl.fromTo(words, { yPercent: 115, opacity: 0 },
                 { yPercent: 0, opacity: 1, duration: 0.85, stagger: 0.045, ease: 'power4.out' }, 0.15);
             rest.forEach((el, k) => tl.fromTo(el, hiddenState(el), shownState(el), 0.42 + k * 0.13));
 
-            const scene = { box, tl, shown: false, st: null };
+            const scene = {
+                idx, tl, shown: false, st: null,
+                // Göster: normal hızda ileri oynat. Gizliyken çağrılırsa kaldığı
+                // progress'ten devam eder → kesintiden sonra bile pürüzsüz reveal.
+                show() {
+                    if (this.shown) return;
+                    this.shown = true;
+                    setActiveStage(this.idx);
+                    this.tl.timeScale(1).play();
+                },
+                // Gizle: aynı çizelgeyi biraz daha hızlı GERİ sar. İleri/geri tek
+                // tween olduğundan asla çakışmaz; metin asla takılı kalmaz.
+                hide() {
+                    if (!this.shown) return;
+                    this.shown = false;
+                    this.tl.timeScale(1.5).reverse();
+                }
+            };
 
-            // Başlangıç gizli durumu — inline yazılır; FOUC CSS katmanı kaldırılınca da
-            // gizli kalır (görünürlüğü artık yalnızca GSAP inline stilleri yönetir).
-            gsap.set(box, { opacity: 0 });
-            if (first) gsap.set(first, { y: 18, opacity: 0 });
-            if (words.length) gsap.set(words, { yPercent: 115, opacity: 0 });
-            rest.forEach((el) => gsap.set(el, hiddenState(el)));
-
-            // Dört ayrı geri-çağrı (onEnter/onLeave/...) yerine TEK onToggle:
-            // isActive → göster, değilse → gizle. Desenkron olamaz.
+            // Dört ayrı geri-çağrı yerine TEK onToggle: isActive → göster, değilse
+            // → gizle. show()/hide() içindeki `shown` muhafızı tekrarı engeller.
             scene.st = ScrollTrigger.create({
                 trigger: section, start: 'top 72%', end: 'bottom 28%',
-                onToggle: (self) => {
-                    if (self.isActive) { setActiveStage(idx); revealScene(scene); }
-                    else { hideScene(scene, self.direction); }
-                }
+                onToggle: (self) => { self.isActive ? scene.show() : scene.hide(); }
             });
 
             scenes.push(scene);
         });
 
-        // FOUC katmanını kaldır: içerik artık inline stillerle gizli; CSS tabanı GÖRÜNÜR.
-        // Beklenmedik bir durumda (kaçan tetikleyici vb.) metin görünür kalır, kaybolmaz.
+        // FOUC katmanını kaldır: içerik artık inline autoAlpha ile gizli; CSS tabanı
+        // GÖRÜNÜR. Bir tetikleyici kaçsa bile reconcile() metni güvenle açar.
         document.documentElement.classList.remove('aicore-anim');
 
         // Kaydırma ipucu (yalnız ilk bölümde) — kaydırınca yumuşakça söner.
@@ -451,17 +468,26 @@ import * as THREE from 'three';
             });
         }
 
-        ScrollTrigger.refresh();
+        // Görünürlüğü ScrollTrigger'ın gerçek aktiflik durumuyla uzlaştır. Tek
+        // doğruluk kaynağı: st.isActive. Aktif → göster, değilse → gizle. Her iki
+        // yönde de idempotent (muhafızlar sayesinde) → güvenle tekrar çağrılabilir.
+        const reconcile = () => {
+            let active = -1;
+            for (let i = 0; i < scenes.length; i++) {
+                const scene = scenes[i];
+                if (!scene) continue;
+                if (scene.st.isActive) { active = scene.idx; scene.show(); }
+                else if (scene.shown) { scene.hide(); }
+            }
+            if (active < 0) setActiveStage(0);
+        };
 
-        // Başlangıç/refresh sonrası durum uzlaştırma: o an görünürdeki bölüm(ler)i aç.
-        // onToggle ilk yüklemede tetiklenmese bile görünür bölüm güvenle açılır.
-        let anyShown = false;
-        scenes.forEach((scene, idx) => {
-            if (!scene) return;
-            if (scene.st.isActive && !scene.shown) { setActiveStage(idx); revealScene(scene); }
-            if (scene.shown) anyShown = true;
-        });
-        if (!anyShown) setActiveStage(0);
+        // İlk konumlar kesinleşsin, sonra görünür bölüm(ler)i aç. Ardından HER
+        // refresh'te (yeniden boyutlandırma, sekme dönüşü, layout değişimi) tekrar
+        // uzlaştır → metin yön değişiminde/refresh sonrası asla kaybolmaz.
+        ScrollTrigger.refresh();
+        reconcile();
+        ScrollTrigger.addEventListener('refresh', reconcile);
     }
 
     // ==========================================================================
