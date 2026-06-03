@@ -1,0 +1,168 @@
+﻿@{
+    ViewData["Title"] = "Veri ve Karar Destek";
+    ViewData["BodyClass"] = "solution-detail-body";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/datadecision.css" asp-append-version="true" />
+}
+
+<div class="data-decision-page">
+    <div class="container">
+
+        <header class="solution-hero fade-up">
+            <span class="section-tag">Data & Analytics</span>
+
+            <h1 class="hero-title">
+                Verinin gücüyle <br />
+                <span class="highlight-serif">kesin kararlar.</span>
+            </h1>
+
+            <p class="hero-lead">
+                İşletmenizin ürettiği devasa veriyi anlamlı içgörülere dönüştürüyoruz. Sezgilerin yerini algoritmaların, tahminlerin yerini analitik gerçekliğin aldığı yepyeni bir karar alma deneyimi.
+            </p>
+
+            <div class="stats-row fade-up">
+                <div class="stat-item">
+                    <h4>360°</h4>
+                    <span>Operasyonel Görünürlük</span>
+                </div>
+                <div class="stat-item">
+                    <h4>-30%</h4>
+                    <span>Risk Faktörü</span>
+                </div>
+                <div class="stat-item">
+                    <h4>5x</h4>
+                    <span>Karar Alma Hızı</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="challenge-section fade-up">
+            <h2 class="section-title">Ham Veri Çözüm Değil, Maliyettir</h2>
+            <p class="section-subtitle">Bağlamından koparılmış ve analiz edilmemiş veriler sizi yanıltır.</p>
+
+            <div class="content-grid">
+                <div class="glass-box light-glass">
+                    <div class="box-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="9" y1="21" x2="9" y2="9" /></svg>
+                    </div>
+                    <h3>Veri Adacıkları</h3>
+                    <p>Farklı departmanların kendi silolarında tuttuğu kopuk veriler, büyük resmi görmenizi engeller. İşletmenizin potansiyelini kısıtlayan bu adacıkları birleştiriyoruz.</p>
+                </div>
+
+                <div class="glass-box active-glass">
+                    <div class="box-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
+                    </div>
+                    <h3>Öngörülebilir Gelecek</h3>
+                    <p>Geleneksel raporlar sadece geçmişte ne olduğunu söyler. Gelişmiş makine öğrenimi modellerimiz, gelecekte ne olacağını yüksek doğrulukla simüle eder.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="use-cases-section fade-up">
+            <h2 class="section-title">Veri Zekası Katmanları</h2>
+
+            <div class="uc-list">
+                <div class="uc-item">
+                    <div class="uc-number">01</div>
+                    <div class="uc-content">
+                        <h3>Kurumsal İş Zekası (BI)</h3>
+                        <p>Dağınık veri kaynaklarını tek bir merkezde topluyor; anlık metrikleri takip edebileceğiniz, modern, hızlı ve görselleştirilmiş editoryal paneller (Dashboard) kuruyoruz.</p>
+                        <div class="uc-tags">
+                            <span class="tag">BI Dashboards</span>
+                            <span class="tag">Data Warehouse</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uc-item">
+                    <div class="uc-number">02</div>
+                    <div class="uc-content">
+                        <h3>Tahminleyici Analitik (Predictive)</h3>
+                        <p>Müşteri davranışlarını, pazar dalgalanmalarını ve tedarik zinciri risklerini önceden tahmin eden yapay zeka destekli algoritmalar ile proaktif stratejiler geliştirin.</p>
+                        <div class="uc-tags">
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Forecasting</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uc-item">
+                    <div class="uc-number">03</div>
+                    <div class="uc-content">
+                        <h3>Gerçek Zamanlı Veri Boru Hatları</h3>
+                        <p>Büyük veri (Big Data) yığınlarını anlık olarak filtreleyen, temizleyen ve hedefe ulaştıran, sıfır gecikmeli, yüksek güvenlikli streaming mimarileri tasarlıyoruz.</p>
+                        <div class="uc-tags">
+                            <span class="tag">Data Engineering</span>
+                            <span class="tag">ETL/ELT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="industry-cta fade-up">
+            <div class="data-cta-wrapper">
+                <div class="data-aura-bg"></div>
+
+                <div class="data-content-row">
+                    <div class="data-text-col">
+                        <div class="analytics-badge">
+                            <span class="pulse-ring"></span>
+                            <span>Analitik Sistem Aktif</span>
+                        </div>
+                        <h2 class="cta-heading">Karanlıkta Yürümeyi <br> <span class="highlight-serif" style="color: var(--bg-primary);">Bırakın.</span></h2>
+                        <p class="cta-desc">
+                            Kararlarınızı verinin ışığıyla aydınlatın. İşletmenizi veriye dayalı (data-driven) bir organizasyona dönüştürecek stratejiyi birlikte planlayalım.
+                        </p>
+                        <a asp-controller="Contact" asp-action="Index" class="btn btn-primary cta-action-btn">
+                            Veri Yol Haritası Oluştur
+                        </a>
+                    </div>
+
+                    <div class="data-visual-col">
+                        <div class="glass-dashboard">
+                            <div class="dash-header">
+                                <div class="dash-title">PREDICTIVE_MODEL_v2</div>
+                                <div class="dash-metrics">
+                                    <span>ACCURACY: <b style="color:#4ADE80;">98.4%</b></span>
+                                </div>
+                            </div>
+
+                            <div class="dash-body">
+                                <div class="chart-container">
+                                    <div class="bar-chart">
+                                        <div class="bar-group"><div class="bar value-1"></div></div>
+                                        <div class="bar-group"><div class="bar value-2"></div></div>
+                                        <div class="bar-group active-bar"><div class="bar value-3"></div><div class="bar-tooltip">Yüksek Potansiyel</div></div>
+                                        <div class="bar-group"><div class="bar value-4"></div></div>
+                                        <div class="bar-group"><div class="bar value-5"></div></div>
+                                        <div class="bar-group"><div class="bar value-6"></div></div>
+                                    </div>
+
+                                    <svg class="trend-line" viewBox="0 0 100 40" preserveAspectRatio="none">
+                                        <path d="M0,35 Q15,25 30,30 T60,15 T100,5" fill="none" stroke="var(--bg-primary)" stroke-width="2" stroke-linecap="round" />
+                                        <circle cx="60" cy="15" r="2" fill="var(--bg-primary)" />
+                                        <circle cx="100" cy="5" r="2" fill="var(--bg-primary)" />
+                                    </svg>
+                                </div>
+
+                                <div class="data-footer">
+                                    <div class="data-pill">Processing 2.4TB/s</div>
+                                    <div class="data-pill sync">Syncing...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/datadecision.js" asp-append-version="true" defer></script>
+}
