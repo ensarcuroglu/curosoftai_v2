@@ -260,6 +260,7 @@ import * as THREE from 'three';
 
                     // Aşama ağırlıkları (ucuz)
                     float wCore   = 1.0 - clamp(uMorph, 0.0, 1.0);              // çekirdek
+                    float wGrid   = 1.0 - clamp(abs(uMorph - 2.0), 0.0, 1.0);  // grid/matris
                     float wBlocks = 1.0 - clamp(abs(uMorph - 3.0), 0.0, 1.0);  // bloklar
                     float wFloor  = clamp(uMorph - 4.0, 0.0, 1.0);             // zemin/dalga
 
@@ -287,6 +288,14 @@ import * as THREE from 'three';
                     // Dış kabuk — Y ekseni (XZ), EN YAVAŞ ve çekirdeğe ters (counter-rotation):
                     float aSh = -uTime * (0.11 + aSeed * 0.05) * mC;
                     { float s = sin(aSh), c = cos(aSh); p.xz = mat2(c, -s, s, c) * p.xz; }
+
+                    // ── Aşama 2 · DALGALANAN VERİ MATRİSİ (Pulsing Neural Lattice) ──
+                    // Kübik kafesin x–z ayak izinden geçen yumuşak bir sinüs dalgası
+                    // p.y'yi hafifçe esnetir. Aynı kolondaki noktalar (eşit x,z) EŞİT
+                    // ötelenir → kafesin ana yapısı BOZULMAZ, yalnızca "nefes alır".
+                    // Genlik (0.07) hücre aralığının (~0.14) altında → zarif, yumuşak.
+                    // x ve z için hafifçe farklı frekans/hız → organik girişim deseni.
+                    p.y += sin(p.x * 1.5 + uTime * 1.05) * cos(p.z * 1.35 + uTime * 0.8) * 0.07 * wGrid;
 
                     // Bloklar: bağımsız ama ahenkli salınım
                     p.x += sin(uTime * 0.8 + aSeed * 6.2831) * 0.10 * wBlocks;
